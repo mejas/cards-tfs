@@ -16,7 +16,7 @@ namespace Cards.Extensions.Tfs.Api
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/v2/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }
