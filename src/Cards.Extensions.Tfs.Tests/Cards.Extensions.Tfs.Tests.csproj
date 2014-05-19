@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="Area.cs" />
     <Compile Include="AreaTests.cs" />
+    <Compile Include="DateProvider.cs" />
+    <Compile Include="IDateProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

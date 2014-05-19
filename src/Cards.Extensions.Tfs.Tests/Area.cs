@@ -1,18 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Cards.Extensions.Tfs.Tests
 {
     public class Area
     {
 
+        public Area()
+            :this(new DateProvider())
+        {
+
+        }
+
+        public Area(IDateProvider dateProvider)
+        {
+            DateProvider = dateProvider;
+        }
+
         protected static List<Area> Storage;
         public static void Reset()
         {
             Storage = new List<Area>();
         }
+
+        protected IDateProvider DateProvider { get; set; }
+
 
         public int ID { get; set; }
         public string Name { get; set; }
@@ -25,8 +37,8 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 Name = areaName,
                 ID = 1,
-                CreatedDate = new DateTime(2014, 5, 19),
-                ModifiedDate = new DateTime(2014, 5, 19)
+                CreatedDate = DateProvider.Now(),
+                ModifiedDate = DateProvider.Now()
             };
 
             //add storage fugg
@@ -43,6 +55,19 @@ namespace Cards.Extensions.Tfs.Tests
         public Area Get(int id)
         {
             return Storage.Find(item => item.ID == id);
+        }
+
+        public Area Update(Area area)
+        {
+            if (this.Get(area.ID) == null)
+            {
+                return null;
+            }
+            else
+            {
+                area.ModifiedDate = DateProvider.Now();
+                return area;
+            }
         }
     }
 }
