@@ -166,7 +166,6 @@ namespace Cards.Extensions.Tfs.Tests
             }
         }
 
-
         public class GetMethod
         {
             public GetMethod()
@@ -223,6 +222,19 @@ namespace Cards.Extensions.Tfs.Tests
                 var subject = area.Get(1);
 
                 subject.Name.Should().Be("Backlog");
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenGet_AndWithNewArea_CreatedDateShouldHaveValue()
+            {
+                var area = new Area();
+
+                area.Add("Backlog");
+
+                var subject = area.Get(1);
+
+                subject.CreatedDate.Should().Be(new DateTime(2014, 5, 19));
             }
         }
     }
