@@ -49,6 +49,22 @@ namespace Cards.Extensions.Tfs.Tests
                 var subject = new Area();
                 subject.ModifiedDate.Should().Be(DateTime.MinValue);
             }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenInitialize_ShouldCreatedUserBeNull()
+            {
+                var subject = new Area();
+                subject.CreatedUser.Should().BeNull();
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenInitialize_ShouldModifiedUserBeNull()
+            {
+                var subject = new Area();
+                subject.ModifiedUser.Should().BeNull();
+            }
         }
 
         public class AddMethod
@@ -183,6 +199,64 @@ namespace Cards.Extensions.Tfs.Tests
                 subject = area.Add(areaName);
 
                 subject.ModifiedDate.Should().Be(new DateTime(2014, 5, 19));
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenNameIsNotNull_CreatedUserShouldHaveValue()
+            {
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a)
+                    .Returns(() => 
+                    {
+                        subject.CreatedUser = "Dave Rodgers";
+                        return subject;
+                    });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var areaName = "Backlog";
+
+                subject = area.Add(areaName);
+
+                subject.CreatedUser.Should().Be("Dave Rodgers");
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenNameIsNotNull_ModifiedUserShouldHaveValue()
+            {
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a)
+                    .Returns(() =>
+                    {
+                        subject.ModifiedUser = "Dave Rodgers";
+                        return subject;
+                    });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var areaName = "Backlog";
+
+                subject = area.Add(areaName);
+
+                subject.ModifiedUser.Should().Be("Dave Rodgers");
             }
         }
 
@@ -362,6 +436,76 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.CreatedDate.Should().Be(new DateTime(2014, 5, 19));
             }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenGet_ModifiedDateShouldHaveValue()
+            {
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedDate = NOW });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.ModifiedDate.Should().Be(new DateTime(2014, 5, 19));
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenGet_CreatedUserShouldHaveValue()
+            {
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, CreatedDate = NOW, CreatedUser = "Dave Rodgers" });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.CreatedUser.Should().Be("Dave Rodgers");
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenGet_ModifiedUserShouldHaveValue()
+            {
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedUser = "Dave Rodgers" });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.ModifiedUser.Should().Be("Dave Rodgers");
+            }
+
         }
 
         public class UpdateMethod
@@ -392,7 +536,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Area")]
-            public void WhenEdit_AndWithNewArea_ShouldNotBeNull()
+            public void WhenEdit_ShouldNotBeNull()
             {
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
@@ -423,7 +567,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Area")]
-            public void WhenEdit_AndWithNewArea_NameShouldBeUpdated()
+            public void WhenEdit_NameShouldBeUpdated()
             {
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
@@ -483,6 +627,72 @@ namespace Cards.Extensions.Tfs.Tests
                 subject = area.Update(subject);
 
                 subject.ModifiedDate.Should().Be(new DateTime(2014, 5, 20));
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenEdit_ModifiedUserShouldBeUpdated()
+            {
+                var NOW = new DateTime(2014, 5, 20);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW, CreatedUser = "Dave Rodgers" });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a.ID == 1 ? a : null)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.Name = "Not a backlog";
+                subject.ModifiedUser = "MIKADO";
+
+                subject = area.Update(subject);
+
+                subject.ModifiedUser.Should().Be("MIKADO");
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenEdit_CreatedUserUserShouldNotBeUpdated()
+            {
+                var NOW = new DateTime(2014, 5, 20);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW, CreatedUser = "Dave Rodgers" });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a.ID == 1 ? a : null)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.Name = "Not a backlog";
+                subject.ModifiedUser = "MIKADO";
+
+                subject = area.Update(subject);
+
+                subject.CreatedUser.Should().Be("Dave Rodgers");
             }
         }
     }

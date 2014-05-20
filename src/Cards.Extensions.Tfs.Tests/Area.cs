@@ -23,6 +23,8 @@ namespace Cards.Extensions.Tfs.Tests
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public string CreatedUser { get; set; }
+        public string ModifiedUser { get; set; }
 
         public Area Add(string areaName)
         {
