@@ -75,6 +75,11 @@ namespace Cards.Extensions.Tfs.Tests
             public void WhenNameIsNotNull_ShouldNotBeNull()
             {
                 //Arrange
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
+
                 var NOW = DateTime.Now;
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -88,7 +93,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
                 var areaName = "Backlog";
 
                 //Act
@@ -102,6 +107,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenNameIsNotNull_NameShouldBeBacklog()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = DateTime.Now;
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -115,7 +124,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
                 var areaName = "Backlog";
 
                 subject = area.Add(areaName);
@@ -127,6 +136,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenNameIsNotNull_IDShouldBeOne()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = DateTime.Now;
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -143,7 +156,7 @@ namespace Cards.Extensions.Tfs.Tests
                         subject = a;
                     }).Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 var areaName = "Backlog";
 
@@ -156,6 +169,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenNameIsNotNull_CreatedDateShouldHaveValue()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -169,7 +186,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
                 var areaName = "Backlog";
 
                 subject = area.Add(areaName);
@@ -181,6 +198,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenNameIsNotNull_ModifiedDateShouldHaveValue()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -194,7 +215,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
                 var areaName = "Backlog";
 
                 subject = area.Add(areaName);
@@ -206,6 +227,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenNameIsNotNull_CreatedUserShouldHaveValue()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -217,13 +242,9 @@ namespace Cards.Extensions.Tfs.Tests
                 storageProvider
                     .Setup(d => d.Add(It.IsAny<Area>()))
                     .Callback<Area>(a => subject = a)
-                    .Returns(() => 
-                    {
-                        subject.CreatedUser = "Dave Rodgers";
-                        return subject;
-                    });
+                    .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
                 var areaName = "Backlog";
 
                 subject = area.Add(areaName);
@@ -235,6 +256,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenNameIsNotNull_ModifiedUserShouldHaveValue()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -246,13 +271,9 @@ namespace Cards.Extensions.Tfs.Tests
                 storageProvider
                     .Setup(d => d.Add(It.IsAny<Area>()))
                     .Callback<Area>(a => subject = a)
-                    .Returns(() =>
-                    {
-                        subject.ModifiedUser = "Dave Rodgers";
-                        return subject;
-                    });
+                    .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
                 var areaName = "Backlog";
 
                 subject = area.Add(areaName);
@@ -275,7 +296,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetAllAreas())
                     .Returns(() => new List<Area>());
 
-                var area = new Area(null, storageProvider.Object);
+                var area = new Area(null, storageProvider.Object, null);
 
                 subject = area.GetAll();
 
@@ -294,7 +315,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetAllAreas())
                     .Returns(() => new List<Area>());
 
-                var area = new Area(null, storageProvider.Object);
+                var area = new Area(null, storageProvider.Object, null);
 
                 subject = area.GetAll();
 
@@ -315,7 +336,7 @@ namespace Cards.Extensions.Tfs.Tests
                         return toReturn;
                     });
 
-                var area = new Area(null, storageProvider.Object);
+                var area = new Area(null, storageProvider.Object, null);
 
                 var subject = area.GetAll();
 
@@ -338,7 +359,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetArea(It.IsAny<int>()))
                     .Returns(() => null);
 
-                var area = new Area(null, storageProvider.Object);
+                var area = new Area(null, storageProvider.Object, null);
                 var id = 1;
 
                 subject = area.Get(id);
@@ -362,7 +383,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
                     .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
                 subject = area.Get(1);
 
@@ -385,7 +406,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
                     .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
                 subject = area.Get(1);
 
@@ -408,7 +429,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
                     .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
                 subject = area.Get(1);
 
@@ -431,7 +452,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
                     .Returns(() => new Area() { ID = 1, CreatedDate = NOW });
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
                 subject = area.Get(1);
 
@@ -454,7 +475,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
                     .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedDate = NOW });
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
                 subject = area.Get(1);
 
@@ -477,7 +498,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
                     .Returns(() => new Area() { ID = 1, CreatedDate = NOW, CreatedUser = "Dave Rodgers" });
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
                 subject = area.Get(1);
 
@@ -500,7 +521,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
                     .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedUser = "Dave Rodgers" });
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
                 subject = area.Get(1);
 
@@ -528,7 +549,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a)
                     .Returns(() => null);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
                 subject = area.Update(null);
 
@@ -539,6 +560,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenEdit_ShouldNotBeNull()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -556,7 +581,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a.ID == 1 ? a : null)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = area.Get(1);
                 subject.Name = "Not a Backlog";
@@ -570,6 +595,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenEdit_NameShouldBeUpdated()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -587,7 +616,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a.ID == 1 ? a : null)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = area.Get(1);
 
@@ -602,6 +631,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenEdit_ModifiedDateShouldBeUpdated()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -619,7 +652,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a.ID == 1 ? a : null)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = area.Get(1);
 
@@ -634,6 +667,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenEdit_ModifiedUserShouldBeUpdated()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("MIKADO");
+
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -651,12 +688,11 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a.ID == 1 ? a : null)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = area.Get(1);
 
                 subject.Name = "Not a backlog";
-                subject.ModifiedUser = "MIKADO";
 
                 subject = area.Update(subject);
 
@@ -667,6 +703,10 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenEdit_CreatedUserUserShouldNotBeUpdated()
             {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -684,12 +724,11 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Area>(a => subject = a.ID == 1 ? a : null)
                     .Returns(() => subject);
 
-                var area = new Area(dateProvider.Object, storageProvider.Object);
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = area.Get(1);
 
                 subject.Name = "Not a backlog";
-                subject.ModifiedUser = "MIKADO";
 
                 subject = area.Update(subject);
 

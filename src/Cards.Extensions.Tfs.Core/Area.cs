@@ -7,17 +7,19 @@ namespace Cards.Extensions.Tfs.Core
     {
 
         public Area()
-            : this(new DateProvider(), new StorageProvider())
+            : this(new DateProvider(), new StorageProvider(), new IdentityProvider())
         { }
 
-        public Area(IDateProvider dateProvider, IStorageProvider storageProvider)
+        public Area(IDateProvider dateProvider, IStorageProvider storageProvider, IIdentityProvider identityProvider)
         {
             DateProvider = dateProvider;
             StorageProvider = storageProvider;
+            IdentityProvider = identityProvider;
         }
 
         protected IDateProvider DateProvider { get; set; }
         protected IStorageProvider StorageProvider { get; set; }
+        protected IIdentityProvider IdentityProvider { get; set; }
 
         public int ID { get; set; }
         public string Name { get; set; }
@@ -30,8 +32,10 @@ namespace Cards.Extensions.Tfs.Core
         {
             var area = new Area()
             {
-                Name = areaName,
-                CreatedDate = DateProvider.Now(),
+                Name         = areaName,
+                CreatedUser  = IdentityProvider.UserName(),
+                ModifiedUser = IdentityProvider.UserName(),
+                CreatedDate  = DateProvider.Now(),
                 ModifiedDate = DateProvider.Now()
             };
 
@@ -53,6 +57,7 @@ namespace Cards.Extensions.Tfs.Core
         {
             if (area != null && this.Get(area.ID) != null)
             {
+                area.ModifiedUser = IdentityProvider.UserName();
                 area.ModifiedDate = DateProvider.Now();
                 return StorageProvider.Update(area);
             }
