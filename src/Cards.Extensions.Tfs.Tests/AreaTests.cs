@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cards.Extensions.Tfs.Core;
 using FluentAssertions;
 using Moq;
 using Xunit;
