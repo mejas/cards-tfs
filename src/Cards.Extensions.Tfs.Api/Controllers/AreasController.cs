@@ -28,5 +28,12 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
         }
 
+        public Area GetAreaByID(int id)
+        {
+            var identity = HttpContext.Current.Request.LogonUserIdentity;
+
+            return new Area() { ID = id, Name = "Backlog", CreatedDate = DateTime.MinValue, ModifiedDate = DateTime.MinValue, CreatedUser = identity.Name, ModifiedUser = identity.Name };
+        }
+
     }
 }
