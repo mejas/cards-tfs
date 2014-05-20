@@ -735,5 +735,41 @@ namespace Cards.Extensions.Tfs.Tests
                 subject.CreatedUser.Should().Be("Dave Rodgers");
             }
         }
+
+        public class RemoveMethod
+        {
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenDelete_DataShouldBeRemoved()
+            {
+
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+
+                var NOW = new DateTime(2014, 5, 20);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.RemoveArea(It.Is<int>(i => i == 1)));
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => null);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
+
+                area.Remove(1);
+
+                subject = area.Get(1);
+
+                subject.Should().BeNull();
+            }
+        }
     }
 }

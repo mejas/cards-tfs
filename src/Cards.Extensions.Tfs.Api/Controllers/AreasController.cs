@@ -58,7 +58,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [HttpDelete]
         [Route("api/Areas/{id}")]
         public void Delete(int id)
-        { 
+        {
         }
 
     }
