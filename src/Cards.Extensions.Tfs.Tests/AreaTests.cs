@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -52,11 +53,6 @@ namespace Cards.Extensions.Tfs.Tests
 
         public class AddMethod
         {
-            public AddMethod()
-            {
-                Area.Reset();
-            }
-
             [Fact]
             [Trait("Category", "Area")]
             public void WhenNameIsNotNull_ShouldNotBeNull()
@@ -66,11 +62,20 @@ namespace Cards.Extensions.Tfs.Tests
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
                 var areaName = "Backlog";
 
                 //Act
-                var subject = area.Add(areaName);
+                subject = area.Add(areaName);
 
                 //Assert
                 subject.Should().NotBeNull();
@@ -84,11 +89,19 @@ namespace Cards.Extensions.Tfs.Tests
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
 
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
                 var areaName = "Backlog";
 
-                var subject = area.Add(areaName);
+                subject = area.Add(areaName);
 
                 subject.Name.Should().Be("Backlog");
             }
@@ -101,11 +114,23 @@ namespace Cards.Extensions.Tfs.Tests
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Area>()))
+                    .Callback<Area>(a => 
+                    {
+                        a.ID = 1;
+                        subject = a;
+                    }).Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
 
                 var areaName = "Backlog";
 
-                var subject = area.Add(areaName);
+                subject = area.Add(areaName);
 
                 subject.ID.Should().Be(1);
             }
@@ -118,11 +143,19 @@ namespace Cards.Extensions.Tfs.Tests
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
-                
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
                 var areaName = "Backlog";
 
-                var subject = area.Add(areaName);
+                subject = area.Add(areaName);
 
                 subject.CreatedDate.Should().Be(new DateTime(2014, 5, 19));
             }
@@ -135,11 +168,19 @@ namespace Cards.Extensions.Tfs.Tests
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
 
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
                 var areaName = "Backlog";
 
-                var subject = area.Add(areaName);
+                subject = area.Add(areaName);
 
                 subject.ModifiedDate.Should().Be(new DateTime(2014, 5, 19));
             }
@@ -147,17 +188,21 @@ namespace Cards.Extensions.Tfs.Tests
 
         public class GetAllMethod
         {
-            public GetAllMethod()
-            {
-                Area.Reset();
-            }
-
             [Fact]
             [Trait("Category", "Area")]
             public void WhenGetAll_ShouldNotBeNull()
             {
-                var area = new Area();
-                var subject = area.GetAll();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                List<Area> subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetAllAreas())
+                    .Returns(() => new List<Area>());
+
+                var area = new Area(null, storageProvider.Object);
+
+                subject = area.GetAll();
 
                 subject.Should().NotBeNull();
             }
@@ -166,8 +211,17 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenGetAll_ShouldBeEmpty()
             {
-                var area = new Area();
-                var subject = area.GetAll();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                List<Area> subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetAllAreas())
+                    .Returns(() => new List<Area>());
+
+                var area = new Area(null, storageProvider.Object);
+
+                subject = area.GetAll();
 
                 subject.Should().BeEmpty();
             }
@@ -176,52 +230,66 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenGetAll_AndWithNewArea_ShouldHaveOneElement()
             {
-                var NOW = DateTime.Now;
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
+                var storageProvider = new Mock<IStorageProvider>();
+                storageProvider.Setup(d => d.GetAllAreas()).Returns(
+                    () => 
+                    {
+                        List<Area> toReturn = new List<Area>();
+                        toReturn.Add(new Area());
 
-                var area = new Area(dateProvider.Object);
+                        return toReturn;
+                    });
 
-                area.Add("Backlog");
+                var area = new Area(null, storageProvider.Object);
 
                 var subject = area.GetAll();
 
                 subject.Count.Should().Be(1);
+
             }
         }
 
         public class GetMethod
         {
-            public GetMethod()
-            {
-                Area.Reset();
-            }
-
             [Fact]
             [Trait("Category", "Area")]
             public void WhenGet_ShouldBeNull()
             {
-                var area = new Area();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.IsAny<int>()))
+                    .Returns(() => null);
+
+                var area = new Area(null, storageProvider.Object);
                 var id = 1;
 
-                var subject = area.Get(id);
+                subject = area.Get(id);
 
                 subject.Should().BeNull();
             }
 
             [Fact]
             [Trait("Category", "Area")]
-            public void WhenGet_AndWithNewArea_ShouldNotBeNull()
+            public void WhenGet_ShouldNotBeNull()
             {
                 var NOW = DateTime.Now;
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
 
-                area.Add("Backlog");
+                Area subject = null;
 
-                var subject = area.Get(1);
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
 
                 subject.Should().NotBeNull();
             }
@@ -234,11 +302,17 @@ namespace Cards.Extensions.Tfs.Tests
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
 
-                area.Add("Backlog");
+                Area subject = null;
 
-                var subject = area.Get(1);
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
 
                 subject.ID.Should().Be(1);
             }
@@ -247,32 +321,44 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenGet_AndWithNewArea_NameShouldBeBacklog()
             {
-                var NOW = new DateTime(2014, 5, 21);
+                var NOW = DateTime.Now;
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
 
-                area.Add("Backlog");
+                Area subject = null;
 
-                var subject = area.Get(1);
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
 
                 subject.Name.Should().Be("Backlog");
             }
 
             [Fact]
             [Trait("Category", "Area")]
-            public void WhenGet_AndWithNewArea_CreatedDateShouldHaveValue()
+            public void WhenGet_CreatedDateShouldHaveValue()
             {
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
+                
+                Area subject = null;
 
-                area.Add("Backlog");
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, CreatedDate = NOW });
 
-                var subject = area.Get(1);
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
 
                 subject.CreatedDate.Should().Be(new DateTime(2014, 5, 19));
             }
@@ -280,18 +366,26 @@ namespace Cards.Extensions.Tfs.Tests
 
         public class UpdateMethod
         {
-            public UpdateMethod()
-            {
-                Area.Reset();
-            }
-
             [Fact]
             [Trait("Category", "Area")]
             public void WhenEdit_ShouldBeNull()
             {
-                var area = new Area();
-                
-                var subject = area.Update(area);
+                var NOW = new DateTime(2014, 5, 20);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a)
+                    .Returns(() => null);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Update(null);
 
                 subject.Should().BeNull();
             }
@@ -304,12 +398,25 @@ namespace Cards.Extensions.Tfs.Tests
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
 
-                var areaToModify = area.Add("Backlog");
-                areaToModify.Name = "Not a Backlog";
+                Area subject = null;
 
-                var subject = area.Update(areaToModify);
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a.ID == 1 ? a : null)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
+                subject.Name = "Not a Backlog";
+
+                subject = area.Update(subject);
 
                 subject.Should().NotBeNull();
             }
@@ -318,56 +425,64 @@ namespace Cards.Extensions.Tfs.Tests
             [Trait("Category", "Area")]
             public void WhenEdit_AndWithNewArea_NameShouldBeUpdated()
             {
-                var NOW = new DateTime(2014, 5, 21);
+                var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
 
-                var areaToModify = area.Add("Backlog");
-                areaToModify.Name = "Not a Backlog";
+                Area subject = null;
 
-                var subject = area.Update(areaToModify);
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a.ID == 1 ? a : null)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.Name = "Not a Backlog";
+
+                subject = area.Update(subject);
 
                 subject.Name.Should().Be("Not a Backlog");
             }
 
             [Fact]
             [Trait("Category", "Area")]
-            public void WhenEdit_AndWithNewArea_ModifiedDateShouldBeUpdated()
+            public void WhenEdit_ModifiedDateShouldBeUpdated()
             {
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
 
-                var area = new Area(dateProvider.Object);
+                var storageProvider = new Mock<IStorageProvider>();
 
-                var areaToModify = area.Add("Backlog");
-                areaToModify.Name = "Not a Backlog";
+                Area subject = null;
 
-                var subject = area.Update(areaToModify);
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a.ID == 1 ? a : null)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.Name = "Not a backlog";
+
+                subject = area.Update(subject);
 
                 subject.ModifiedDate.Should().Be(new DateTime(2014, 5, 20));
-            }
-
-            [Fact]
-            [Trait("Category", "Area")]
-            public void WhenEdit_AndWithNewAreaAndUseGet_ModifiedDateShouldBeUpdated()
-            {
-                var NOW = new DateTime(2014, 5, 21);
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var area = new Area(dateProvider.Object);
-
-                var areaToModify = area.Add("Backlog");
-                areaToModify.Name = "Not a Backlog";
-
-                area.Update(areaToModify);
-
-                var subject = area.Get(1);
-
-                subject.ModifiedDate.Should().Be(NOW);
             }
         }
     }
