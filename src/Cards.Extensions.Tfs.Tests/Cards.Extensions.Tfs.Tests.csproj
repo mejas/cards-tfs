@@ -57,7 +57,9 @@
     <Compile Include="AreaTests.cs" />
     <Compile Include="DateProvider.cs" />
     <Compile Include="IDateProvider.cs" />
+    <Compile Include="IStorageProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StorageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
