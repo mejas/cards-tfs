@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cards.Extensions.Tfs.Tests
+namespace Cards.Extensions.Tfs.Core
 {
     public class Area
     {
