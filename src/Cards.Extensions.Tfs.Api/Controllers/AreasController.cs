@@ -35,5 +35,15 @@ namespace Cards.Extensions.Tfs.Api.Controllers
             return new Area() { ID = id, Name = "Backlog", CreatedDate = DateTime.MinValue, ModifiedDate = DateTime.MinValue, CreatedUser = identity.Name, ModifiedUser = identity.Name };
         }
 
+        public Area UpdateArea(Area area)
+        {
+            var identity = HttpContext.Current.Request.LogonUserIdentity;
+
+            area.ModifiedUser = identity.Name;
+            area.ModifiedDate = DateTime.UtcNow;
+
+            return area;
+        }
+
     }
 }

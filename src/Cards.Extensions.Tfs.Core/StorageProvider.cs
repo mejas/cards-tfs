@@ -26,5 +26,10 @@ namespace Cards.Extensions.Tfs.Core
         {
             throw new NotImplementedException();
         }
+
+        public void RemoveArea(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

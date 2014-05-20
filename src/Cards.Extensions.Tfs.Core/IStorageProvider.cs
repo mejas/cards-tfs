@@ -12,5 +12,7 @@ namespace Cards.Extensions.Tfs.Core
 
         Area Add(Area area);
         Area Update(Area area);
+
+        void RemoveArea(int id);
     }
 }

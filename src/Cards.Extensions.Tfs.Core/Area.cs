@@ -66,5 +66,10 @@ namespace Cards.Extensions.Tfs.Core
                 return null;
             }
         }
+
+        public void Remove(int id)
+        {
+            StorageProvider.RemoveArea(id);
+        }
     }
 }
