@@ -351,6 +351,29 @@ namespace Cards.Extensions.Tfs.Tests
                 subject.Count.Should().Be(1);
 
             }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenGetAll_AndWithNewArea_StatusShouldBeActive()
+            {
+                var storageProvider = new Mock<IStorageProvider>();
+                storageProvider.Setup(d => d.GetAllAreas()).Returns(
+                    () =>
+                    {
+                        List<Area> toReturn = new List<Area>();
+                        toReturn.Add(new Area());
+                        toReturn.Add(new Area());
+
+                        return toReturn;
+                    });
+
+                var area = new Area(null, storageProvider.Object, null);
+
+                var subject = area.GetAll();
+
+                subject.Should().OnlyContain(item=>item.Active == true);
+
+            }
         }
 
         public class GetMethod
@@ -534,6 +557,29 @@ namespace Cards.Extensions.Tfs.Tests
                 subject = area.Get(1);
 
                 subject.ModifiedUser.Should().Be("Dave Rodgers");
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenGet_ActiveValueShouldBeTrue()
+            {
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedUser = "Dave Rodgers" });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
+
+                subject = area.Get(1);
+
+                subject.Active.Should().Be(true);
             }
 
             [Fact]

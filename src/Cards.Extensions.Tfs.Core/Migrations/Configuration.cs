@@ -9,11 +9,7 @@ namespace Cards.Extensions.Tfs.Core.Migrations
     {
         public Configuration()
         {
-<<<<<<< HEAD
-            AutomaticMigrationsEnabled = false;
-=======
             AutomaticMigrationsEnabled = true;
->>>>>>> fully implement areas api and ef db
         }
 
         protected override void Seed(Cards.Extensions.Tfs.Core.CardsDBContext context)
