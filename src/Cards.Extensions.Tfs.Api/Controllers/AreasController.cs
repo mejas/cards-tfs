@@ -11,7 +11,6 @@ namespace Cards.Extensions.Tfs.Api.Controllers
     [Authorize]
     public class AreasController : ApiController
     {
-
         [HttpGet]
         [Route("api/Areas")]
         public List<Area> GetAll()
