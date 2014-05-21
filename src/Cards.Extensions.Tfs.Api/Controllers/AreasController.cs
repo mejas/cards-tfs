@@ -14,7 +14,9 @@ namespace Cards.Extensions.Tfs.Api.Controllers
     public class AreasController : ApiController
     {
 
-        public List<Area> GetAllAreas()
+        [HttpGet]
+        [Route("api/Areas")]
+        public List<Area> GetAll()
         {
             var identity = HttpContext.Current.Request.LogonUserIdentity;
 
@@ -28,11 +30,35 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
         }
 
-        public Area GetAreaByID(int id)
+
+        [HttpGet]
+        [Route("api/Areas/{id}")]
+        public Area GetByID(int id)
         {
             var identity = HttpContext.Current.Request.LogonUserIdentity;
 
             return new Area() { ID = id, Name = "Backlog", CreatedDate = DateTime.MinValue, ModifiedDate = DateTime.MinValue, CreatedUser = identity.Name, ModifiedUser = identity.Name };
+        }
+
+        [HttpPost]
+        [Route("api/Areas")]
+        public Area Add(Area area)
+        {
+            return area;
+        }
+
+        [HttpPut]
+        [Route("api/Areas/{id}")]
+        public Area Edit(int id, Area area)
+        {
+            area.ID = id;
+            return area;
+        }
+
+        [HttpDelete]
+        [Route("api/Areas/{id}")]
+        public void Delete(int id)
+        { 
         }
 
     }
