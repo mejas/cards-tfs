@@ -7,8 +7,10 @@ namespace Cards.Extensions.Tfs.Core
     {
 
         public Area()
-            : this(new DateProvider(), new StorageProvider(), new IdentityProvider())
-        { }
+            : this(new DateProvider(), new EntityFrameworkStorageProvider(), new WindowsIdentityProvider())
+        {
+            Active = true;
+        }
 
         public Area(IDateProvider dateProvider, IStorageProvider storageProvider, IIdentityProvider identityProvider)
         {
@@ -27,37 +29,56 @@ namespace Cards.Extensions.Tfs.Core
         public DateTime ModifiedDate { get; set; }
         public string CreatedUser { get; set; }
         public string ModifiedUser { get; set; }
+        public bool Active { get; set; }
 
+        /// <summary>
+        /// Creates an area given the name.
+        /// </summary>
+        /// <param name="areaName">Name of the area.</param>
+        /// <returns></returns>
         public Area Add(string areaName)
         {
             var area = new Area()
             {
                 Name         = areaName,
-                CreatedUser  = IdentityProvider.UserName(),
-                ModifiedUser = IdentityProvider.UserName(),
+                CreatedUser  = IdentityProvider.GetUserName(),
+                ModifiedUser = IdentityProvider.GetUserName(),
                 CreatedDate  = DateProvider.Now(),
                 ModifiedDate = DateProvider.Now()
             };
 
-            //add storage fugg
             return StorageProvider.Add(area);
         }
 
+        /// <summary>
+        /// Gets all areas.
+        /// </summary>
+        /// <returns></returns>
         public List<Area> GetAll()
         {
             return StorageProvider.GetAllAreas();
         }
 
+        /// <summary>
+        /// Gets the specified area given the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public Area Get(int id)
         {
             return StorageProvider.GetArea(id);
         }
 
+        /// <summary>
+        /// Updates the specified area.
+        /// </summary>
+        /// <param name="area">The area.</param>
+        /// <returns></returns>
         public Area Update(Area area)
         {
-            if (area != null && this.Get(area.ID) != null)
+            if (area != null)
             {
-                area.ModifiedUser = IdentityProvider.UserName();
+                area.ModifiedUser = IdentityProvider.GetUserName();
                 area.ModifiedDate = DateProvider.Now();
                 return StorageProvider.Update(area);
             }
@@ -67,6 +88,10 @@ namespace Cards.Extensions.Tfs.Core
             }
         }
 
+        /// <summary>
+        /// Removes the specified area given the id.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         public void Remove(int id)
         {
             StorageProvider.RemoveArea(id);

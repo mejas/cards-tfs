@@ -30,19 +30,41 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
         public Area GetAreaByID(int id)
         {
-            var identity = HttpContext.Current.Request.LogonUserIdentity;
+            var area = new Area();
 
-            return new Area() { ID = id, Name = "Backlog", CreatedDate = DateTime.MinValue, ModifiedDate = DateTime.MinValue, CreatedUser = identity.Name, ModifiedUser = identity.Name };
+            return area.Get(id);
         }
 
         public Area UpdateArea(Area area)
         {
+<<<<<<< Updated upstream
             var identity = HttpContext.Current.Request.LogonUserIdentity;
 
             area.ModifiedUser = identity.Name;
             area.ModifiedDate = DateTime.UtcNow;
 
             return area;
+=======
+            return area.Add(area.Name);
+        }
+
+        [HttpPut]
+        [Route("api/Areas/{id}")]
+        public Area Edit(int id, Area area)
+        {
+            area.ID = id;
+
+            return area.Update(area);
+        }
+
+        [HttpDelete]
+        [Route("api/Areas/{id}")]
+        public void Delete(int id)
+        {
+            var area = new Area();
+
+            area.Remove(id);
+>>>>>>> Stashed changes
         }
 
     }

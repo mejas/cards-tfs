@@ -7,6 +7,6 @@ namespace Cards.Extensions.Tfs.Core
 {
     public interface IIdentityProvider
     {
-        string UserName();
+        string GetUserName();
     }
 }
