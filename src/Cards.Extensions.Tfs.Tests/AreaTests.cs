@@ -561,6 +561,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Area")]
+<<<<<<< HEAD
             public void WhenGet_ActiveValueShouldBeTrue()
             {
                 var NOW = new DateTime(2014, 5, 19);
@@ -584,6 +585,8 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Area")]
+=======
+>>>>>>> createEFDatabase
             public void WhenGet_ShouldStatusBeActive()
             {
                 var NOW = new DateTime(2014, 5, 19);
