@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cards.Extensions.Tfs.Core
 {
@@ -21,6 +22,7 @@ namespace Cards.Extensions.Tfs.Core
         protected IStorageProvider StorageProvider { get; set; }
         protected IIdentityProvider IdentityProvider { get; set; }
 
+        [Key]
         public int ID { get; set; }
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -65,6 +67,11 @@ namespace Cards.Extensions.Tfs.Core
             {
                 return null;
             }
+        }
+
+        public void Remove(int id)
+        {
+            StorageProvider.RemoveArea(id);
         }
     }
 }
