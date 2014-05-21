@@ -66,6 +66,14 @@ namespace Cards.Extensions.Tfs.Tests
                 var subject = new Area();
                 subject.ModifiedUser.Should().BeNull();
             }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenInitialize_ShouldBeActive()
+            {
+                var subject = new Area();
+                subject.Active.Should().Be(true);
+            }
         }
 
         public class AddMethod
@@ -77,7 +85,7 @@ namespace Cards.Extensions.Tfs.Tests
                 //Arrange
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
 
                 var NOW = DateTime.Now;
@@ -109,7 +117,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = DateTime.Now;
                 var dateProvider = new Mock<IDateProvider>();
@@ -138,7 +146,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = DateTime.Now;
                 var dateProvider = new Mock<IDateProvider>();
@@ -171,7 +179,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
@@ -200,7 +208,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
@@ -229,7 +237,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
@@ -258,7 +266,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 19);
                 var dateProvider = new Mock<IDateProvider>();
@@ -528,6 +536,29 @@ namespace Cards.Extensions.Tfs.Tests
                 subject.ModifiedUser.Should().Be("Dave Rodgers");
             }
 
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenGet_ShouldStatusBeActive()
+            {
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedUser = "Dave Rodgers", Active = true });
+
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
+
+                subject = area.Get(1);
+
+                subject.Active.Should().Be(true);
+            }
+
         }
 
         public class UpdateMethod
@@ -562,7 +593,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
@@ -597,7 +628,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
@@ -633,7 +664,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
@@ -669,7 +700,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("MIKADO");
+                identityProvider.Setup(d => d.GetUserName()).Returns("MIKADO");
 
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
@@ -705,7 +736,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();
@@ -745,7 +776,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 var identityProvider = new Mock<IIdentityProvider>();
 
-                identityProvider.Setup(d => d.UserName()).Returns("Dave Rodgers");
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
 
                 var NOW = new DateTime(2014, 5, 20);
                 var dateProvider = new Mock<IDateProvider>();

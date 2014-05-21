@@ -14,5 +14,6 @@ namespace Cards.Extensions.Tfs.Core
         Area Update(Area area);
 
         void RemoveArea(int id);
+
     }
 }
