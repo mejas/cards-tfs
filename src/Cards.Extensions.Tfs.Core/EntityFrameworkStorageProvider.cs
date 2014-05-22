@@ -8,6 +8,7 @@ namespace Cards.Extensions.Tfs.Core
 {
     public class EntityFrameworkStorageProvider : IStorageProvider
     {
+        #region Areas
         public List<Area> GetAllAreas()
         {
             using (var db = new CardsDBContext())
@@ -76,6 +77,22 @@ namespace Cards.Extensions.Tfs.Core
 
                 db.SaveChanges();
             }
+        }
+        #endregion
+
+        public Card Add(Card card)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Card> GetAllCards(int areaID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Card GetCard(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

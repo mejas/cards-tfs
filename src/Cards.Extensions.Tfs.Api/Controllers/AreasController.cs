@@ -54,6 +54,5 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
             area.Remove(id);
         }
-
     }
 }
