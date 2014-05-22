@@ -54,24 +54,5 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
             area.Remove(id);
         }
-
-        [HttpPut]
-        [Route("api/Areas/{id}")]
-        public Area Edit(int id, Area area)
-        {
-            area.ID = id;
-
-            return area.Update(area);
-        }
-
-        [HttpDelete]
-        [Route("api/Areas/{id}")]
-        public void Delete(int id)
-        {
-            var area = new Area();
-
-            area.Remove(id);
-        }
-
     }
 }

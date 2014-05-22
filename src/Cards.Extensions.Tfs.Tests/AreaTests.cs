@@ -561,7 +561,6 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Area")]
-<<<<<<< HEAD
             public void WhenGet_ActiveValueShouldBeTrue()
             {
                 var NOW = new DateTime(2014, 5, 19);
@@ -575,31 +574,6 @@ namespace Cards.Extensions.Tfs.Tests
                 storageProvider
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
                     .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedUser = "Dave Rodgers" });
-
-                var area = new Area(dateProvider.Object, storageProvider.Object, null);
-
-                subject = area.Get(1);
-
-                subject.Active.Should().Be(true);
-            }
-
-            [Fact]
-            [Trait("Category", "Area")]
-=======
->>>>>>> createEFDatabase
-            public void WhenGet_ShouldStatusBeActive()
-            {
-                var NOW = new DateTime(2014, 5, 19);
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var storageProvider = new Mock<IStorageProvider>();
-
-                Area subject = null;
-
-                storageProvider
-                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
-                    .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedUser = "Dave Rodgers", Active = true });
 
                 var area = new Area(dateProvider.Object, storageProvider.Object, null);
 
