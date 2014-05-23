@@ -14,17 +14,17 @@ namespace Cards.Extensions.Tfs.Core
         Area Add(Area area);
         Area Update(Area area);
 
-        void RemoveArea(int id);
+        void RemoveArea(Area area);
         #endregion
 
         #region Card Operations
         List<Card> GetAllCards(int areaID);
+        Card GetCard(int id);
 
         Card Add(Card card);
-        Card GetCard(int id);
+        Card Update(Card card);
         
+        void RemoveCard(Card card);
         #endregion
-
-
     }
 }

@@ -96,7 +96,15 @@ namespace Cards.Extensions.Tfs.Core
         /// <param name="id">The identifier.</param>
         public void Remove(int id)
         {
-            StorageProvider.RemoveArea(id);
+            var area = Get(id);
+
+            if (area != null)
+            {
+                area.ModifiedDate = DateProvider.Now();
+                area.ModifiedUser = IdentityProvider.GetUserName();
+
+                StorageProvider.RemoveArea(area);
+            }
         }
     }
 }

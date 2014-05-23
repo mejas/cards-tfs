@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
-using Cards.Extensions.Tfs.Core;
 
 namespace Cards.Extensions.Tfs.Core
 {
@@ -63,6 +60,33 @@ namespace Cards.Extensions.Tfs.Core
         public Card Get(int id)
         {
             return StorageProvider.GetCard(id);
+        }
+
+        public Card Update(Card card)
+        {
+            if (card != null)
+            {
+                card.ModifiedDate = DateProvider.Now();
+                card.ModifiedUser = IdentityProvider.GetUserName();
+                return StorageProvider.Update(card);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void Remove(int id)
+        {
+            var card = Get(id);
+
+            if (card != null)
+            {
+                card.ModifiedDate = DateProvider.Now();
+                card.ModifiedUser = IdentityProvider.GetUserName();
+
+                StorageProvider.RemoveCard(card);
+            }
         }
     }
 }

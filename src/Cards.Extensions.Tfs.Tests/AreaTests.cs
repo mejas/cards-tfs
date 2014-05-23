@@ -755,7 +755,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Area")]
-            public void WhenEdit_CreatedUserUserShouldNotBeUpdated()
+            public void WhenEdit_CreatedUserShouldNotBeUpdated()
             {
                 var identityProvider = new Mock<IIdentityProvider>();
 
@@ -788,15 +788,11 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.CreatedUser.Should().Be("Dave Rodgers");
             }
-        }
 
-        public class RemoveMethod
-        {
             [Fact]
             [Trait("Category", "Area")]
-            public void WhenDelete_DataShouldBeRemoved()
+            public void WhenEdit_CreatedDateShouldNotBeUpdated()
             {
-
                 var identityProvider = new Mock<IIdentityProvider>();
 
                 identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
@@ -810,7 +806,118 @@ namespace Cards.Extensions.Tfs.Tests
                 Area subject = null;
 
                 storageProvider
-                    .Setup(d => d.RemoveArea(It.Is<int>(i => i == 1)));
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW, CreatedUser = "Dave Rodgers" });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a.ID == 1 ? a : null)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.Name = "Not a backlog";
+
+                subject = area.Update(subject);
+
+                subject.CreatedDate.Should().Be(NOW);
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenEdit_ActiveBitShouldNotBeUpdated()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
+
+                var NOW = new DateTime(2014, 5, 20);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW, CreatedUser = "Dave Rodgers" });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a.ID == 1 ? a : null)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.Name = "Not a backlog";
+
+                subject = area.Update(subject);
+
+                subject.Active.Should().Be(true);
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenEdit_IDShouldNotBeUpdated()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
+
+                var NOW = new DateTime(2014, 5, 20);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, Name = "Backlog", CreatedDate = NOW, CreatedUser = "Dave Rodgers" });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a.ID == 1 ? a : null)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
+
+                subject = area.Get(1);
+
+                subject.Name = "Not a backlog";
+
+                subject = area.Update(subject);
+
+                subject.ID.Should().Be(1);
+            }
+        }
+
+        public class RemoveMethod
+        {
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenDelete_DataShouldBeRemoved()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
+
+                var NOW = new DateTime(2014, 5, 20);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.RemoveArea(It.IsAny<Area>()));
 
                 storageProvider
                     .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))

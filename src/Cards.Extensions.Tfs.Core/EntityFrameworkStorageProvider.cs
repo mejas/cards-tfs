@@ -67,12 +67,14 @@ namespace Cards.Extensions.Tfs.Core
             }
         }
 
-        public void RemoveArea(int id)
+        public void RemoveArea(Area area)
         {
             using (var db = new CardsDBContext())
             {
-                var itemToDelete = db.Areas.FirstOrDefault(area => area.ID == id);
-
+                var itemToDelete = db.Areas.FirstOrDefault(item => item.ID == area.ID);
+                
+                itemToDelete.ModifiedDate = area.ModifiedDate;
+                itemToDelete.ModifiedUser = area.ModifiedUser;
                 itemToDelete.Active = false;
 
                 db.SaveChanges();
@@ -91,6 +93,16 @@ namespace Cards.Extensions.Tfs.Core
         }
 
         public Card GetCard(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Card Update(Card card)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveCard(Card card)
         {
             throw new NotImplementedException();
         }
