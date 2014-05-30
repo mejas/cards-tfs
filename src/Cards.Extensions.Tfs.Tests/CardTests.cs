@@ -410,7 +410,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var area = 1;
                 var card = new Card(null, storageProvider.Object, null);
 
-                var subject = card.GetAllCards(area);
+                var subject = card.GetAll(area);
 
                 subject.Should().NotBeNull();
             }
@@ -428,7 +428,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var area = 1;
                 var card = new Card(null, storageProvider.Object, null);
 
-                var subject = card.GetAllCards(area);
+                var subject = card.GetAll(area);
 
                 subject.Should().BeEmpty();
             }
@@ -454,7 +454,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var area = 1;
                 var card = new Card(null, storageProvider.Object, null);
 
-                var subject = card.GetAllCards(area);
+                var subject = card.GetAll(area);
 
                 subject.Count.Should().Be(1);
             }
@@ -482,7 +482,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var area = 1;
                 var card = new Card(null, storageProvider.Object, null);
 
-                var subject = card.GetAllCards(area);
+                var subject = card.GetAll(area);
 
                 subject.Should().OnlyContain(item => item.Active == true);
             }

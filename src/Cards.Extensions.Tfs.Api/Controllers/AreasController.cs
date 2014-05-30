@@ -1,10 +1,6 @@
-﻿using Cards.Extensions.Tfs.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using Cards.Extensions.Tfs.Core;
 
 namespace Cards.Extensions.Tfs.Api.Controllers
 {
@@ -46,7 +42,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
             return area.Update(area);
         }
 
-        [HttpDelete]
+        [HttpHead]
         [Route("api/Areas/{id}")]
         public void Delete(int id)
         {
