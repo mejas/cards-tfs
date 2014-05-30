@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Cards.Extensions.Tfs.Core;
 
 namespace Cards.Extensions.Tfs.Api.Controllers
@@ -8,46 +12,82 @@ namespace Cards.Extensions.Tfs.Api.Controllers
     public class CardsController : ApiController
     {
         [HttpGet]
+        [ResponseType(typeof(List<Card>))]
         [Route("api/Cards/ByArea/{areaID}")]
-        public List<Card> GetAll(int areaID)
+        public HttpResponseMessage GetAll(HttpRequestMessage request, int areaID)
         {
             var card = new Card();
 
-            return card.GetAll(areaID);
+            var result = card.GetAll(areaID);
+
+            return request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
+        [ResponseType(typeof(Card))]
         [Route("api/Cards/{id}")]
-        public Card GetByID(int id)
+        public HttpResponseMessage GetByID(HttpRequestMessage request, int id)
         {
             var card = new Card();
 
-            return card.Get(id);
+            var result = card.Get(id);
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.NoContent);
+            }
         }
 
         [HttpPost]
+        [ResponseType(typeof(Card))]
         [Route("api/Cards")]
-        public Card Add(Card card)
+        public HttpResponseMessage Add(HttpRequestMessage request, Card card)
         {
-            return card.Add(card.Name, card.Description, card.AreaID);
+            var result = card.Add(card.Name, card.Description, card.AreaID);
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.Created, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpPut]
+        [ResponseType(typeof(Card))]
         [Route("api/Cards/{id}")]
-        public Card Edit(int id, Card card)
+        public HttpResponseMessage Edit(HttpRequestMessage request, int id, Card card)
         {
             card.ID = id;
 
-            return card.Update(card);
+            var result = card.Update(card);
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpHead]
+        [ResponseType(typeof(void))]
         [Route("api/Cards/{id}")]
-        public void Delete(int id)
+        public void Delete(HttpRequestMessage request, int id)
         {
             var card = new Card();
 
             card.Remove(id);
+
+            request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

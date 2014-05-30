@@ -144,7 +144,7 @@ namespace Cards.Extensions.Tfs.Core
                 {
                     cardToUpdate.ModifiedDate = card.ModifiedDate;
                     cardToUpdate.ModifiedUser = card.ModifiedUser;
-                    card.Active = false;
+                    cardToUpdate.Active = false;
 
                     db.SaveChanges();
                 }

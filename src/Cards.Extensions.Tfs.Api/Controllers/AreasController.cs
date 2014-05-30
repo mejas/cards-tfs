@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Cards.Extensions.Tfs.Core;
 
 namespace Cards.Extensions.Tfs.Api.Controllers
@@ -8,32 +11,56 @@ namespace Cards.Extensions.Tfs.Api.Controllers
     public class AreasController : ApiController
     {
         [HttpGet]
+        [ResponseType(typeof(List<Area>))]
         [Route("api/Areas")]
-        public List<Area> GetAll()
+        public HttpResponseMessage GetAll(HttpRequestMessage request)
         {
             var area = new Area();
 
-            return area.GetAll();
+            var result = area.GetAll();
+
+            return request.CreateResponse(HttpStatusCode.OK, result);
         }
 
 
         [HttpGet]
+        [ResponseType(typeof(Area))]
         [Route("api/Areas/{id}")]
-        public Area GetByID(int id)
+        public HttpResponseMessage GetByID(HttpRequestMessage request, int id)
         {
             var area = new Area();
 
-            return area.Get(id);
+            var result = area.Get(id);
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.NoContent);
+            }
         }
 
         [HttpPost]
+        [ResponseType(typeof(Area))]
         [Route("api/Areas")]
-        public Area Add(Area area)
+        public HttpResponseMessage Add(HttpRequestMessage request, Area area)
         {
-            return area.Add(area.Name);
+            var result = area.Add(area.Name);
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.Created, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpPut]
+        [ResponseType(typeof(Area))]
         [Route("api/Areas/{id}")]
         public Area Edit(int id, Area area)
         {
@@ -43,12 +70,15 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         }
 
         [HttpHead]
+        [ResponseType(typeof(void))]
         [Route("api/Areas/{id}")]
-        public void Delete(int id)
+        public void Delete(HttpRequestMessage request, int id)
         {
             var area = new Area();
 
             area.Remove(id);
+
+            request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }
