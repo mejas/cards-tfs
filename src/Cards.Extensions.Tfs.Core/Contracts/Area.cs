@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Cards.Extensions.Tfs.Core.Interfaces;
+using Cards.Extensions.Tfs.Core.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cards.Extensions.Tfs.Core
+namespace Cards.Extensions.Tfs.Core.Contracts
 {
     public class Area
     {

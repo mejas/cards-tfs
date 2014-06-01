@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Cards.Extensions.Tfs.Core.Contracts;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Cards.Extensions.Tfs.Core
+namespace Cards.Extensions.Tfs.Core.Interfaces
 {
     public interface IStorageProvider
     {

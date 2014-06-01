@@ -4,6 +4,8 @@ using Cards.Extensions.Tfs.Core;
 using FluentAssertions;
 using Moq;
 using Xunit;
+using Cards.Extensions.Tfs.Core.Interfaces;
+using Cards.Extensions.Tfs.Core.Contracts;
 
 namespace Cards.Extensions.Tfs.Tests
 {

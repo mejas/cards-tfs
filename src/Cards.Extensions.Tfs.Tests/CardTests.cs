@@ -1,4 +1,6 @@
 ﻿using Cards.Extensions.Tfs.Core;
+using Cards.Extensions.Tfs.Core.Contracts;
+using Cards.Extensions.Tfs.Core.Interfaces;
 using FluentAssertions;
 using Moq;
 using System;

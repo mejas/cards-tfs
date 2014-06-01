@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Cards.Extensions.Tfs.Core.Contracts;
+using Cards.Extensions.Tfs.Core.Data;
+using Cards.Extensions.Tfs.Core.Interfaces;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 
-namespace Cards.Extensions.Tfs.Core
+namespace Cards.Extensions.Tfs.Core.Services
 {
     public class EntityFrameworkStorageProvider : IStorageProvider
     {

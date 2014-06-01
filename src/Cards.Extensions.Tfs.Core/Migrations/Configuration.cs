@@ -1,18 +1,16 @@
 namespace Cards.Extensions.Tfs.Core.Migrations
 {
-    using System;
-    using System.Data.Entity;
+    using Cards.Extensions.Tfs.Core.Data;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Cards.Extensions.Tfs.Core.CardsDBContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CardsDBContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(Cards.Extensions.Tfs.Core.CardsDBContext context)
+        protected override void Seed(CardsDBContext context)
         {
             //  This method will be called after migrating to the latest version.
 

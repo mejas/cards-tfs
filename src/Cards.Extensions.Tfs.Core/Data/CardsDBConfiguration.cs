@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Cards.Extensions.Tfs.Core
+namespace Cards.Extensions.Tfs.Core.Data
 {
     public class CardsDBConfiguration : DbConfiguration
     {

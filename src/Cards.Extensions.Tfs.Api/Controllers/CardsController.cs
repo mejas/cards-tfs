@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Cards.Extensions.Tfs.Core;
+using Cards.Extensions.Tfs.Core.Contracts;
 
 namespace Cards.Extensions.Tfs.Api.Controllers
 {
