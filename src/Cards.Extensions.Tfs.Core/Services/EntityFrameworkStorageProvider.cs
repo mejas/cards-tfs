@@ -98,7 +98,7 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             using (var db = new CardsDBContext())
             {
-               return db.Cards.Where(card => card.AreaID == areaID && card.Active == true).ToList();
+               return db.Cards.Where(card => card.AreaId == areaID && card.Active == true).ToList();
             }
         }
 
