@@ -38,6 +38,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Client, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.TeamFoundation.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.Client, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -51,8 +54,12 @@
   <ItemGroup>
     <Compile Include="Contracts\Area.cs" />
     <Compile Include="Contracts\Card.cs" />
+    <Compile Include="Contracts\ImportRequest.cs" />
+    <Compile Include="Contracts\WorkItem.cs" />
+    <Compile Include="Services\TFSImportProvider.cs" />
     <Compile Include="Data\CardsDBConfiguration.cs" />
     <Compile Include="Data\CardsDBContext.cs" />
+    <Compile Include="Interfaces\ITFSProvider.cs" />
     <Compile Include="Migrations\201406020158434_Add_Cards_To_Areas.cs" />
     <Compile Include="Migrations\201406020158434_Add_Cards_To_Areas.Designer.cs">
       <DependentUpon>201406020158434_Add_Cards_To_Areas.cs</DependentUpon>

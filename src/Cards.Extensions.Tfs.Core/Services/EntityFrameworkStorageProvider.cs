@@ -120,6 +120,7 @@ namespace Cards.Extensions.Tfs.Core.Services
                 {
                     cardToUpdate.Name         = card.Name;
                     cardToUpdate.Description  = card.Description;
+                    cardToUpdate.AreaId       = card.AreaId;
                     cardToUpdate.ModifiedDate = card.ModifiedDate;
                     cardToUpdate.ModifiedUser = card.ModifiedUser;
 

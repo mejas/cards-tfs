@@ -60,6 +60,25 @@ namespace Cards.Extensions.Tfs.Api.Controllers
             }
         }
 
+        [HttpPost]
+        [ResponseType(typeof(Card))]
+        [Route("api/Cards/Import")]
+        public HttpResponseMessage Add(HttpRequestMessage request, ImportRequest importRequest)
+        {
+            Card card = new Card();
+
+            var result = card.Add(importRequest.WorkItem, importRequest.AreaID);
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.Created, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
         [HttpPut]
         [ResponseType(typeof(Card))]
         [Route("api/Cards/{id}")]

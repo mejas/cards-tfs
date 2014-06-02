@@ -9,21 +9,26 @@ namespace Cards.Extensions.Tfs.Core.Contracts
     public class Card
     {
         public Card()
-            : this(new DateProvider(), new EntityFrameworkStorageProvider(), new WindowsIdentityProvider())
+            : this(new DateProvider(), new EntityFrameworkStorageProvider(), new WindowsIdentityProvider(), new TFSImportProvider())
         {
             Active = true;
         }
 
-        public Card(IDateProvider dateProvider, IStorageProvider storageProvider, IIdentityProvider identityProvider)
+        public Card(IDateProvider dateProvider, 
+                    IStorageProvider storageProvider, 
+                    IIdentityProvider identityProvider, 
+                    ITFSProvider importProvider)
         {
-            DateProvider = dateProvider;
-            StorageProvider = storageProvider;
+            DateProvider     = dateProvider;
+            StorageProvider  = storageProvider;
             IdentityProvider = identityProvider;
+            ImportProvider   = importProvider;
         }
 
         protected IDateProvider DateProvider { get; set; }
         protected IStorageProvider StorageProvider { get; set; }
         protected IIdentityProvider IdentityProvider { get; set; }
+        protected ITFSProvider ImportProvider { get; set; }
 
         [Key]
         public int ID { get; set; }
@@ -41,8 +46,8 @@ namespace Cards.Extensions.Tfs.Core.Contracts
         {
             var card = new Card()
             {
-                CreatedUser = IdentityProvider.GetUserName(),
-                CreatedDate = DateProvider.Now(),
+                CreatedUser  = IdentityProvider.GetUserName(),
+                CreatedDate  = DateProvider.Now(),
                 ModifiedUser = IdentityProvider.GetUserName(),
                 ModifiedDate = DateProvider.Now(),
 
@@ -52,6 +57,20 @@ namespace Cards.Extensions.Tfs.Core.Contracts
             };
 
             return StorageProvider.Add(card);
+        }
+
+        public Card Add(int id, int areaID)
+        {
+            var tfsItem = ImportProvider.GetTFSItem(id);
+
+            if (tfsItem != null)
+            {
+                return Add(tfsItem.Title, tfsItem.Description, areaID);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public List<Card> GetAll(int areaID)
