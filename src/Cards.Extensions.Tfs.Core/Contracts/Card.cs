@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Cards.Extensions.Tfs.Core.Interfaces;
+using Cards.Extensions.Tfs.Core.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cards.Extensions.Tfs.Core
+namespace Cards.Extensions.Tfs.Core.Contracts
 {
     public class Card
     {
@@ -52,9 +54,9 @@ namespace Cards.Extensions.Tfs.Core
             return StorageProvider.Add(card);
         }
 
-        public List<Card> GetAllCards(int area)
+        public List<Card> GetAll(int areaID)
         {
-            return StorageProvider.GetAllCards(area);
+            return StorageProvider.GetAllCards(areaID);
         }
 
         public Card Get(int id)

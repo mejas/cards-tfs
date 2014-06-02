@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Cards.Extensions.Tfs.Core.Contracts;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Cards.Extensions.Tfs.Core
+namespace Cards.Extensions.Tfs.Core.Data
 {
 
     [DbConfigurationType(typeof(CardsDBConfiguration))]
@@ -19,6 +15,7 @@ namespace Cards.Extensions.Tfs.Core
         }
 
         public DbSet<Area> Areas { get; set; }
+        public DbSet<Card> Cards { get; set; }
 
     }
 }

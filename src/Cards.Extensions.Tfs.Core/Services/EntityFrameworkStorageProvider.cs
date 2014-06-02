@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Cards.Extensions.Tfs.Core.Contracts;
+using Cards.Extensions.Tfs.Core.Data;
+using Cards.Extensions.Tfs.Core.Interfaces;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 
-namespace Cards.Extensions.Tfs.Core
+namespace Cards.Extensions.Tfs.Core.Services
 {
     public class EntityFrameworkStorageProvider : IStorageProvider
     {
@@ -75,36 +75,81 @@ namespace Cards.Extensions.Tfs.Core
                 
                 itemToDelete.ModifiedDate = area.ModifiedDate;
                 itemToDelete.ModifiedUser = area.ModifiedUser;
-                itemToDelete.Active = false;
+                itemToDelete.Active       = false;
 
                 db.SaveChanges();
             }
         }
         #endregion
 
+        #region Cards
         public Card Add(Card card)
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+                var result = db.Cards.Add(card);
+                db.SaveChanges();
+
+                return result;
+            }
         }
 
         public List<Card> GetAllCards(int areaID)
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+               return db.Cards.Where(card => card.AreaID == areaID && card.Active == true).ToList();
+            }
         }
 
         public Card GetCard(int id)
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+                return db.Cards.FirstOrDefault(card => card.ID == id && card.Active == true);
+            }
         }
 
         public Card Update(Card card)
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+                var cardToUpdate = db.Cards.FirstOrDefault(item => item.ID == card.ID);
+
+                if (cardToUpdate != null)
+                {
+                    cardToUpdate.Name         = card.Name;
+                    cardToUpdate.Description  = card.Description;
+                    cardToUpdate.ModifiedDate = card.ModifiedDate;
+                    cardToUpdate.ModifiedUser = card.ModifiedUser;
+
+                    db.SaveChanges();
+
+                    return cardToUpdate;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         public void RemoveCard(Card card)
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+                var cardToUpdate = db.Cards.FirstOrDefault(item => item.ID == card.ID);
+
+                if (cardToUpdate != null)
+                {
+                    cardToUpdate.ModifiedDate = card.ModifiedDate;
+                    cardToUpdate.ModifiedUser = card.ModifiedUser;
+                    cardToUpdate.Active = false;
+
+                    db.SaveChanges();
+                }
+            }
         }
+        #endregion
     }
 }

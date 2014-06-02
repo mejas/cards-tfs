@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Cards.Extensions.Tfs.Core.Interfaces;
 using System.Web;
 
-namespace Cards.Extensions.Tfs.Core
+namespace Cards.Extensions.Tfs.Core.Services
 {
     public class WindowsIdentityProvider : IIdentityProvider
     {

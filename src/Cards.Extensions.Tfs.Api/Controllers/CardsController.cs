@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Cards.Extensions.Tfs.Core;
@@ -9,29 +10,28 @@ using Cards.Extensions.Tfs.Core.Contracts;
 namespace Cards.Extensions.Tfs.Api.Controllers
 {
     [Authorize]
-    public class AreasController : ApiController
+    public class CardsController : ApiController
     {
         [HttpGet]
-        [ResponseType(typeof(List<Area>))]
-        [Route("api/Areas")]
-        public HttpResponseMessage GetAll(HttpRequestMessage request)
+        [ResponseType(typeof(List<Card>))]
+        [Route("api/Cards/ByArea/{areaID}")]
+        public HttpResponseMessage GetAll(HttpRequestMessage request, int areaID)
         {
-            var area = new Area();
+            var card = new Card();
 
-            var result = area.GetAll();
+            var result = card.GetAll(areaID);
 
             return request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-
         [HttpGet]
-        [ResponseType(typeof(Area))]
-        [Route("api/Areas/{id}")]
+        [ResponseType(typeof(Card))]
+        [Route("api/Cards/{id}")]
         public HttpResponseMessage GetByID(HttpRequestMessage request, int id)
         {
-            var area = new Area();
+            var card = new Card();
 
-            var result = area.Get(id);
+            var result = card.Get(id);
 
             if (result != null)
             {
@@ -44,11 +44,11 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         }
 
         [HttpPost]
-        [ResponseType(typeof(Area))]
-        [Route("api/Areas")]
-        public HttpResponseMessage Add(HttpRequestMessage request, Area area)
+        [ResponseType(typeof(Card))]
+        [Route("api/Cards")]
+        public HttpResponseMessage Add(HttpRequestMessage request, Card card)
         {
-            var result = area.Add(area.Name);
+            var result = card.Add(card.Name, card.Description, card.AreaID);
 
             if (result != null)
             {
@@ -61,23 +61,32 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         }
 
         [HttpPut]
-        [ResponseType(typeof(Area))]
-        [Route("api/Areas/{id}")]
-        public Area Edit(int id, Area area)
+        [ResponseType(typeof(Card))]
+        [Route("api/Cards/{id}")]
+        public HttpResponseMessage Edit(HttpRequestMessage request, int id, Card card)
         {
-            area.ID = id;
+            card.ID = id;
 
-            return area.Update(area);
+            var result = card.Update(card);
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpHead]
         [ResponseType(typeof(void))]
-        [Route("api/Areas/{id}")]
+        [Route("api/Cards/{id}")]
         public void Delete(HttpRequestMessage request, int id)
         {
-            var area = new Area();
+            var card = new Card();
 
-            area.Remove(id);
+            card.Remove(id);
 
             request.CreateResponse(HttpStatusCode.OK);
         }
