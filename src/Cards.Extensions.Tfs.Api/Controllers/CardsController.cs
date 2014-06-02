@@ -48,7 +48,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [Route("api/Cards")]
         public HttpResponseMessage Add(HttpRequestMessage request, Card card)
         {
-            var result = card.Add(card.Name, card.Description, card.AreaID);
+            var result = card.Add(card.Name, card.Description, card.AreaId);
 
             if (result != null)
             {
@@ -69,6 +69,25 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
             var result = card.Update(card);
 
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPut]
+        [ResponseType(typeof(Card))]
+        [Route("api/Cards/{id}/move")]
+        public HttpResponseMessage Edit(HttpRequestMessage request, int cardID, Area area)
+        {
+            Card card = new Card();
+
+            var result = card.Move(cardID, area);
+            
             if (result != null)
             {
                 return request.CreateResponse(HttpStatusCode.OK, result);

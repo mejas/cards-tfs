@@ -16,8 +16,8 @@ namespace Cards.Extensions.Tfs.Core.Contracts
 
         public Card(IDateProvider dateProvider, IStorageProvider storageProvider, IIdentityProvider identityProvider)
         {
-            DateProvider     = dateProvider;
-            StorageProvider  = storageProvider;
+            DateProvider = dateProvider;
+            StorageProvider = storageProvider;
             IdentityProvider = identityProvider;
         }
 
@@ -35,20 +35,20 @@ namespace Cards.Extensions.Tfs.Core.Contracts
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public int AreaID { get; set; }
+        public int AreaId { get; set; }
 
         public Card Add(string name, string description, int areaID)
         {
             var card = new Card()
             {
-                CreatedUser  = IdentityProvider.GetUserName(),
-                CreatedDate  = DateProvider.Now(),
+                CreatedUser = IdentityProvider.GetUserName(),
+                CreatedDate = DateProvider.Now(),
                 ModifiedUser = IdentityProvider.GetUserName(),
                 ModifiedDate = DateProvider.Now(),
 
-                Name        = name,
+                Name = name,
                 Description = description,
-                AreaID      = areaID
+                AreaId = areaID
             };
 
             return StorageProvider.Add(card);
@@ -88,6 +88,23 @@ namespace Cards.Extensions.Tfs.Core.Contracts
                 card.ModifiedUser = IdentityProvider.GetUserName();
 
                 StorageProvider.RemoveCard(card);
+            }
+        }
+
+        public Card Move(int id, Area targetArea)
+        {
+            var card = Get(id);
+
+            if (card != null)
+            {
+                card.AreaId = targetArea.ID;
+                card.Update(card);
+
+                return card;
+            }
+            else
+            {
+                return null;
             }
         }
     }

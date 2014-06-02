@@ -13,6 +13,7 @@ namespace Cards.Extensions.Tfs.Core.Contracts
             : this(new DateProvider(), new EntityFrameworkStorageProvider(), new WindowsIdentityProvider())
         {
             Active = true;
+            Cards  = new List<Card>();
         }
 
         public Area(IDateProvider dateProvider, IStorageProvider storageProvider, IIdentityProvider identityProvider)

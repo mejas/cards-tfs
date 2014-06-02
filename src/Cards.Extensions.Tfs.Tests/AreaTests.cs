@@ -76,6 +76,14 @@ namespace Cards.Extensions.Tfs.Tests
                 var subject = new Area();
                 subject.Active.Should().Be(true);
             }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenInitialize_ShouldCardsListBeEmpty()
+            {
+                var subject = new Area();
+                subject.Cards.Should().BeEmpty();
+            }
         }
 
         public class AddMethod
@@ -289,6 +297,35 @@ namespace Cards.Extensions.Tfs.Tests
                 subject = area.Add(areaName);
 
                 subject.ModifiedUser.Should().Be("Dave Rodgers");
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenNameIsNotNull_CardsListShouldBeEmpty()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
+
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Area>()))
+                    .Callback<Area>(a => subject = a)
+                    .Returns(() => subject);
+
+                var area = new Area(dateProvider.Object, storageProvider.Object, identityProvider.Object);
+                var areaName = "Backlog";
+
+                subject = area.Add(areaName);
+
+                subject.Cards.Should().BeEmpty();
             }
         }
 
@@ -582,6 +619,29 @@ namespace Cards.Extensions.Tfs.Tests
                 subject = area.Get(1);
 
                 subject.Active.Should().Be(true);
+            }
+
+            [Fact]
+            [Trait("Category", "Area")]
+            public void WhenGet_CardsShouldNotBeEmpty()
+            {
+                var NOW = new DateTime(2014, 5, 19);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Area subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetArea(It.Is<int>(i => i == 1)))
+                    .Returns(() => new Area() { ID = 1, CreatedDate = NOW, ModifiedUser = "Dave Rodgers", Cards = new List<Card>() { new Card(), new Card() }});
+
+                var area = new Area(dateProvider.Object, storageProvider.Object, null);
+
+                subject = area.Get(1);
+
+                subject.Cards.Should().NotBeEmpty();
             }
 
         }
