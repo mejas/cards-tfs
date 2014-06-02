@@ -29,6 +29,7 @@ namespace Cards.Extensions.Tfs.Core.Contracts
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
+        public List<Card> Cards { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string CreatedUser { get; set; }

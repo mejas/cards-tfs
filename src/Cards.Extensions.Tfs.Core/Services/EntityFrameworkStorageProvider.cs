@@ -13,7 +13,7 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             using (var db = new CardsDBContext())
             {
-                return db.Areas.Where(item => item.Active).ToList();
+                return db.Areas.Include("Cards").Where(item => item.Active).ToList();
             }
         }
 
