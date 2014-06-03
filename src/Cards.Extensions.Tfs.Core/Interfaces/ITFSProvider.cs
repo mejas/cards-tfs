@@ -10,5 +10,6 @@ namespace Cards.Extensions.Tfs.Core.Interfaces
     public interface ITFSProvider
     {
         WorkItem GetTFSItem(int tfsID);
+        List<WorkItem> GetTFSItems(string tfsQuery);
     }
 }

@@ -92,6 +92,22 @@ namespace Cards.Extensions.Tfs.Tests
                 Card subject = new Card();
                 subject.ModifiedUser.Should().BeNull();
             }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void WhenInitialize_ShouldAssignedToBeNull()
+            {
+                Card subject = new Card();
+                subject.AssignedTo.Should().BeNull();
+            }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void WhenInitialize_ShouldTfsIdBeZero()
+            {
+                Card subject = new Card();
+                subject.TfsID.Should().Be(0);
+            }
         }
 
         public class AddMethod
@@ -121,7 +137,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.Should().NotBeNull();
             }
@@ -151,7 +167,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.Name.Should().Be("MyCard");
             }
@@ -181,7 +197,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.Description.Should().Be("MyDescription");
             }
@@ -211,7 +227,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.AreaId.Should().Be(1);
             }
@@ -241,7 +257,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.ID.Should().Be(1);
             }
@@ -271,7 +287,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.Active.Should().Be(true);
             }
@@ -301,7 +317,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.CreatedDate.Should().Be(NOW);
             }
@@ -331,7 +347,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.ModifiedDate.Should().Be(NOW);
             }
@@ -361,7 +377,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.CreatedUser.Should().Be("Dave Rodgers");
             }
@@ -391,9 +407,69 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, areaID);
+                subject = card.Add(name, description, "MIKADO", areaID);
 
                 subject.ModifiedUser.Should().Be("Dave Rodgers");
+            }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void WhenAdd_ShouldAssignedToHaveValue()
+            {
+                var NOW = new DateTime(2014, 5, 22);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var identityProvider = new Mock<IIdentityProvider>();
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
+
+                Card subject = null;
+
+                var storageProvider = new Mock<IStorageProvider>();
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Card>()))
+                    .Callback<Card>(c => subject = c)
+                    .Returns(() => { subject.ID = 1; return subject; });
+
+                string name = "MyCard";
+                string description = "MyDescription";
+                int areaID = 1;
+
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+
+                subject = card.Add(name, description, "MIKADO", areaID);
+
+                subject.AssignedTo.Should().Be("MIKADO");
+            }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void WhenAdd_ShouldTFSIdBeZero()
+            {
+                var NOW = new DateTime(2014, 5, 22);
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var identityProvider = new Mock<IIdentityProvider>();
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
+
+                Card subject = null;
+
+                var storageProvider = new Mock<IStorageProvider>();
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Card>()))
+                    .Callback<Card>(c => subject = c)
+                    .Returns(() => subject);
+
+                string name = "MyCard";
+                string description = "MyDescription";
+                int areaID = 1;
+
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+
+                subject = card.Add(name, description, "MIKADO", areaID);
+
+                subject.TfsID.Should().Be(0);
             }
         }
 
@@ -1341,6 +1417,57 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Active.Should().Be(true);
             }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void WhenEdit_ShouldAssignedToBeUpdated()
+            {
+                Card subject = null;
+
+                var createdDate = new DateTime(2014, 5, 21);
+                var NOW = new DateTime(2014, 5, 22);
+
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var identityProvider = new Mock<IIdentityProvider>();
+                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
+
+                var storageProvider = new Mock<IStorageProvider>();
+                storageProvider
+                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
+                    .Returns(() =>
+                        new Card()
+                        {
+                            ID = 1,
+                            Name = "MyCard",
+                            Description = "MyDescription",
+                            CreatedDate = createdDate,
+                            ModifiedDate = NOW,
+                            CreatedUser = "Dave Rodgers",
+                            ModifiedUser = "Dave Rodgers",
+                            Active = true,
+                            AreaId = 1
+                        });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Card>()))
+                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
+                    .Returns(() => subject);
+
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+
+                subject = card.Get(1);
+
+                subject.Name = "NotMyCard";
+                subject.Description = "NotMyDescription";
+                subject.AreaId = 2;
+                subject.AssignedTo = "Me";
+
+                subject = card.Update(subject);
+
+                subject.AssignedTo.Should().Be("Me");
+            }
         }
 
         public class RemoveMethod
@@ -1575,7 +1702,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var importProvider = new Mock<ITFSProvider>();
                 var storageProvider = new Mock<IStorageProvider>();
 
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 1, Title = "Title" });
+                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
 
                 Card subject = null;
 
@@ -1603,7 +1730,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var importProvider = new Mock<ITFSProvider>();
                 var storageProvider = new Mock<IStorageProvider>();
 
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 1, Title = "Title" });
+                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
 
                 Card subject = null;
 
@@ -1631,7 +1758,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var importProvider = new Mock<ITFSProvider>();
                 var storageProvider = new Mock<IStorageProvider>();
 
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 1, Title = "Title" });
+                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
 
                 Card subject = null;
 
@@ -1659,7 +1786,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var importProvider = new Mock<ITFSProvider>();
                 var storageProvider = new Mock<IStorageProvider>();
 
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 1, Title = "Title" });
+                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
 
                 Card subject = null;
 
@@ -1687,7 +1814,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var importProvider = new Mock<ITFSProvider>();
                 var storageProvider = new Mock<IStorageProvider>();
 
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 1, Title = "Title" });
+                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
 
                 Card subject = null;
 
@@ -1715,7 +1842,7 @@ namespace Cards.Extensions.Tfs.Tests
                 var importProvider = new Mock<ITFSProvider>();
                 var storageProvider = new Mock<IStorageProvider>();
 
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 1, Title = "Title" });
+                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
 
                 Card subject = null;
 
@@ -1726,6 +1853,34 @@ namespace Cards.Extensions.Tfs.Tests
                 subject = card.Add(16728, 1);
 
                 subject.ModifiedDate.Should().Be(NOW);
+            }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void WhenID_IsValid_ShouldHaveTfsID()
+            {
+                var NOW = new DateTime(2014, 5, 22);
+
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var identityProvider = new Mock<IIdentityProvider>();
+                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
+
+                var importProvider = new Mock<ITFSProvider>();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
+
+                Card subject = null;
+
+                storageProvider.Setup(d => d.Add(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
+
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, importProvider.Object);
+
+                subject = card.Add(16728, 1);
+
+                subject.TfsID.Should().Be(16728);
             }
         }
     }

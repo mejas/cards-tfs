@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cards.Extensions.Tfs.Core.Contracts
 {
+    /// <summary>
+    /// Defines a specific area where a set of cards can be associated
+    /// </summary>
     public class Area
     {
 
@@ -27,14 +30,69 @@ namespace Cards.Extensions.Tfs.Core.Contracts
         protected IStorageProvider StorageProvider { get; set; }
         protected IIdentityProvider IdentityProvider { get; set; }
 
+        /// <summary>
+        /// Gets or sets the database identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
         [Key]
         public int ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cards.
+        /// </summary>
+        /// <value>
+        /// The cards.
+        /// </value>
         public List<Card> Cards { get; set; }
+
+        /// <summary>
+        /// Gets or sets the created date.
+        /// </summary>
+        /// <value>
+        /// The created date.
+        /// </value>
         public DateTime CreatedDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the modified date.
+        /// </summary>
+        /// <value>
+        /// The modified date.
+        /// </value>
         public DateTime ModifiedDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the created user.
+        /// </summary>
+        /// <value>
+        /// The created user.
+        /// </value>
         public string CreatedUser { get; set; }
+
+        /// <summary>
+        /// Gets or sets the modified user.
+        /// </summary>
+        /// <value>
+        /// The modified user.
+        /// </value>
         public string ModifiedUser { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="Area"/> is active.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if active; otherwise, <c>false</c>.
+        /// </value>
         public bool Active { get; set; }
 
         /// <summary>
