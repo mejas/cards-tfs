@@ -1,4 +1,4 @@
-﻿using Cards.Extensions.Tfs.Core.Contracts;
+﻿using Cards.Extensions.Tfs.Core.Models;
 using System.Data.Entity;
 
 namespace Cards.Extensions.Tfs.Core.Data

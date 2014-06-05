@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Cards.Extensions.Tfs.Core;
-using Cards.Extensions.Tfs.Core.Contracts;
+using Cards.Extensions.Tfs.Core.Models;
 
 namespace Cards.Extensions.Tfs.Api.Controllers
 {
@@ -49,25 +49,6 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         public HttpResponseMessage Add(HttpRequestMessage request, Card card)
         {
             var result = card.Add(card.Name, card.Description, card.AssignedTo, card.AreaID);
-
-            if (result != null)
-            {
-                return request.CreateResponse(HttpStatusCode.Created, result);
-            }
-            else
-            {
-                return request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpPost]
-        [ResponseType(typeof(Card))]
-        [Route("api/Cards/Import")]
-        public HttpResponseMessage Add(HttpRequestMessage request, ImportRequest importRequest)
-        {
-            Card card = new Card();
-
-            var result = card.Add(importRequest.WorkItem, importRequest.AreaID);
 
             if (result != null)
             {

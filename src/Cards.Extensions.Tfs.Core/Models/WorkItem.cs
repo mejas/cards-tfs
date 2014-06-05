@@ -1,11 +1,23 @@
 ﻿
-namespace Cards.Extensions.Tfs.Core.Contracts
+using System.Collections.Generic;
+using Cards.Extensions.Tfs.Core.Interfaces;
+using Cards.Extensions.Tfs.Core.Services;
+namespace Cards.Extensions.Tfs.Core.Models
 {
     /// <summary>
     /// Represents a TFS work item
     /// </summary>
     public class WorkItem
     {
+        public WorkItem()
+            : this(new TFSProvider())
+        { }
+
+        public WorkItem(ITFSProvider tfsProvider)
+        {
+            TFSProvider = tfsProvider;
+        }
+
         /// <summary>
         /// Gets or sets the TFS identifier.
         /// </summary>
@@ -37,5 +49,17 @@ namespace Cards.Extensions.Tfs.Core.Contracts
         /// The assigned to.
         /// </value>
         public string AssignedTo { get; set; }
+
+        protected ITFSProvider TFSProvider { get; set; }
+
+        public WorkItem Get(int tfsID)
+        {
+            return TFSProvider.GetTFSItem(tfsID);
+        }
+
+        public List<WorkItem> Get(IEnumerable<KeyValuePair<string, string>> searchparams)
+        {
+            return TFSProvider.GetTFSItems(searchparams);
+        }
     }
 }

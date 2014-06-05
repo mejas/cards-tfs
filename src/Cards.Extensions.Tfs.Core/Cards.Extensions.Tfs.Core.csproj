@@ -53,15 +53,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\Area.cs" />
-    <Compile Include="Contracts\Card.cs" />
-    <Compile Include="Contracts\ImportRequest.cs" />
-    <Compile Include="Contracts\WorkItem.cs" />
+    <Compile Include="Constants\TFSArguments.cs" />
+    <Compile Include="Models\Area.cs" />
+    <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\WorkItem.cs" />
     <Compile Include="Migrations\201406050600521_Rename_Card_AreaID.cs" />
     <Compile Include="Migrations\201406050600521_Rename_Card_AreaID.Designer.cs">
       <DependentUpon>201406050600521_Rename_Card_AreaID.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\TFSImportProvider.cs" />
+    <Compile Include="Services\TFSProvider.cs" />
     <Compile Include="Data\CardsDBConfiguration.cs" />
     <Compile Include="Data\CardsDBContext.cs" />
     <Compile Include="Interfaces\ITFSProvider.cs" />
