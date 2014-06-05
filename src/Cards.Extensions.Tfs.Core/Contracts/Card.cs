@@ -12,7 +12,10 @@ namespace Cards.Extensions.Tfs.Core.Contracts
     public class Card
     {
         public Card()
-            : this(new DateProvider(), new EntityFrameworkStorageProvider(), new WindowsIdentityProvider(), new TFSImportProvider())
+            : this( new DateProvider(), 
+                    new EntityFrameworkStorageProvider(), 
+                    new WindowsIdentityProvider(), 
+                    new TFSImportProvider())
         {
             Active = true;
         }
