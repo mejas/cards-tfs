@@ -87,6 +87,11 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             using (var db = new CardsDBContext())
             {
+                if (card.TfsID != 0 && db.Cards.FirstOrDefault(item => item.TfsID == card.TfsID) != null)
+                {
+                    return null;
+                }
+
                 var result = db.Cards.Add(card);
                 db.SaveChanges();
 
@@ -120,8 +125,10 @@ namespace Cards.Extensions.Tfs.Core.Services
                 {
                     cardToUpdate.Name         = card.Name;
                     cardToUpdate.Description  = card.Description;
+                    cardToUpdate.AreaId       = card.AreaId;
                     cardToUpdate.ModifiedDate = card.ModifiedDate;
                     cardToUpdate.ModifiedUser = card.ModifiedUser;
+                    cardToUpdate.AssignedTo   = card.AssignedTo;
 
                     db.SaveChanges();
 

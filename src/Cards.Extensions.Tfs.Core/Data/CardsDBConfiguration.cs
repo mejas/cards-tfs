@@ -5,11 +5,9 @@ namespace Cards.Extensions.Tfs.Core.Data
 {
     public class CardsDBConfiguration : DbConfiguration
     {
-
         public CardsDBConfiguration()
         {
             SetDefaultConnectionFactory(new LocalDbConnectionFactory("v11.0"));
         }
-
     }
 }
