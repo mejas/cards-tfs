@@ -58,7 +58,7 @@ namespace Cards.Extensions.Tfs.Tests
             public void WhenInitialize_ShouldAreaIDBeZero()
             {
                 Card subject = new Card();
-                subject.AreaId.Should().Be(0);
+                subject.AreaID.Should().Be(0);
             }
 
             [Fact]
@@ -229,7 +229,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
-                subject.AreaId.Should().Be(1);
+                subject.AreaID.Should().Be(1);
             }
 
             [Fact]
@@ -599,7 +599,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID           = 1,
-                            AreaId       = 1,
+                            AreaID       = 1,
                             Name         = "MyCard",
                             Description  = "MyDescription",
                             CreatedDate  = NOW,
@@ -630,7 +630,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -661,7 +661,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -692,7 +692,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -706,7 +706,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 var subject = card.Get(1);
 
-                subject.AreaId.Should().Be(1);
+                subject.AreaID.Should().Be(1);
             }
 
             [Fact]
@@ -723,7 +723,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -754,7 +754,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -785,7 +785,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -816,7 +816,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -847,7 +847,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -878,7 +878,7 @@ namespace Cards.Extensions.Tfs.Tests
                         new Card()
                         {
                             ID = 1,
-                            AreaId = 1,
+                            AreaID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
                             CreatedDate = NOW,
@@ -947,7 +947,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -961,7 +961,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -997,7 +997,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1011,7 +1011,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1047,7 +1047,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1061,7 +1061,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1097,7 +1097,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1111,7 +1111,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1147,7 +1147,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1161,7 +1161,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1197,7 +1197,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1211,7 +1211,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1247,7 +1247,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1261,7 +1261,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1297,7 +1297,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1311,7 +1311,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1347,7 +1347,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1361,7 +1361,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1397,7 +1397,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1411,7 +1411,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
 
                 subject = card.Update(subject);
 
@@ -1447,7 +1447,7 @@ namespace Cards.Extensions.Tfs.Tests
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
-                            AreaId = 1
+                            AreaID = 1
                         });
 
                 storageProvider
@@ -1461,7 +1461,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Name = "NotMyCard";
                 subject.Description = "NotMyDescription";
-                subject.AreaId = 2;
+                subject.AreaID = 2;
                 subject.AssignedTo = "Me";
 
                 subject = card.Update(subject);
@@ -1526,7 +1526,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaId = 1, Name = "MyCard" };
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaID = 1, Name = "MyCard" };
                 var area = new Area(null, storageProvider.Object, identityProvider.Object);
 
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => card);
@@ -1563,7 +1563,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaId = 1, Name = "MyCard" };
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaID = 1, Name = "MyCard" };
                 var area = new Area(null, storageProvider.Object, identityProvider.Object);
 
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => card);
@@ -1572,7 +1572,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject = card.Move(1, targetArea);
 
-                subject.AreaId.Should().Be(2);
+                subject.AreaID.Should().Be(2);
             }
 
             [Fact]
@@ -1600,7 +1600,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaId = 1, Name = "MyCard" };
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaID = 1, Name = "MyCard" };
                 var area = new Area(null, storageProvider.Object, identityProvider.Object);
 
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => card);
@@ -1637,7 +1637,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaId = 1, Name = "MyCard" };
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaID = 1, Name = "MyCard" };
                 var area = new Area(null, storageProvider.Object, identityProvider.Object);
 
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => card);
@@ -1670,7 +1670,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 });
 
-                storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => new Card() { ID = 1, AreaId = 1, Name = "MyCard" });
+                storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => new Card() { ID = 1, AreaID = 1, Name = "MyCard" });
 
                 Card subject = null;
 

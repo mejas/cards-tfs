@@ -57,6 +57,10 @@
     <Compile Include="Contracts\Card.cs" />
     <Compile Include="Contracts\ImportRequest.cs" />
     <Compile Include="Contracts\WorkItem.cs" />
+    <Compile Include="Migrations\201406050600521_Rename_Card_AreaID.cs" />
+    <Compile Include="Migrations\201406050600521_Rename_Card_AreaID.Designer.cs">
+      <DependentUpon>201406050600521_Rename_Card_AreaID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\TFSImportProvider.cs" />
     <Compile Include="Data\CardsDBConfiguration.cs" />
     <Compile Include="Data\CardsDBContext.cs" />
@@ -87,6 +91,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406020158434_Add_Cards_To_Areas.resx">
       <DependentUpon>201406020158434_Add_Cards_To_Areas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406050600521_Rename_Card_AreaID.resx">
+      <DependentUpon>201406050600521_Rename_Card_AreaID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

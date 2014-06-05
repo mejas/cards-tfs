@@ -103,7 +103,7 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             using (var db = new CardsDBContext())
             {
-               return db.Cards.Where(card => card.AreaId == areaID && card.Active == true).ToList();
+               return db.Cards.Where(card => card.AreaID == areaID && card.Active == true).ToList();
             }
         }
 
@@ -125,7 +125,7 @@ namespace Cards.Extensions.Tfs.Core.Services
                 {
                     cardToUpdate.Name         = card.Name;
                     cardToUpdate.Description  = card.Description;
-                    cardToUpdate.AreaId       = card.AreaId;
+                    cardToUpdate.AreaID       = card.AreaID;
                     cardToUpdate.ModifiedDate = card.ModifiedDate;
                     cardToUpdate.ModifiedUser = card.ModifiedUser;
                     cardToUpdate.AssignedTo   = card.AssignedTo;

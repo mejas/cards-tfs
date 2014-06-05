@@ -112,7 +112,7 @@ namespace Cards.Extensions.Tfs.Core.Contracts
         /// <value>
         /// The area identifier.
         /// </value>
-        public int AreaId { get; set; }
+        public int AreaID { get; set; }
 
         /// <summary>
         /// Gets or sets the assigned to.
@@ -141,7 +141,7 @@ namespace Cards.Extensions.Tfs.Core.Contracts
                 
                 Name = name,
                 Description = description,
-                AreaId = areaID,
+                AreaID = areaID,
                 AssignedTo = assignedTo
             };
 
@@ -170,7 +170,7 @@ namespace Cards.Extensions.Tfs.Core.Contracts
 
                     Name        = tfsItem.Title,
                     Description = tfsItem.Description,
-                    AreaId      = areaID,
+                    AreaID      = areaID,
                     AssignedTo  = tfsItem.AssignedTo,
                     TfsID       = tfsItem.ID
                 };
@@ -251,7 +251,7 @@ namespace Cards.Extensions.Tfs.Core.Contracts
 
             if (card != null)
             {
-                card.AreaId = targetArea.ID;
+                card.AreaID = targetArea.ID;
                 card.Update(card);
 
                 return card;
