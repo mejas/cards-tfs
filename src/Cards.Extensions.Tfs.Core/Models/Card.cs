@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using Cards.Extensions.Tfs.Core.Services;
 
-namespace Cards.Extensions.Tfs.Core.Contracts
+namespace Cards.Extensions.Tfs.Core.Models
 {
     /// <summary>
     /// A work item
@@ -12,26 +12,25 @@ namespace Cards.Extensions.Tfs.Core.Contracts
     public class Card
     {
         public Card()
-            : this(new DateProvider(), new EntityFrameworkStorageProvider(), new WindowsIdentityProvider(), new TFSImportProvider())
+            : this( new DateProvider(), 
+                    new EntityFrameworkStorageProvider(), 
+                    new WindowsIdentityProvider())
         {
             Active = true;
         }
 
         public Card(IDateProvider dateProvider, 
                     IStorageProvider storageProvider, 
-                    IIdentityProvider identityProvider, 
-                    ITFSProvider importProvider)
+                    IIdentityProvider identityProvider)
         {
             DateProvider     = dateProvider;
             StorageProvider  = storageProvider;
             IdentityProvider = identityProvider;
-            ImportProvider   = importProvider;
         }
 
         protected IDateProvider DateProvider { get; set; }
         protected IStorageProvider StorageProvider { get; set; }
         protected IIdentityProvider IdentityProvider { get; set; }
-        protected ITFSProvider ImportProvider { get; set; }
 
         /// <summary>
         /// Gets or sets the database identifier.
@@ -146,41 +145,6 @@ namespace Cards.Extensions.Tfs.Core.Contracts
             };
 
             return StorageProvider.Add(card);
-        }
-
-
-        /// <summary>
-        /// Creates a card using the specified parameters.
-        /// </summary>
-        /// <param name="tfsID">The TFS identifier.</param>
-        /// <param name="areaID">The area identifier.</param>
-        /// <returns></returns>
-        public Card Add(int tfsID, int areaID)
-        {
-            var tfsItem = ImportProvider.GetTFSItem(tfsID);
-
-            if (tfsItem != null)
-            {
-                var card = new Card()
-                {
-                    CreatedUser = IdentityProvider.GetUserName(),
-                    CreatedDate = DateProvider.Now(),
-                    ModifiedUser = IdentityProvider.GetUserName(),
-                    ModifiedDate = DateProvider.Now(),
-
-                    Name        = tfsItem.Title,
-                    Description = tfsItem.Description,
-                    AreaID      = areaID,
-                    AssignedTo  = tfsItem.AssignedTo,
-                    TfsID       = tfsItem.ID
-                };
-
-                return StorageProvider.Add(card);
-            }
-            else
-            {
-                return null;
-            }
         }
 
         /// <summary>

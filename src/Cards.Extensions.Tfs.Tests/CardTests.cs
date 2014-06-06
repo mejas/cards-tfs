@@ -1,5 +1,5 @@
 ﻿using Cards.Extensions.Tfs.Core;
-using Cards.Extensions.Tfs.Core.Contracts;
+using Cards.Extensions.Tfs.Core.Models;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -135,7 +135,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -165,7 +165,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -195,7 +195,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -225,7 +225,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -255,7 +255,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID         = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -285,7 +285,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -315,7 +315,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -345,7 +345,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -375,7 +375,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -405,7 +405,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -435,7 +435,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -465,7 +465,7 @@ namespace Cards.Extensions.Tfs.Tests
                 string description = "MyDescription";
                 int areaID = 1;
 
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Add(name, description, "MIKADO", areaID);
 
@@ -486,7 +486,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Returns(() => new List<Card>());
 
                 var area = 1;
-                var card = new Card(null, storageProvider.Object, null, null);
+                var card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.GetAll(area);
 
@@ -504,7 +504,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Returns(() => new List<Card>());
 
                 var area = 1;
-                var card = new Card(null, storageProvider.Object, null, null);
+                var card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.GetAll(area);
 
@@ -530,7 +530,7 @@ namespace Cards.Extensions.Tfs.Tests
                     });
 
                 var area = 1;
-                var card = new Card(null, storageProvider.Object, null, null);
+                var card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.GetAll(area);
 
@@ -558,7 +558,7 @@ namespace Cards.Extensions.Tfs.Tests
                     });
 
                 var area = 1;
-                var card = new Card(null, storageProvider.Object, null, null);
+                var card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.GetAll(area);
 
@@ -578,7 +578,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Setup(d => d.GetCard(It.IsAny<int>()))
                     .Returns(() => null);
 
-                var card = new Card(null, storageProvider.Object, null, null);
+                var card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -609,7 +609,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -640,7 +640,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -671,7 +671,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -702,7 +702,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -733,7 +733,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -764,7 +764,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -795,7 +795,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -826,7 +826,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -857,7 +857,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -888,7 +888,7 @@ namespace Cards.Extensions.Tfs.Tests
                         }
                     );
 
-                Card card = new Card(null, storageProvider.Object, null, null);
+                Card card = new Card(null, storageProvider.Object, null);
 
                 var subject = card.Get(1);
 
@@ -911,7 +911,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c)
                     .Returns(() => subject);
 
-                var card = new Card(null, storageProvider.Object, null, null);
+                var card = new Card(null, storageProvider.Object, null);
 
                 subject = card.Update(null);
 
@@ -955,7 +955,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1005,7 +1005,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1055,7 +1055,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1105,7 +1105,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1155,7 +1155,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1205,7 +1205,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1255,7 +1255,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1305,7 +1305,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1355,7 +1355,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1405,7 +1405,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1455,7 +1455,7 @@ namespace Cards.Extensions.Tfs.Tests
                     .Callback<Card>(c => subject = c.ID == 1 ? c : null)
                     .Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 subject = card.Get(1);
 
@@ -1489,7 +1489,7 @@ namespace Cards.Extensions.Tfs.Tests
                 storageProvider.Setup(d => d.RemoveCard(It.IsAny<Card>()));
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => null);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
 
                 card.Remove(1);
 
@@ -1526,7 +1526,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaID = 1, Name = "MyCard" };
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object) { ID = 1, AreaID = 1, Name = "MyCard" };
                 var area = new Area(null, storageProvider.Object, identityProvider.Object);
 
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => card);
@@ -1563,7 +1563,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaID = 1, Name = "MyCard" };
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object) { ID = 1, AreaID = 1, Name = "MyCard" };
                 var area = new Area(null, storageProvider.Object, identityProvider.Object);
 
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => card);
@@ -1600,7 +1600,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaID = 1, Name = "MyCard" };
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object) { ID = 1, AreaID = 1, Name = "MyCard" };
                 var area = new Area(null, storageProvider.Object, identityProvider.Object);
 
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => card);
@@ -1637,7 +1637,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null) { ID = 1, AreaID = 1, Name = "MyCard" };
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object) { ID = 1, AreaID = 1, Name = "MyCard" };
                 var area = new Area(null, storageProvider.Object, identityProvider.Object);
 
                 storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => card);
@@ -1676,211 +1676,12 @@ namespace Cards.Extensions.Tfs.Tests
 
                 storageProvider.Setup(d => d.Update(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
+                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object);
                 var area = new Area(null, storageProvider.Object, null);
 
                 subject = card.Move(2, area.GetAll().Find(item => item.ID == 2));
 
                 subject.Should().BeNull();
-            }
-        }
-
-        public class ImportMethod
-        {
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenID_IsInvalid()
-            {
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var importProvider = new Mock<ITFSProvider>();
-                var storageProvider = new Mock<IStorageProvider>();
-
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
-
-                Card subject = null;
-
-                storageProvider.Setup(d => d.Add(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
-
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, importProvider.Object);
-
-                subject = card.Add(1, 1);
-
-                subject.Should().BeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenID_IsValid()
-            {
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var importProvider = new Mock<ITFSProvider>();
-                var storageProvider = new Mock<IStorageProvider>();
-
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
-
-                Card subject = null;
-
-                storageProvider.Setup(d => d.Add(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
-
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, importProvider.Object);
-
-                subject = card.Add(16728, 1);
-
-                subject.Should().NotBeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenID_IsValid_ShouldHaveCreatedUser()
-            {
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var importProvider = new Mock<ITFSProvider>();
-                var storageProvider = new Mock<IStorageProvider>();
-
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
-
-                Card subject = null;
-
-                storageProvider.Setup(d => d.Add(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
-
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, importProvider.Object);
-
-                subject = card.Add(16728, 1);
-
-                subject.CreatedUser.Should().Be("MIKADO");
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenID_IsValid_ShouldHaveCreatedDate()
-            {
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var importProvider = new Mock<ITFSProvider>();
-                var storageProvider = new Mock<IStorageProvider>();
-
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
-
-                Card subject = null;
-
-                storageProvider.Setup(d => d.Add(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
-
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, importProvider.Object);
-
-                subject = card.Add(16728, 1);
-
-                subject.CreatedDate.Should().Be(NOW);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenID_IsValid_ShouldHaveModifiedUser()
-            {
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var importProvider = new Mock<ITFSProvider>();
-                var storageProvider = new Mock<IStorageProvider>();
-
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
-
-                Card subject = null;
-
-                storageProvider.Setup(d => d.Add(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
-
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, importProvider.Object);
-
-                subject = card.Add(16728, 1);
-
-                subject.ModifiedUser.Should().Be("MIKADO");
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenID_IsValid_ShouldHaveModifiedDate()
-            {
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var importProvider = new Mock<ITFSProvider>();
-                var storageProvider = new Mock<IStorageProvider>();
-
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
-
-                Card subject = null;
-
-                storageProvider.Setup(d => d.Add(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
-
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, importProvider.Object);
-
-                subject = card.Add(16728, 1);
-
-                subject.ModifiedDate.Should().Be(NOW);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenID_IsValid_ShouldHaveTfsID()
-            {
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var importProvider = new Mock<ITFSProvider>();
-                var storageProvider = new Mock<IStorageProvider>();
-
-                importProvider.Setup(d => d.GetTFSItem(It.Is<int>(i => i == 16728))).Returns(() => new WorkItem() { ID = 16728, Title = "Title" });
-
-                Card subject = null;
-
-                storageProvider.Setup(d => d.Add(It.IsAny<Card>())).Callback<Card>(a => subject = a).Returns(() => subject);
-
-                Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, importProvider.Object);
-
-                subject = card.Add(16728, 1);
-
-                subject.TfsID.Should().Be(16728);
             }
         }
     }

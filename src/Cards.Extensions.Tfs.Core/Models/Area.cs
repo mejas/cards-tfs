@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cards.Extensions.Tfs.Core.Contracts
+namespace Cards.Extensions.Tfs.Core.Models
 {
     /// <summary>
     /// Defines a specific area where a set of cards can be associated

@@ -1,4 +1,4 @@
-﻿using Cards.Extensions.Tfs.Core.Contracts;
+﻿using Cards.Extensions.Tfs.Core.Models;
 using Cards.Extensions.Tfs.Core.Data;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using System.Collections.Generic;
