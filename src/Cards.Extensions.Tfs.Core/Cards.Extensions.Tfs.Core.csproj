@@ -53,7 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\TFSArguments.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\WorkItem.cs" />

@@ -11,5 +11,6 @@ namespace Cards.Extensions.Tfs.Core.Interfaces
     {
         WorkItem GetTFSItem(int tfsID);
         List<WorkItem> GetTFSItems(IEnumerable<KeyValuePair<string, string>> tfsQueryArgs);
+        List<WorkItem> GetTFSItems(string queryName);
     }
 }
