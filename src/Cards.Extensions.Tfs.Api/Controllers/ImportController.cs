@@ -22,7 +22,9 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
             var tfsItem = workItem.Get(tfsWorkItem);
 
-            var result = new Card().Add(tfsItem.Title, tfsItem.Description, tfsItem.AssignedTo, areaID);
+            Card cardFromTFSItem = createCardFromWorkItem(workItem, areaID);
+
+            var result = new Card().Add(cardFromTFSItem);
 
             if (result != null)
             {
@@ -37,7 +39,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [HttpPost]
         [ResponseType(typeof(List<Card>))]
         [Route("api/Import/{areaID}")]
-        public HttpResponseMessage ImportFromTFSQuery(HttpRequestMessage request, int areaID)
+        public HttpResponseMessage ImportFromLiveTFSQuery(HttpRequestMessage request, int areaID)
         {
             var tfsArgs = request.GetQueryNameValuePairs();
 
@@ -52,7 +54,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
                 result = new List<Card>();
                 foreach (var tfsItem in tfsItems)
                 {
-                    result.Add(card.Add(tfsItem.Title, tfsItem.Description, tfsItem.AssignedTo, areaID));
+                    result.Add(card.Add(createCardFromWorkItem(tfsItem, areaID)));
                 }
             }
 
@@ -64,6 +66,48 @@ namespace Cards.Extensions.Tfs.Api.Controllers
             {
                 return request.CreateResponse(HttpStatusCode.InternalServerError);
             }
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(List<Card>))]
+        [Route("api/Import/{areaID}")]
+        public HttpResponseMessage ImportFromSavedTFSQuery(HttpRequestMessage request, string queryName, int areaID)
+        {
+            WorkItem workItem = new WorkItem();
+            Card card = new Card();
+
+            var tfsItems = workItem.Get(queryName);
+
+            List<Card> result = null;
+            if (tfsItems != null)
+            {
+                result = new List<Card>();
+                foreach (var tfsItem in tfsItems)
+                {
+                    result.Add(card.Add(createCardFromWorkItem(tfsItem, areaID)));
+                }
+            }
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.Accepted, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        private Card createCardFromWorkItem(WorkItem workItem, int areaID)
+        {
+            return new Card()
+            {
+                AreaID      = areaID,
+                Name        = workItem.Title,
+                Description = workItem.Description,
+                TfsID       = workItem.ID,
+                AssignedTo  = workItem.AssignedTo
+            };
         }
     }
 }
