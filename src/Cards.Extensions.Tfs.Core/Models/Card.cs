@@ -147,6 +147,25 @@ namespace Cards.Extensions.Tfs.Core.Models
             return StorageProvider.Add(card);
         }
 
+        public Card Add(Card card)
+        {
+            var cardToAdd = new Card()
+            {
+                CreatedUser  = IdentityProvider.GetUserName(),
+                CreatedDate  = DateProvider.Now(),
+                ModifiedUser = IdentityProvider.GetUserName(),
+                ModifiedDate = DateProvider.Now(),
+
+                Name        = card.Name,
+                Description = card.Description,
+                AreaID      = card.AreaID,
+                AssignedTo  = card.AssignedTo,
+                TfsID       = card.TfsID
+            };
+
+            return StorageProvider.Add(cardToAdd);
+        }
+
         /// <summary>
         /// Gets all Cards from a given area.
         /// </summary>

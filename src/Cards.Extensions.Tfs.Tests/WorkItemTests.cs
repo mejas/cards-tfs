@@ -159,5 +159,42 @@ namespace Cards.Extensions.Tfs.Tests
                 subject.Count.Should().Be(1);
             }
         }
+
+        public class GetBySavedQueryMethod
+        {
+            [Fact]
+            [Trait("Category", "WorkItem")]
+            public void WhenGet_ShouldNotBeNull()
+            {
+                var tfsProvider = new Mock<ITFSProvider>();
+
+                tfsProvider.
+                    Setup(d => d.GetTFSItems(It.IsAny<string>()))
+                    .Returns(() => { return new List<WorkItem>() { new WorkItem() { ID = 1, Title = "TFS Work Item", Description = "TFS Work Item Description", AssignedTo = "Somebody" } }; });
+
+                WorkItem workItem = new WorkItem(tfsProvider.Object);
+
+                var subject = workItem.Get("query");
+
+                subject.Should().NotBeNull();
+            }
+
+            [Fact]
+            [Trait("Category", "WorkItem")]
+            public void WhenGet_ShouldCountBeOne()
+            {
+                var tfsProvider = new Mock<ITFSProvider>();
+
+                tfsProvider.
+                    Setup(d => d.GetTFSItems(It.IsAny<string>()))
+                    .Returns(() => { return new List<WorkItem>() { new WorkItem() { ID = 1, Title = "TFS Work Item", Description = "TFS Work Item Description", AssignedTo = "Somebody" } }; });
+
+                WorkItem workItem = new WorkItem(tfsProvider.Object);
+
+                var subject = workItem.Get("query");
+
+                subject.Count.Should().Be(1);
+            }
+        }
     }
 }

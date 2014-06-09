@@ -61,5 +61,10 @@ namespace Cards.Extensions.Tfs.Core.Models
         {
             return TFSProvider.GetTFSItems(searchparams);
         }
+
+        public List<WorkItem> Get(string queryName)
+        {
+            return TFSProvider.GetTFSItems(queryName);
+        }
     }
 }

@@ -6,35 +6,37 @@ using Microsoft.TeamFoundation.Client;
 using System.Linq;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System.Text;
-using Cards.Extensions.Tfs.Core.Constants;
+using Microsoft.TeamFoundation.Framework.Client.Catalog.Objects;
 
 namespace Cards.Extensions.Tfs.Core.Services
 {
     public class TFSProvider : ITFSProvider
     {
-        WorkItemStore _workItemStore = null;
+        Project _project = null;
         private const string AND_CLAUSE = " AND ";
 
-        public WorkItemStore WorkItemStore
+        public Project Project
         {
             get
             {
-                if (_workItemStore == null)
+                if (_project == null)
                 {
                     var tfs = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(ConfigurationManager.ConnectionStrings["TFSConnectionString"].ConnectionString));
 
-                    _workItemStore = tfs.GetService(typeof(WorkItemStore)) as WorkItemStore;
+                    var workItemStore = tfs.GetService(typeof(WorkItemStore)) as WorkItemStore;
+
+                    _project = workItemStore.Projects[ConfigurationManager.AppSettings["TFSProject"]];
                 }
 
-                return _workItemStore;
+                return _project;
             }
         }
 
         public Models.WorkItem GetTFSItem(int tfsID)
         {
-            if (WorkItemStore != null)
+            if (Project != null)
             {
-                var workItem = WorkItemStore.GetWorkItem(tfsID);
+                var workItem = Project.Store.GetWorkItem(tfsID);
 
                 return createCardsWorkItem(workItem);
             }
@@ -44,11 +46,11 @@ namespace Cards.Extensions.Tfs.Core.Services
 
         public List<Models.WorkItem> GetTFSItems(IEnumerable<KeyValuePair<string, string>> tfsQueryArgs)
         {
-            if (WorkItemStore != null)
+            if (Project != null)
             {
                 string wiql = buildWiqlString(tfsQueryArgs);
 
-                var items = WorkItemStore.Query(wiql);
+                var items = Project.Store.Query(wiql);
 
                 List<Models.WorkItem> workItems = new List<Models.WorkItem>();
                 foreach(WorkItem item in items)
@@ -57,7 +59,43 @@ namespace Cards.Extensions.Tfs.Core.Services
                 }
 
                 return workItems;
+            }
 
+            return null;
+        }
+
+        public List<Models.WorkItem> GetTFSItems(string queryName)
+        {
+            if (Project != null)
+            {
+                StoredQuery query = getStoredQuery(Project, queryName);
+
+                if (query != null)
+                {
+                    var results = Project.Store.Query(query.QueryText);
+
+                    List<Models.WorkItem> workItems = new List<Models.WorkItem>();
+                    foreach (WorkItem result in results)
+                    {
+                        workItems.Add(createCardsWorkItem(result));
+                    }
+
+                    return workItems;
+
+                }
+            }
+
+            return null;
+        }
+
+        private StoredQuery getStoredQuery(Project project, string queryName)
+        {
+            foreach (StoredQuery query in project.StoredQueries)
+            {
+                if (query.Name == queryName)
+                {
+                    return query;
+                }
             }
 
             return null;
@@ -100,32 +138,7 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             StringBuilder query = new StringBuilder();
 
-            switch (tfsQueryArg.Key)
-            {
-                case TFSArguments.WorkItemID:
-                    query.Append(" [Id] = ");
-                    break;
-                case TFSArguments.AssignedTo:
-                    query.Append(" [Assigned to] = ");
-                    break;
-                case TFSArguments.AreaPath:
-                    query.Append(" [Area Path] = ");
-                    break;
-                case TFSArguments.WorkItemType:
-                    query.Append(" [Work Item Type] = ");
-                    break;
-                case TFSArguments.IterationPath:
-                    query.Append(" [Iteration Path] = ");
-                    break;
-                case TFSArguments.State:
-                    query.Append(" [State] = ");
-                    break;
-                case TFSArguments.Project:
-                    query.Append(" [Project] = ");
-                    break;
-            }
-
-            query.AppendFormat(" '{0}' ", tfsQueryArg.Value);
+            query.AppendFormat(" [{0}] = '{1}' ", tfsQueryArg.Key, tfsQueryArg.Value);
 
             return query.ToString();
         }
