@@ -20,11 +20,9 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         {
             WorkItem workItem = new WorkItem();
 
-            var tfsItem = workItem.Get(tfsWorkItem);
+            var tfsItem = new List<WorkItem>() { workItem.Get(tfsWorkItem) };
 
-            Card cardFromTFSItem = createCardFromWorkItem(workItem, areaID);
-
-            var result = new Card().Add(cardFromTFSItem);
+            var result = new Card().Add(tfsItem, areaID);
 
             if (result != null)
             {
@@ -51,11 +49,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
             List<Card> result = null;
             if (tfsItems != null)
             {
-                result = new List<Card>();
-                foreach (var tfsItem in tfsItems)
-                {
-                    result.Add(card.Add(createCardFromWorkItem(tfsItem, areaID)));
-                }
+                result = card.Add(tfsItems, areaID);
             }
 
             if (result != null)
@@ -78,15 +72,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
             var tfsItems = workItem.Get(queryName);
 
-            List<Card> result = null;
-            if (tfsItems != null)
-            {
-                result = new List<Card>();
-                foreach (var tfsItem in tfsItems)
-                {
-                    result.Add(card.Add(createCardFromWorkItem(tfsItem, areaID)));
-                }
-            }
+            List<Card> result = card.Add(tfsItems, areaID);
 
             if (result != null)
             {
@@ -96,18 +82,6 @@ namespace Cards.Extensions.Tfs.Api.Controllers
             {
                 return request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-        }
-
-        private Card createCardFromWorkItem(WorkItem workItem, int areaID)
-        {
-            return new Card()
-            {
-                AreaID      = areaID,
-                Name        = workItem.Title,
-                Description = workItem.Description,
-                TfsID       = workItem.ID,
-                AssignedTo  = workItem.AssignedTo
-            };
         }
     }
 }
