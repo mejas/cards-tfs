@@ -161,6 +161,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\extensions\card-partial.html" />
     <Content Include="app\extensions\settings.js" />
     <Content Include="app\extensions\style.css" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -242,7 +243,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>38886</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
