@@ -147,23 +147,36 @@ namespace Cards.Extensions.Tfs.Core.Models
             return StorageProvider.Add(card);
         }
 
-        public Card Add(Card card)
+        /// <summary>
+        /// Creates a card using the specified TFS WorkItem
+        /// </summary>
+        /// <param name="workItem">The work item.</param>
+        /// <param name="areaID">The area identifier.</param>
+        /// <returns></returns>
+        public List<Card> Add(List<WorkItem> workItems, int areaID)
         {
-            var cardToAdd = new Card()
+            List<Card> result = new List<Card>();
+
+            foreach (var workItem in workItems)
             {
-                CreatedUser  = IdentityProvider.GetUserName(),
-                CreatedDate  = DateProvider.Now(),
-                ModifiedUser = IdentityProvider.GetUserName(),
-                ModifiedDate = DateProvider.Now(),
+                var cardToAdd = new Card()
+                {
+                    CreatedUser = IdentityProvider.GetUserName(),
+                    CreatedDate = DateProvider.Now(),
+                    ModifiedUser = IdentityProvider.GetUserName(),
+                    ModifiedDate = DateProvider.Now(),
 
-                Name        = card.Name,
-                Description = card.Description,
-                AreaID      = card.AreaID,
-                AssignedTo  = card.AssignedTo,
-                TfsID       = card.TfsID
-            };
+                    Name = workItem.Title,
+                    Description = workItem.Description,
+                    AreaID = areaID,
+                    AssignedTo = workItem.AssignedTo,
+                    TfsID = workItem.ID
+                };
 
-            return StorageProvider.Add(cardToAdd);
+                result.Add(StorageProvider.Add(cardToAdd));
+            }
+
+            return result;
         }
 
         /// <summary>
