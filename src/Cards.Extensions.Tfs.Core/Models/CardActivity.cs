@@ -12,7 +12,6 @@ namespace Cards.Extensions.Tfs.Core.Models
         public static string Move   = "MOVE_CARD";
         public static string Modify = "MODIFY_CARD";
         public static string Delete = "DELETE_CARD";
-        public static string None   = String.Empty;
     }
 
     public class CardActivity
