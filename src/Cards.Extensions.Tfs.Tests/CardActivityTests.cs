@@ -47,7 +47,7 @@ namespace Cards.Extensions.Tfs.Tests
             {
                 CardActivity subject = new CardActivity();
 
-                subject.ActivityType.Should().Be(CardActivityType.None);
+                subject.ActivityType.Should().Be(null);
             }
 
             [Fact]
