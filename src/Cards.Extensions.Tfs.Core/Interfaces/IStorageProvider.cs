@@ -24,5 +24,11 @@ namespace Cards.Extensions.Tfs.Core.Interfaces
         
         void RemoveCard(Card card);
         #endregion
+
+        #region Card Activity Operations
+        List<CardActivity> GetAllCardActivities(int cardID);
+        CardActivity Add(CardActivity cardActivity);
+        CardActivity GetCardActivity(int cardActivityID);
+        #endregion
     }
 }

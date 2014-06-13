@@ -16,7 +16,8 @@ namespace Cards.Extensions.Tfs.Core.Models
                     new EntityFrameworkStorageProvider(), 
                     new WindowsIdentityProvider())
         {
-            Active = true;
+            Active         = true;
+            CardActivities = new List<CardActivity>();
         }
 
         public Card(IDateProvider dateProvider, 
@@ -122,6 +123,14 @@ namespace Cards.Extensions.Tfs.Core.Models
         public string AssignedTo { get; set; }
 
         /// <summary>
+        /// Gets or sets the card activities.
+        /// </summary>
+        /// <value>
+        /// The card activities.
+        /// </value>
+        public List<CardActivity> CardActivities { get; set; }
+
+        /// <summary>
         /// Creates a card using the specified parameters.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -131,20 +140,30 @@ namespace Cards.Extensions.Tfs.Core.Models
         /// <returns></returns>
         public Card Add(string name, string description, string assignedTo, int areaID)
         {
+            var dateNow     = DateProvider.Now();
+            var currentUser = IdentityProvider.GetUserName();
+
             var card = new Card()
             {
-                CreatedUser  = IdentityProvider.GetUserName(),
-                CreatedDate  = DateProvider.Now(),
-                ModifiedUser = IdentityProvider.GetUserName(),
-                ModifiedDate = DateProvider.Now(),
-                
-                Name = name,
+                CreatedUser = currentUser,
+                CreatedDate = dateNow,
+                ModifiedUser = currentUser,
+                ModifiedDate = dateNow,
+
+                Name        = name,
                 Description = description,
-                AreaID = areaID,
-                AssignedTo = assignedTo
+                AreaID      = areaID,
+                AssignedTo  = assignedTo
             };
 
-            return StorageProvider.Add(card);
+            var result = StorageProvider.Add(card);
+
+            CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
+            activity = activity.Add(result.ID, CardActivityType.Add, dateNow);
+
+            result.CardActivities.Add(activity);
+
+            return result;
         }
 
         /// <summary>
@@ -155,25 +174,33 @@ namespace Cards.Extensions.Tfs.Core.Models
         /// <returns></returns>
         public List<Card> Add(List<WorkItem> workItems, int areaID)
         {
+            var dateNow     = DateProvider.Now();
+            var currentUser = IdentityProvider.GetUserName();
+
             List<Card> result = new List<Card>();
 
             foreach (var workItem in workItems)
             {
                 var cardToAdd = new Card()
                 {
-                    CreatedUser = IdentityProvider.GetUserName(),
-                    CreatedDate = DateProvider.Now(),
-                    ModifiedUser = IdentityProvider.GetUserName(),
-                    ModifiedDate = DateProvider.Now(),
+                    CreatedUser  = currentUser,
+                    CreatedDate  = dateNow,
+                    ModifiedUser = currentUser,
+                    ModifiedDate = dateNow,
 
-                    Name = workItem.Title,
+                    Name        = workItem.Title,
                     Description = workItem.Description,
-                    AreaID = areaID,
-                    AssignedTo = workItem.AssignedTo,
-                    TfsID = workItem.ID
+                    AreaID      = areaID,
+                    AssignedTo  = workItem.AssignedTo,
+                    TfsID       = workItem.ID
                 };
 
-                result.Add(StorageProvider.Add(cardToAdd));
+                var storedCard = StorageProvider.Add(cardToAdd);
+
+                CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
+                storedCard.CardActivities.Add(activity.Add(storedCard.ID, CardActivityType.Add, dateNow));
+
+                result.Add(storedCard);
             }
 
             return result;
@@ -208,9 +235,7 @@ namespace Cards.Extensions.Tfs.Core.Models
         {
             if (card != null)
             {
-                card.ModifiedDate = DateProvider.Now();
-                card.ModifiedUser = IdentityProvider.GetUserName();
-                return StorageProvider.Update(card);
+                return onUpdate(card, CardActivityType.Modify);
             }
             else
             {
@@ -248,14 +273,29 @@ namespace Cards.Extensions.Tfs.Core.Models
             if (card != null)
             {
                 card.AreaID = targetArea.ID;
-                card.Update(card);
 
-                return card;
+                return onUpdate(card, CardActivityType.Move);
             }
             else
             {
                 return null;
             }
+        }
+
+        private Card onUpdate(Card card, CardActivityType cardActivityType)
+        {
+            var dateNow = DateProvider.Now();
+
+            card.ModifiedDate = dateNow;
+            card.ModifiedUser = IdentityProvider.GetUserName();
+
+            var cardResult = StorageProvider.Update(card);
+
+            CardActivity cardActivity = new CardActivity(StorageProvider, IdentityProvider);
+
+            cardResult.CardActivities.Add(cardActivity.Add(card.ID, cardActivityType, dateNow));
+
+            return cardResult;
         }
     }
 }

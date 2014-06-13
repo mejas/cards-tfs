@@ -16,6 +16,7 @@ namespace Cards.Extensions.Tfs.Core.Data
 
         public DbSet<Area> Areas { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<CardActivity> CardActivities { get; set; }
 
     }
 }
