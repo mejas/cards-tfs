@@ -57,6 +57,14 @@ namespace Cards.Extensions.Tfs.Tests
                 CardActivity subject = new CardActivity();
                 subject.ID.Should().Be(0);
             }
+
+            [Fact]
+            [Trait("Category", "CardActivity")]
+            public void WhenInitialize_ShouldCardIDBeZero()
+            {
+                CardActivity subject = new CardActivity();
+                subject.CardID.Should().Be(0);
+            }
         }
 
         public class AddMethod

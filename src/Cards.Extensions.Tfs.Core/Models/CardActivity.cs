@@ -18,6 +18,8 @@ namespace Cards.Extensions.Tfs.Core.Models
     public class CardActivity
     {
         public int ID { get; set; }
+
+        public int CardID { get; set; }
         public DateTime LoggedDate { get; set; }
         public string LoggedUser { get; set; }
         public string ActivityType { get; set; }
