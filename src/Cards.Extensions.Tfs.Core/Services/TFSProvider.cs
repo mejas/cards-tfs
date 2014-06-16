@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using Microsoft.TeamFoundation.Client;
-using System.Linq;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
-using System.Text;
-using Microsoft.TeamFoundation.Framework.Client.Catalog.Objects;
 
 namespace Cards.Extensions.Tfs.Core.Services
 {
@@ -92,7 +92,7 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             foreach (StoredQuery query in project.StoredQueries)
             {
-                if (query.Name == queryName)
+                if (String.Compare(query.Name, queryName, true, CultureInfo.InvariantCulture) == 0)
                 {
                     return query;
                 }

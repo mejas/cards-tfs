@@ -103,7 +103,7 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             using (var db = new CardsDBContext())
             {
-               return db.Cards.Where(card => card.AreaID == areaID && card.Active == true).ToList();
+                return db.Cards.Include("CardActivities").Where(card => card.AreaID == areaID && card.Active == true).ToList();
             }
         }
 
@@ -155,6 +155,35 @@ namespace Cards.Extensions.Tfs.Core.Services
 
                     db.SaveChanges();
                 }
+            }
+        }
+        #endregion
+
+        #region CardActivities
+        public CardActivity Add(CardActivity cardActivity)
+        {
+            using (var db = new CardsDBContext())
+            {
+                var result = db.CardActivities.Add(cardActivity);
+                db.SaveChanges();
+
+                return result;
+            }
+        }
+
+        public CardActivity GetCardActivity(int cardActivityID)
+        {
+            using (var db = new CardsDBContext())
+            {
+                return db.CardActivities.Where(item => item.ID == cardActivityID).FirstOrDefault();
+            }
+        }
+
+        public List<CardActivity> GetAllCardActivities(int cardID)
+        {
+            using (var db = new CardsDBContext())
+            {
+                return db.CardActivities.Where(item => item.CardID == cardID).ToList();
             }
         }
         #endregion
