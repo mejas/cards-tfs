@@ -7,6 +7,7 @@ using System.Text;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
+using System.Web;
 
 namespace Cards.Extensions.Tfs.Core.Services
 {
@@ -70,9 +71,14 @@ namespace Cards.Extensions.Tfs.Core.Services
             {
                 StoredQuery query = getStoredQuery(Project, queryName);
 
+                Dictionary<string, string> parameters = new Dictionary<string,string>()
+                {
+                    { "project", Project.Name }
+                };
+
                 if (query != null)
                 {
-                    var results = Project.Store.Query(query.QueryText);
+                    var results = Project.Store.Query(query.QueryText, parameters);
 
                     List<Models.WorkItem> workItems = new List<Models.WorkItem>();
                     foreach (WorkItem result in results)
