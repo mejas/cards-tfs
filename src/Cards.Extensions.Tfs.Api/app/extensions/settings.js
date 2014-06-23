@@ -7,4 +7,13 @@
         AppSettings.cardTemplate = 'extensions/card-partial.html';
         AppSettings.menuTemplate = 'extensions/menu-partial.html'
     }]);
+
+    app.controller('MenuCtrl', ['$scope', '$location', function ($scope, $location) {
+
+        $scope.import = function () {
+            console.log('import invoked.');
+            $location.path('/areas');
+        };
+
+    }])
 })(angular);
