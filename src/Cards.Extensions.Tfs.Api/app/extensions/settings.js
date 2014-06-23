@@ -8,11 +8,13 @@
         AppSettings.menuTemplate = 'extensions/menu-partial.html'
     }]);
 
-    app.controller('MenuCtrl', ['$scope', '$location', function ($scope, $location) {
+    app.controller('MenuCtrl', ['$scope', '$location', '$http', '$route', function ($scope, $location, $http, $route) {
 
         $scope.import = function () {
-            console.log('import invoked.');
-            $location.path('/areas');
+            $http.post('/api/import/1?queryName=Cards')
+                .success(function(data) {
+                    $route.reload();
+                });
         };
 
     }])
