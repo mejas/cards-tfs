@@ -1,8 +1,12 @@
 ﻿<div class="card panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">ID {{card.tfsID}}</h4>
+    </div>
     <div class="panel-body">
         <a class="link link-unstyled" href="#/cards/{{card.id}}">{{card.name}}</a>
     </div>
     <div class="panel-footer">
+        <span class="label label-default">{{card.assignedTo}}</span>
         <span ng-repeat="label in card.labels" class="label label-info">{{label}}</span>
     </div>
 </div>
