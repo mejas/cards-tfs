@@ -253,10 +253,16 @@ namespace Cards.Extensions.Tfs.Core.Models
 
             if (card != null)
             {
-                card.ModifiedDate = DateProvider.Now();
+                var NOW = DateProvider.Now();
+
+                card.ModifiedDate = NOW;
                 card.ModifiedUser = IdentityProvider.GetUserName();
 
                 StorageProvider.RemoveCard(card);
+
+                CardActivity cardActivity = new CardActivity(StorageProvider, IdentityProvider);
+
+                cardActivity.Add(card.ID, CardActivityType.Delete, NOW);
             }
         }
 

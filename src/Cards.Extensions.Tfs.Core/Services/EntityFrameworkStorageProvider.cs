@@ -13,15 +13,11 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             using (var db = new CardsDBContext())
             {
-                return db.Areas.Include("Cards").Where(item => item.Active).ToList();
-            }
-        }
+                var areas = db.Areas.Where(area=>area.Active).ToList();
 
-        public List<Area> GetAllActiveAreas()
-        {
-            using (var db = new CardsDBContext())
-            {
-                return db.Areas.Where(item => item.Active == true).ToList();
+                areas.ForEach(area => area.Cards = db.Cards.Where(card => card.AreaID == area.ID && card.Active).ToList());
+
+                return areas;
             }
         }
 
@@ -29,7 +25,11 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             using (var db = new CardsDBContext())
             {
-                return db.Areas.FirstOrDefault(area => area.ID == id && area.Active);
+                var resultArea = db.Areas.FirstOrDefault(area => area.ID == id && area.Active);
+
+                resultArea.Cards = db.Cards.Where(card => card.AreaID == resultArea.ID && card.Active).ToList();
+
+                return resultArea;
             }
         }
 
