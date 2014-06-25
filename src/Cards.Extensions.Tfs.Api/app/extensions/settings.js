@@ -5,6 +5,7 @@
     app.config(['AppSettings', function (AppSettings) {
         AppSettings.serviceBaseUrl = 'http://localhost:3000/api/';
         AppSettings.cardTemplate = 'extensions/card-partial.html';
+        AppSettings.cardFormTemplate = 'extensions/cardform-partial.html';
         AppSettings.menuTemplate = 'extensions/menu-partial.html';
         AppSettings.importQuery = 'Cards';
     }]);
