@@ -5,13 +5,14 @@
     app.config(['AppSettings', function (AppSettings) {
         AppSettings.serviceBaseUrl = 'http://localhost:3000/api/';
         AppSettings.cardTemplate = 'extensions/card-partial.html';
-        AppSettings.menuTemplate = 'extensions/menu-partial.html'
+        AppSettings.menuTemplate = 'extensions/menu-partial.html';
+        AppSettings.importQuery = 'Cards';
     }]);
 
-    app.controller('MenuCtrl', ['$scope', '$location', '$http', '$route', function ($scope, $location, $http, $route) {
+    app.controller('MenuCtrl', ['$scope', '$location', '$http', '$route', 'AppSettings', function ($scope, $location, $http, $route, AppSettings) {
 
         $scope.import = function () {
-            $http.post('/api/import/1?queryName=CardsTest')
+            $http.post('/api/import/1?queryName=' + AppSettings.importQuery)
                 .success(function(data) {
                     $route.reload();
                 });
