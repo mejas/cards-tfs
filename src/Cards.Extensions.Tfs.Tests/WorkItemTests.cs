@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Cards.Extensions.Tfs.Core.Interfaces;
 using Cards.Extensions.Tfs.Core.Models;
-using Xunit;
 using FluentAssertions;
 using Moq;
-using Cards.Extensions.Tfs.Core.Interfaces;
+using Xunit;
 
 namespace Cards.Extensions.Tfs.Tests
 {

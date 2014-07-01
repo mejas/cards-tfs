@@ -1,7 +1,7 @@
 namespace Cards.Extensions.Tfs.Core.Migrations
 {
-    using Cards.Extensions.Tfs.Core.Data;
     using System.Data.Entity.Migrations;
+    using Cards.Extensions.Tfs.Core.Data;
 
     internal sealed class Configuration : DbMigrationsConfiguration<CardsDBContext>
     {

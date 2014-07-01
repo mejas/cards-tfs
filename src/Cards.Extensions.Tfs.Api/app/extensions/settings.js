@@ -11,7 +11,7 @@
     app.controller('MenuCtrl', ['$scope', '$location', '$http', '$route', function ($scope, $location, $http, $route) {
 
         $scope.import = function () {
-            $http.post('/api/import/1?queryName=Cards')
+            $http.post('/api/import/1?queryName=CardsTest')
                 .success(function(data) {
                     $route.reload();
                 });

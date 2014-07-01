@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Cards.Extensions.Tfs.Core.Models;
 
 namespace Cards.Extensions.Tfs.Core.Interfaces

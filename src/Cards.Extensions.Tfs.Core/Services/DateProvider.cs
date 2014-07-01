@@ -1,5 +1,5 @@
-﻿using Cards.Extensions.Tfs.Core.Interfaces;
-using System;
+﻿using System;
+using Cards.Extensions.Tfs.Core.Interfaces;
 
 namespace Cards.Extensions.Tfs.Core.Services
 {

@@ -1,5 +1,5 @@
-﻿using Cards.Extensions.Tfs.Core.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Cards.Extensions.Tfs.Core.Models;
 
 namespace Cards.Extensions.Tfs.Core.Interfaces
 {
@@ -29,6 +29,13 @@ namespace Cards.Extensions.Tfs.Core.Interfaces
         List<CardActivity> GetAllCardActivities(int cardID);
         CardActivity Add(CardActivity cardActivity);
         CardActivity GetCardActivity(int cardActivityID);
+        #endregion
+
+        #region Label Operations
+        List<Label> GetAllLabels();
+        Label GetLabel(string labelName);
+        Label Add(Label label);
+        Label Update(Label label);
         #endregion
     }
 }

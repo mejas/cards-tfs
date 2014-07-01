@@ -1,5 +1,5 @@
-﻿using Cards.Extensions.Tfs.Core.Models;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using Cards.Extensions.Tfs.Core.Models;
 
 namespace Cards.Extensions.Tfs.Core.Data
 {

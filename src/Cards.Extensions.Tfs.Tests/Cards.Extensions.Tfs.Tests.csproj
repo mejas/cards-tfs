@@ -57,6 +57,7 @@
     <Compile Include="CardActivityTests.cs" />
     <Compile Include="AreaTests.cs" />
     <Compile Include="CardTests.cs" />
+    <Compile Include="LabelTests.cs" />
     <Compile Include="WorkItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

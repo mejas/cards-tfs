@@ -1,8 +1,8 @@
-﻿using Cards.Extensions.Tfs.Core.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Cards.Extensions.Tfs.Core.Data;
 using Cards.Extensions.Tfs.Core.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
+using Cards.Extensions.Tfs.Core.Models;
 
 namespace Cards.Extensions.Tfs.Core.Services
 {
@@ -185,6 +185,28 @@ namespace Cards.Extensions.Tfs.Core.Services
             {
                 return db.CardActivities.Where(item => item.CardID == cardID).ToList();
             }
+        }
+        #endregion
+
+        #region Labels
+        public Label Add(Label label)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<Label> GetAllLabels()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Label Update(Label label)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Label GetLabel(string labelName)
+        {
+            throw new System.NotImplementedException();
         }
         #endregion
     }

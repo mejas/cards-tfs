@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Cards.Extensions.Tfs.Core;
 using Cards.Extensions.Tfs.Core.Models;
 
 namespace Cards.Extensions.Tfs.Api.Controllers

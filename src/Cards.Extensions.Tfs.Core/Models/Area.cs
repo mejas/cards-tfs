@@ -1,8 +1,8 @@
-﻿using Cards.Extensions.Tfs.Core.Interfaces;
-using Cards.Extensions.Tfs.Core.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Cards.Extensions.Tfs.Core.Interfaces;
+using Cards.Extensions.Tfs.Core.Services;
 
 namespace Cards.Extensions.Tfs.Core.Models
 {
