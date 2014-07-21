@@ -490,6 +490,44 @@ namespace Cards.Extensions.Tfs.Tests
 
                 subject.Should().NotBeNull();
             }
+
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenGet_ShouldIDHaveValue()
+            {
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Label subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetLabel(It.Is<string>(i => i == "MIKADO")))
+                    .Returns(() => new Label() { ID = 1, Active = true, ColorCode = "#123456", Name = "MIKADO" });
+
+                Label label = new Label(null, null, storageProvider.Object);
+
+                subject = label.Get("MIKADO");
+
+                subject.ColorCode.Should().Be("#123456");
+            }
+
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenGet_ShouldColorHaveValue()
+            {
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Label subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetLabel(It.Is<string>(i => i == "MIKADO")))
+                    .Returns(() => new Label() { ID = 1, Active = true, ColorCode = "#123456", Name = "MIKADO" });
+
+                Label label = new Label(null, null, storageProvider.Object);
+
+                subject = label.Get("MIKADO");
+
+                subject.ColorCode.Should().Be("#123456");
+            }
         }
 
         public class UpdateMethod
