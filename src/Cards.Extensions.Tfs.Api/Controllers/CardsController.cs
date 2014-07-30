@@ -31,14 +31,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
             var result = card.Get(id);
 
-            if (result != null)
-            {
-                return request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            else
-            {
-                return request.CreateResponse(HttpStatusCode.NoContent);
-            }
+            return request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
@@ -99,13 +92,13 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [HttpHead]
         [ResponseType(typeof(void))]
         [Route("api/Cards/{id}")]
-        public void Delete(HttpRequestMessage request, int id)
+        public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
             var card = new Card();
 
             card.Remove(id);
 
-            request.CreateResponse(HttpStatusCode.OK);
+            return request.CreateResponse(HttpStatusCode.NoContent);
         }
     }
 }

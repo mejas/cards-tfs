@@ -32,14 +32,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
             var result = area.Get(id);
 
-            if (result != null)
-            {
-                return request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            else
-            {
-                return request.CreateResponse(HttpStatusCode.NoContent);
-            }
+            return request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
@@ -62,23 +55,32 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [HttpPut]
         [ResponseType(typeof(Area))]
         [Route("api/Areas/{id}")]
-        public Area Edit(int id, Area area)
+        public HttpResponseMessage Edit(HttpRequestMessage request, int id, Area area)
         {
             area.ID = id;
 
-            return area.Update(area);
+            var result = area.Update(area);
+
+            if (result != null)
+            {
+                return request.CreateResponse(HttpStatusCode.Created, result);
+            }
+            else
+            {
+                return request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpHead]
         [ResponseType(typeof(void))]
         [Route("api/Areas/{id}")]
-        public void Delete(HttpRequestMessage request, int id)
+        public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
             var area = new Area();
 
             area.Remove(id);
 
-            request.CreateResponse(HttpStatusCode.OK);
+            return request.CreateResponse(HttpStatusCode.NoContent);
         }
     }
 }

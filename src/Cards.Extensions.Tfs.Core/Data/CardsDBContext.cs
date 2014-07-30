@@ -9,14 +9,11 @@ namespace Cards.Extensions.Tfs.Core.Data
     {
 
         public CardsDBContext()
-            : base("CardsDB")
-        {
-            
-        }
+            : base("CardsDB") { }
 
         public DbSet<Area> Areas { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<Label> Labels { get; set; }
         public DbSet<CardActivity> CardActivities { get; set; }
-
     }
 }

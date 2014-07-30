@@ -21,7 +21,7 @@ namespace Cards.Extensions.Tfs.Core.Services
             {
                 if (_project == null)
                 {
-                    var tfs = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(ConfigurationManager.AppSettings["TFSProjectCollection"]));
+                    var tfs = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(ConfigurationManager.ConnectionStrings["TeamFoundationServer"].ConnectionString));
 
                     var workItemStore = tfs.GetService(typeof(WorkItemStore)) as WorkItemStore;
 

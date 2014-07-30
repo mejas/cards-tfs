@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using Cards.Extensions.Tfs.Core.Services;
 
@@ -64,9 +61,37 @@ namespace Cards.Extensions.Tfs.Core.Models
             return StorageProvider.GetAllLabels();
         }
 
-        public Label Get(string labelName)
+        public Label Get(int labelID)
         {
-            return StorageProvider.GetLabel(labelName);
+            return StorageProvider.GetLabel(labelID);
+        }
+
+        public Label Update(Label label)
+        {
+            if (label != null)
+            {
+                label.ModifiedDate = DateProvider.Now();
+                label.ModifiedUser = IdentityProvider.GetUserName();
+
+                return StorageProvider.Update(label);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void Remove(int labelID)
+        {
+            var label = Get(labelID);
+
+            if (label != null)
+            {
+                label.ModifiedDate = DateProvider.Now();
+                label.ModifiedUser = IdentityProvider.GetUserName();
+
+                StorageProvider.RemoveLabel(label);
+            }
         }
     }
 }

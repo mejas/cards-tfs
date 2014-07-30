@@ -305,7 +305,6 @@ namespace Cards.Extensions.Tfs.Core.Models
 
             if (cardResult != null)
             {
-
                 CardActivity cardActivity = new CardActivity(StorageProvider, IdentityProvider);
 
                 cardResult.CardActivities.Add(cardActivity.Add(card.ID, cardActivityType, dateNow));

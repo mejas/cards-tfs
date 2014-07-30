@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using FluentAssertions;
-using Cards.Extensions.Tfs.Core.Models;
-using Moq;
 using Cards.Extensions.Tfs.Core.Interfaces;
+using Cards.Extensions.Tfs.Core.Models;
+using FluentAssertions;
+using Moq;
+using Xunit;
 
 namespace Cards.Extensions.Tfs.Tests
 {
@@ -462,12 +459,12 @@ namespace Cards.Extensions.Tfs.Tests
                 Label subject = null;
 
                 storageProvider
-                    .Setup(d => d.GetLabel(It.Is<string>(i => i == "MIKADO")))
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
                     .Returns(() => new Label() { ID = 1, Active = true, ColorCode = "#123456", Name = "MIKADO" });
 
                 Label label = new Label(null, null, storageProvider.Object);
 
-                subject = label.Get("mikakuning");
+                subject = label.Get(0);
 
                 subject.Should().BeNull();
             }
@@ -481,12 +478,12 @@ namespace Cards.Extensions.Tfs.Tests
                 Label subject = null;
 
                 storageProvider
-                    .Setup(d => d.GetLabel(It.Is<string>(i => i == "MIKADO")))
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
                     .Returns(() => new Label() { ID = 1, Active = true, ColorCode = "#123456", Name = "MIKADO" });
 
                 Label label = new Label(null, null, storageProvider.Object);
 
-                subject = label.Get("MIKADO");
+                subject = label.Get(1);
 
                 subject.Should().NotBeNull();
             }
@@ -500,12 +497,12 @@ namespace Cards.Extensions.Tfs.Tests
                 Label subject = null;
 
                 storageProvider
-                    .Setup(d => d.GetLabel(It.Is<string>(i => i == "MIKADO")))
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
                     .Returns(() => new Label() { ID = 1, Active = true, ColorCode = "#123456", Name = "MIKADO" });
 
                 Label label = new Label(null, null, storageProvider.Object);
 
-                subject = label.Get("MIKADO");
+                subject = label.Get(1);
 
                 subject.ColorCode.Should().Be("#123456");
             }
@@ -519,12 +516,12 @@ namespace Cards.Extensions.Tfs.Tests
                 Label subject = null;
 
                 storageProvider
-                    .Setup(d => d.GetLabel(It.Is<string>(i => i == "MIKADO")))
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
                     .Returns(() => new Label() { ID = 1, Active = true, ColorCode = "#123456", Name = "MIKADO" });
 
                 Label label = new Label(null, null, storageProvider.Object);
 
-                subject = label.Get("MIKADO");
+                subject = label.Get(1);
 
                 subject.ColorCode.Should().Be("#123456");
             }
@@ -532,6 +529,324 @@ namespace Cards.Extensions.Tfs.Tests
 
         public class UpdateMethod
         {
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenUpdate_ShouldBeNull()
+            {
+                var storageProvider = new Mock<IStorageProvider>();
+
+                Label subject = null;
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Label>()))
+                    .Callback<Label>(l => subject = l)
+                    .Returns(() => subject);
+
+                var label = new Label(null, null, storageProvider.Object);
+
+                subject = label.Update(null);
+
+                subject.Should().BeNull();
+            }
+
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenUpdate_ShouldNotBeNull()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+                var dateProvider = new Mock<IDateProvider>();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                identityProvider
+                    .Setup(d => d.GetUserName())
+                    .Returns("MIKADO");
+
+                var NOW = new DateTime(2014, 7, 21);
+
+                dateProvider
+                    .Setup(d => d.Now())
+                    .Returns(NOW);
+
+                Label subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
+                    .Returns(() =>
+                        {
+                        var now = DateTime.UtcNow;
+                        var user = "Dave Rodgers";
+                        return new Label()
+                        {
+                            ID = 1,
+                            Name = "myLabel",
+                            CreatedDate = now,
+                            CreatedUser = user,
+                            ModifiedDate = now,
+                            ModifiedUser = user,
+                            ColorCode = "#000000"
+                        };
+                        });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Label>()))
+                    .Returns(() => subject);
+
+                var label = new Label(dateProvider.Object, identityProvider.Object, storageProvider.Object);
+
+                subject = label.Get(1);
+
+                subject.Name = "newMyLabel";
+                subject.ColorCode = "#111111";
+
+                subject = label.Update(subject);
+
+                subject.Should().NotBeNull();
+            }
+
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenUpdate_ShouldNameBeUpdated()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+                var dateProvider = new Mock<IDateProvider>();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                identityProvider
+                    .Setup(d => d.GetUserName())
+                    .Returns("MIKADO");
+
+                var NOW = new DateTime(2014, 7, 21);
+
+                dateProvider
+                    .Setup(d => d.Now())
+                    .Returns(NOW);
+
+                Label subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
+                    .Returns(() =>
+                    {
+                        var now = DateTime.UtcNow;
+                        var user = "Dave Rodgers";
+                        return new Label()
+                        {
+                            ID = 1,
+                            Name = "myLabel",
+                            CreatedDate = now,
+                            CreatedUser = user,
+                            ModifiedDate = now,
+                            ModifiedUser = user,
+                            ColorCode = "#000000"
+                        };
+                    });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Label>()))
+                    .Returns(() => subject);
+
+                var label = new Label(dateProvider.Object, identityProvider.Object, storageProvider.Object);
+
+                subject = label.Get(1);
+
+                subject.Name = "newMyLabel";
+                subject.ColorCode = "#111111";
+
+                subject = label.Update(subject);
+
+                subject.Name.Should().Be("newMyLabel");
+            }
+
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenUpdate_ShouldColorCodeBeUpdated()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+                var dateProvider = new Mock<IDateProvider>();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                identityProvider
+                    .Setup(d => d.GetUserName())
+                    .Returns("MIKADO");
+
+                var NOW = new DateTime(2014, 7, 21);
+
+                dateProvider
+                    .Setup(d => d.Now())
+                    .Returns(NOW);
+
+                Label subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
+                    .Returns(() =>
+                    {
+                        var now = DateTime.UtcNow;
+                        var user = "Dave Rodgers";
+                        return new Label()
+                        {
+                            ID = 1,
+                            Name = "myLabel",
+                            CreatedDate = now,
+                            CreatedUser = user,
+                            ModifiedDate = now,
+                            ModifiedUser = user,
+                            ColorCode = "#000000"
+                        };
+                    });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Label>()))
+                    .Returns(() => subject);
+
+                var label = new Label(dateProvider.Object, identityProvider.Object, storageProvider.Object);
+
+                subject = label.Get(1);
+
+                subject.Name = "newMyLabel";
+                subject.ColorCode = "#111111";
+
+                subject = label.Update(subject);
+
+                subject.ColorCode.Should().Be("#111111");
+            }
+
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenUpdate_ShouldModifiedDateBeUpdated()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+                var dateProvider = new Mock<IDateProvider>();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                identityProvider
+                    .Setup(d => d.GetUserName())
+                    .Returns("MIKADO");
+
+                var NOW = new DateTime(2014, 7, 21);
+
+                dateProvider
+                    .Setup(d => d.Now())
+                    .Returns(NOW);
+
+                Label subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
+                    .Returns(() =>
+                    {
+                        var now = DateTime.UtcNow;
+                        var user = "Dave Rodgers";
+                        return new Label()
+                        {
+                            ID = 1,
+                            Name = "myLabel",
+                            CreatedDate = now,
+                            CreatedUser = user,
+                            ModifiedDate = now,
+                            ModifiedUser = user,
+                            ColorCode = "#000000"
+                        };
+                    });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Label>()))
+                    .Returns(() => subject);
+
+                var label = new Label(dateProvider.Object, identityProvider.Object, storageProvider.Object);
+
+                subject = label.Get(1);
+
+                subject.Name = "newMyLabel";
+                subject.ColorCode = "#111111";
+
+                subject = label.Update(subject);
+
+                subject.ModifiedDate.Should().Be(NOW);
+            }
+
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenUpdate_ShouldModifiedUserBeUpdated()
+            {
+                var identityProvider = new Mock<IIdentityProvider>();
+                var dateProvider = new Mock<IDateProvider>();
+                var storageProvider = new Mock<IStorageProvider>();
+
+                identityProvider
+                    .Setup(d => d.GetUserName())
+                    .Returns("MIKADO");
+
+                var NOW = new DateTime(2014, 7, 21);
+
+                dateProvider
+                    .Setup(d => d.Now())
+                    .Returns(NOW);
+
+                Label subject = null;
+
+                storageProvider
+                    .Setup(d => d.GetLabel(It.Is<int>(i => i == 1)))
+                    .Returns(() =>
+                    {
+                        var now = DateTime.UtcNow;
+                        var user = "Dave Rodgers";
+                        return new Label()
+                        {
+                            ID = 1,
+                            Name = "myLabel",
+                            CreatedDate = now,
+                            CreatedUser = user,
+                            ModifiedDate = now,
+                            ModifiedUser = user,
+                            ColorCode = "#000000"
+                        };
+                    });
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Label>()))
+                    .Returns(() => subject);
+
+                var label = new Label(dateProvider.Object, identityProvider.Object, storageProvider.Object);
+
+                subject = label.Get(1);
+
+                subject.Name = "newMyLabel";
+                subject.ColorCode = "#111111";
+
+                subject = label.Update(subject);
+
+                subject.ModifiedUser.Should().Be("MIKADO");
+            }
+        }
+
+        public class RemoveMethod
+        {
+            [Fact]
+            [Trait("Category", "Label")]
+            public void WhenRemove_ShouldBeNull()
+            {
+                var NOW = new DateTime(2014, 5, 22);
+
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var identityProvider = new Mock<IIdentityProvider>();
+                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                storageProvider.Setup(d => d.RemoveLabel(It.IsAny<Label>()));
+                storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => null);
+
+                var label = new Label(dateProvider.Object, identityProvider.Object, storageProvider.Object);
+
+                label.Remove(1);
+
+                var subject = label.Get(1);
+
+                subject.Should().BeNull();
+            }
         }
     }
 }

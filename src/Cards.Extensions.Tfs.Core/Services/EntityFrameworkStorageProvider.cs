@@ -191,22 +191,80 @@ namespace Cards.Extensions.Tfs.Core.Services
         #region Labels
         public Label Add(Label label)
         {
-            throw new System.NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+                var existingItem = db.Labels.FirstOrDefault(item => item.Name == label.Name);
+
+                if (existingItem == null)
+                {
+                    var result = db.Labels.Add(label);
+                    db.SaveChanges();
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         public List<Label> GetAllLabels()
         {
-            throw new System.NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+                return db.Labels.Where(label => label.Active == true).ToList();
+            }
         }
 
         public Label Update(Label label)
         {
-            throw new System.NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+                var labelToUpdate = db.Labels.FirstOrDefault(item => item.ID == label.ID);
+                var existingLabel = db.Labels.FirstOrDefault(item => item.Name == label.Name);
+
+                if (labelToUpdate != null && existingLabel != null)
+                {
+                    labelToUpdate.Name = label.Name;
+                    labelToUpdate.ColorCode = label.ColorCode;
+                    labelToUpdate.ModifiedDate = label.ModifiedDate;
+                    labelToUpdate.ModifiedUser = label.ModifiedUser;
+
+                    db.SaveChanges();
+
+                    return labelToUpdate;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
-        public Label GetLabel(string labelName)
+        public Label GetLabel(int labelID)
         {
-            throw new System.NotImplementedException();
+            using (var db = new CardsDBContext())
+            {
+                return db.Labels.FirstOrDefault(item => item.ID == labelID && item.Active == true);
+            }
+        }
+
+        public void RemoveLabel(Label label)
+        {
+            using (var db = new CardsDBContext())
+            {
+                var labelToRemove = db.Labels.FirstOrDefault(item => item.ID == label.ID);
+
+                if (labelToRemove != null)
+                {
+                    labelToRemove.ModifiedDate = label.ModifiedDate;
+                    labelToRemove.ModifiedUser = label.ModifiedUser;
+                    labelToRemove.Active       = false;
+
+                    db.SaveChanges();
+                }
+            }
         }
         #endregion
     }
