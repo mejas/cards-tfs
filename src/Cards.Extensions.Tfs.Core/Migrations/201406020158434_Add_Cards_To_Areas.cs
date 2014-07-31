@@ -1,6 +1,5 @@
 namespace Cards.Extensions.Tfs.Core.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class Add_Cards_To_Areas : DbMigration

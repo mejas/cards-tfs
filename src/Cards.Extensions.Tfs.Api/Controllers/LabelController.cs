@@ -8,43 +8,42 @@ using Cards.Extensions.Tfs.Core.Models;
 namespace Cards.Extensions.Tfs.Api.Controllers
 {
     [Authorize]
-    public class AreasController : ApiController
+    public class LabelController : ApiController
     {
         [HttpGet]
-        [ResponseType(typeof(List<Area>))]
-        [Route("api/Areas")]
+        [ResponseType(typeof(List<Label>))]
+        [Route("api/Labels")]
         public HttpResponseMessage GetAll(HttpRequestMessage request)
         {
-            var area = new Area();
+            var label = new Label();
 
-            var result = area.GetAll();
+            var result = label.GetAll();
 
             return request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-
         [HttpGet]
-        [ResponseType(typeof(Area))]
-        [Route("api/Areas/{id}")]
-        public HttpResponseMessage GetByID(HttpRequestMessage request, int id)
+        [ResponseType(typeof(Label))]
+        [Route("api/Labels/{id}")]
+        public HttpResponseMessage GetById(HttpRequestMessage request, int id)
         {
-            var area = new Area();
+            var label = new Label();
 
-            var result = area.Get(id);
+            var result = label.Get(id);
 
             return request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
-        [ResponseType(typeof(Area))]
-        [Route("api/Areas")]
-        public HttpResponseMessage Add(HttpRequestMessage request, Area area)
+        [ResponseType(typeof(Label))]
+        [Route("api/Labels")]
+        public HttpResponseMessage Add(HttpRequestMessage request, Label label)
         {
-            var result = area.Add(area.Name);
+            var result = label.Add(label.Name, label.ColorCode);
 
             if (result != null)
             {
-                return request.CreateResponse(HttpStatusCode.Created, result);
+                return request.CreateResponse(HttpStatusCode.OK, result);
             }
             else
             {
@@ -53,17 +52,17 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         }
 
         [HttpPut]
-        [ResponseType(typeof(Area))]
-        [Route("api/Areas/{id}")]
-        public HttpResponseMessage Edit(HttpRequestMessage request, int id, Area area)
+        [ResponseType(typeof(Label))]
+        [Route("api/Labels/{id}")]
+        public HttpResponseMessage Edit(HttpRequestMessage request, int id, Label label)
         {
-            area.ID = id;
+            label.ID = id;
 
-            var result = area.Update(area);
+            var result = label.Update(label);
 
             if (result != null)
             {
-                return request.CreateResponse(HttpStatusCode.Created, result);
+                return request.CreateResponse(HttpStatusCode.OK, result);
             }
             else
             {
@@ -73,12 +72,12 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 
         [HttpHead]
         [ResponseType(typeof(void))]
-        [Route("api/Areas/{id}")]
+        [Route("api/Labels/{id}")]
         public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
-            var area = new Area();
+            var label = new Label();
 
-            area.Remove(id);
+            label.Remove(id);
 
             return request.CreateResponse(HttpStatusCode.NoContent);
         }

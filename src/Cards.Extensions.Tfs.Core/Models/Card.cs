@@ -158,10 +158,13 @@ namespace Cards.Extensions.Tfs.Core.Models
 
             var result = StorageProvider.Add(card);
 
-            CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
-            activity = activity.Add(result.ID, CardActivityType.Add, dateNow);
+            if (result != null)
+            {
+                CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
+                activity = activity.Add(result.ID, CardActivityType.Add, dateNow);
 
-            result.CardActivities.Add(activity);
+                result.CardActivities.Add(activity);
+            }
 
             return result;
         }
@@ -197,10 +200,13 @@ namespace Cards.Extensions.Tfs.Core.Models
 
                 var storedCard = StorageProvider.Add(cardToAdd);
 
-                CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
-                storedCard.CardActivities.Add(activity.Add(storedCard.ID, CardActivityType.Add, dateNow));
+                if (storedCard != null)
+                {
+                    CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
+                    storedCard.CardActivities.Add(activity.Add(storedCard.ID, CardActivityType.Add, dateNow));
 
-                result.Add(storedCard);
+                    result.Add(storedCard);
+                }
             }
 
             return result;
@@ -253,10 +259,16 @@ namespace Cards.Extensions.Tfs.Core.Models
 
             if (card != null)
             {
-                card.ModifiedDate = DateProvider.Now();
+                var NOW = DateProvider.Now();
+
+                card.ModifiedDate = NOW;
                 card.ModifiedUser = IdentityProvider.GetUserName();
 
                 StorageProvider.RemoveCard(card);
+
+                CardActivity cardActivity = new CardActivity(StorageProvider, IdentityProvider);
+
+                cardActivity.Add(card.ID, CardActivityType.Delete, NOW);
             }
         }
 
@@ -291,9 +303,12 @@ namespace Cards.Extensions.Tfs.Core.Models
 
             var cardResult = StorageProvider.Update(card);
 
-            CardActivity cardActivity = new CardActivity(StorageProvider, IdentityProvider);
+            if (cardResult != null)
+            {
+                CardActivity cardActivity = new CardActivity(StorageProvider, IdentityProvider);
 
-            cardResult.CardActivities.Add(cardActivity.Add(card.ID, cardActivityType, dateNow));
+                cardResult.CardActivities.Add(cardActivity.Add(card.ID, cardActivityType, dateNow));
+            }
 
             return cardResult;
         }
