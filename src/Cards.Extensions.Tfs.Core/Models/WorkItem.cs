@@ -1,7 +1,8 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using Cards.Extensions.Tfs.Core.Services;
+
 namespace Cards.Extensions.Tfs.Core.Models
 {
     /// <summary>
@@ -24,6 +25,7 @@ namespace Cards.Extensions.Tfs.Core.Models
         /// <value>
         /// The identifier.
         /// </value>
+        [Key]
         public int ID { get; set; }
 
         /// <summary>

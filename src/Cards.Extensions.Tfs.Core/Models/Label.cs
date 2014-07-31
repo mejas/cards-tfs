@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using Cards.Extensions.Tfs.Core.Services;
 
@@ -28,6 +29,7 @@ namespace Cards.Extensions.Tfs.Core.Models
         protected IIdentityProvider IdentityProvider { get; set; }
         protected IStorageProvider StorageProvider { get; set; }
 
+        [Key]
         public int ID { get; set; }
         public string CreatedUser { get; set; }
         public DateTime CreatedDate { get; set; }
