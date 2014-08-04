@@ -7,6 +7,7 @@ using System.Text;
 using Cards.Extensions.Tfs.Core.Interfaces;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
+using System.Web;
 
 namespace Cards.Extensions.Tfs.Core.Services
 {
@@ -21,7 +22,7 @@ namespace Cards.Extensions.Tfs.Core.Services
             {
                 if (_project == null)
                 {
-                    var tfs = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(ConfigurationManager.ConnectionStrings["TeamFoundationServer"].ConnectionString));
+                    var tfs = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(ConfigurationManager.AppSettings["TFSProjectCollection"]));
 
                     var workItemStore = tfs.GetService(typeof(WorkItemStore)) as WorkItemStore;
 
@@ -53,7 +54,7 @@ namespace Cards.Extensions.Tfs.Core.Services
                 var items = Project.Store.Query(wiql);
 
                 List<Models.WorkItem> workItems = new List<Models.WorkItem>();
-                foreach(WorkItem item in items)
+                foreach (WorkItem item in items)
                 {
                     workItems.Add(createCardsWorkItem(item));
                 }
@@ -70,11 +71,9 @@ namespace Cards.Extensions.Tfs.Core.Services
             {
                 StoredQuery query = getStoredQuery(Project, queryName);
 
-                //for some reason, tfs client api supports @me, but not @project.
-                //we'll put this here to support queries which make use of this variable
-                Dictionary<string, string> parameters = new Dictionary<string,string>()
+                Dictionary<string, string> parameters = new Dictionary<string, string>()
                 {
-                    { "Project", Project.Name }
+                    { "project", Project.Name }
                 };
 
                 if (query != null)
@@ -112,10 +111,10 @@ namespace Cards.Extensions.Tfs.Core.Services
         {
             return new Models.WorkItem()
             {
-                ID          = workItem.Id,
-                Title       = workItem.Title,
+                ID = workItem.Id,
+                Title = workItem.Title,
                 Description = workItem.Description,
-                AssignedTo  = workItem.Fields[CoreField.AssignedTo].Value.ToString()
+                AssignedTo = workItem.Fields[CoreField.AssignedTo].Value.ToString()
             };
         }
 

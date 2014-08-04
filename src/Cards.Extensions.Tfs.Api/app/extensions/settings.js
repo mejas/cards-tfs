@@ -38,11 +38,14 @@
         };
     }]);
 
-    app.controller('MenuCtrl', ['$scope', '$window', '$location', '$http', '$route', 'Session', 'AppSettings', function ($scope, $window, $location, $http, $route, Session, AppSettings) {
+    app.controller('MenuCtrl', ['$scope', '$rootScope', '$window', '$location', '$http', '$route', 'Session', 'AppSettings', function ($scope, $rootScope, $window, $location, $http, $route, Session, AppSettings) {
 
         $scope.import = function () {
+
+            $rootScope.$broadcast('ajax_start');
             $http.post('/api/import/1?queryName=' + AppSettings.importQuery)
-                .success(function(data) {
+                .success(function (data) {
+                    $rootScope.$broadcast('ajax_end');
                     $route.reload();
                 });
         };
