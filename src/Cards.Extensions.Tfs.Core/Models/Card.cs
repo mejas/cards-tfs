@@ -198,34 +198,42 @@ namespace Cards.Extensions.Tfs.Core.Models
 
             List<Card> result = new List<Card>();
 
-            foreach (var workItem in workItems)
+            if (workItems != null)
             {
-                var cardToAdd = new Card()
+                foreach (var workItem in workItems)
                 {
-                    CreatedUser  = currentUser,
-                    CreatedDate  = dateNow,
-                    ModifiedUser = currentUser,
-                    ModifiedDate = dateNow,
+                    var cardToAdd = createCardFromWorkItem(areaID, workItem, dateNow, currentUser);
 
-                    Name        = workItem.Title,
-                    Description = workItem.Description,
-                    AreaID      = areaID,
-                    AssignedTo  = workItem.AssignedTo,
-                    TfsID       = workItem.ID
-                };
+                    var storedCard = StorageProvider.Add(cardToAdd);
 
-                var storedCard = StorageProvider.Add(cardToAdd);
+                    if (storedCard != null)
+                    {
+                        CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
+                        storedCard.CardActivities.Add(activity.Add(storedCard.ID, CardActivityType.Add, dateNow));
 
-                if (storedCard != null)
-                {
-                    CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
-                    storedCard.CardActivities.Add(activity.Add(storedCard.ID, CardActivityType.Add, dateNow));
-
-                    result.Add(storedCard);
+                        result.Add(storedCard);
+                    }
                 }
             }
 
             return result;
+        }
+
+        private Card createCardFromWorkItem(int areaID, WorkItem workItem, DateTime dateNow, string currentUser)
+        {            
+            return new Card()
+            {
+                CreatedUser = currentUser,
+                CreatedDate = dateNow,
+                ModifiedUser = currentUser,
+                ModifiedDate = dateNow,
+
+                Name = workItem.Title,
+                Description = workItem.Description,
+                AreaID = areaID,
+                AssignedTo = workItem.AssignedTo,
+                TfsID = workItem.ID
+            };
         }
 
         /// <summary>

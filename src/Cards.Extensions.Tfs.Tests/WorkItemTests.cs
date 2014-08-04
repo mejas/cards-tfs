@@ -115,47 +115,6 @@ namespace Cards.Extensions.Tfs.Tests
             }
         }
 
-        public class GetByQueryMethod
-        {
-            [Fact]
-            [Trait("Category", "WorkItem")]
-            public void WhenGet_ShouldNotBeNull()
-            {
-                var tfsProvider = new Mock<ITFSProvider>();
-
-                tfsProvider.
-                    Setup(d => d.GetTFSItems(It.IsAny<IEnumerable<KeyValuePair<string, string>>>()))
-                    .Returns(() => { return new List<WorkItem>() { new WorkItem() { ID = 1, Title = "TFS Work Item", Description = "TFS Work Item Description", AssignedTo = "Somebody" } }; });
-
-                WorkItem workItem = new WorkItem(tfsProvider.Object);
-
-                List<KeyValuePair<string, string>> searchparams = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("a", "b") };
-
-                var subject = workItem.Get(searchparams);
-
-                subject.Should().NotBeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "WorkItem")]
-            public void WhenGet_ShouldCountBeOne()
-            {
-                var tfsProvider = new Mock<ITFSProvider>();
-
-                tfsProvider.
-                    Setup(d => d.GetTFSItems(It.IsAny<IEnumerable<KeyValuePair<string, string>>>()))
-                    .Returns(() => { return new List<WorkItem>() { new WorkItem() { ID = 1, Title = "TFS Work Item", Description = "TFS Work Item Description", AssignedTo = "Somebody" } }; });
-
-                WorkItem workItem = new WorkItem(tfsProvider.Object);
-
-                List<KeyValuePair<string,string>> args = new List<KeyValuePair<string,string>>(){ new KeyValuePair<string, string>("a","b") };
-
-                var subject = workItem.Get(args);
-
-                subject.Count.Should().Be(1);
-            }
-        }
-
         public class GetBySavedQueryMethod
         {
             [Fact]
