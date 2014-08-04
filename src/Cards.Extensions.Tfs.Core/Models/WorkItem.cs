@@ -59,11 +59,6 @@ namespace Cards.Extensions.Tfs.Core.Models
             return TFSProvider.GetTFSItem(tfsID);
         }
 
-        public List<WorkItem> Get(IEnumerable<KeyValuePair<string, string>> searchparams)
-        {
-            return TFSProvider.GetTFSItems(searchparams);
-        }
-
         public List<WorkItem> Get(string queryName)
         {
             return TFSProvider.GetTFSItems(queryName);

@@ -8,13 +8,28 @@ using Cards.Extensions.Tfs.Core.Interfaces;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System.Web;
+using Microsoft.TeamFoundation.Framework.Client;
+using Microsoft.TeamFoundation.Server;
 
 namespace Cards.Extensions.Tfs.Core.Services
 {
     public class TFSProvider : ITFSProvider
     {
+        TfsTeamProjectCollection _projectCollection = null;
         Project _project = null;
-        private const string AND_CLAUSE = " AND ";
+
+        public TfsTeamProjectCollection ProjectCollection
+        {
+            get
+            {
+                if (_projectCollection == null)
+                {
+                    _projectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(ConfigurationManager.AppSettings["TFSProjectCollection"]));
+                }
+
+                return _projectCollection;
+            }
+        }
 
         public Project Project
         {
@@ -22,9 +37,7 @@ namespace Cards.Extensions.Tfs.Core.Services
             {
                 if (_project == null)
                 {
-                    var tfs = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(ConfigurationManager.AppSettings["TFSProjectCollection"]));
-
-                    var workItemStore = tfs.GetService(typeof(WorkItemStore)) as WorkItemStore;
+                    var workItemStore = ProjectCollection.GetService(typeof(WorkItemStore)) as WorkItemStore;
 
                     _project = workItemStore.Projects[ConfigurationManager.AppSettings["TFSProject"]];
                 }
@@ -40,26 +53,6 @@ namespace Cards.Extensions.Tfs.Core.Services
                 var workItem = Project.Store.GetWorkItem(tfsID);
 
                 return createCardsWorkItem(workItem);
-            }
-
-            return null;
-        }
-
-        public List<Models.WorkItem> GetTFSItems(IEnumerable<KeyValuePair<string, string>> tfsQueryArgs)
-        {
-            if (Project != null)
-            {
-                string wiql = buildWiqlString(tfsQueryArgs);
-
-                var items = Project.Store.Query(wiql);
-
-                List<Models.WorkItem> workItems = new List<Models.WorkItem>();
-                foreach (WorkItem item in items)
-                {
-                    workItems.Add(createCardsWorkItem(item));
-                }
-
-                return workItems;
             }
 
             return null;
@@ -118,35 +111,13 @@ namespace Cards.Extensions.Tfs.Core.Services
             };
         }
 
-        private string buildWiqlString(IEnumerable<KeyValuePair<string, string>> tfsQueryArgs)
+        public string GetTFSDisplayName(string identity)
         {
-            StringBuilder query = new StringBuilder();
+            var identityService = ProjectCollection.GetService<IGroupSecurityService>();
 
-            query.Append(@"select [Id], [Title], [Description], [Assigned To] from WorkItems");
+            var tfsIdentity = identityService.ReadIdentity(SearchFactor.AccountName, identity, QueryMembership.None);
 
-            if (tfsQueryArgs.Count() > 0)
-            {
-                query.Append(" where");
-
-                foreach (var tfsQueryArg in tfsQueryArgs)
-                {
-                    query.Append(buildWhereParam(tfsQueryArg));
-                    query.Append(AND_CLAUSE);
-                }
-
-                query.Remove(query.Length - AND_CLAUSE.Length, AND_CLAUSE.Length); //remove last AND
-            }
-
-            return query.ToString().Trim();
-        }
-
-        private string buildWhereParam(KeyValuePair<string, string> tfsQueryArg)
-        {
-            StringBuilder query = new StringBuilder();
-
-            query.AppendFormat(" [{0}] = '{1}' ", tfsQueryArg.Key, tfsQueryArg.Value);
-
-            return query.ToString();
+            return tfsIdentity.DisplayName;
         }
     }
 }

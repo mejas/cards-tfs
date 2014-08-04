@@ -8,7 +8,7 @@
         AppSettings.cardFormTemplate = 'extensions/cardform-partial.html';
         AppSettings.menuTemplate = 'extensions/menu-partial.html';
         AppSettings.sessionTemplate = 'extensions/login-partial.html';
-        AppSettings.importQuery = 'Cards';
+        AppSettings.importQuery = 'CardsTest';
         
     }]);
 
