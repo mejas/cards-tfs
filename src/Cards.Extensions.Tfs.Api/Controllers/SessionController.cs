@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -15,7 +16,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [Route("api/Session")]
         public HttpResponseMessage New(HttpRequestMessage request)
         {
-            return request.CreateResponse(HttpStatusCode.Created, new { Name = "Marc Vitalis" });
+            return request.CreateResponse(HttpStatusCode.Created, new { Name = HttpContext.Current.Request.LogonUserIdentity.Name });
         }
 
     }
