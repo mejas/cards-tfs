@@ -1,0 +1,2 @@
+<a ng-href="#/session/new" ng-if="!isAuthenticated()" class="navbar-link link-unstyled">Not Signed In</a>
+<span ng-if="isAuthenticated()">{{getCurrentUser()}}</span>

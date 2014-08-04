@@ -157,6 +157,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\LabelController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -164,6 +165,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\extensions\card-partial.html" />
+    <Content Include="app\extensions\cardform-partial.html" />
+    <Content Include="app\extensions\login-partial.html" />
     <Content Include="app\extensions\menu-partial.html" />
     <Content Include="app\extensions\settings.js" />
     <Content Include="app\extensions\style.css" />

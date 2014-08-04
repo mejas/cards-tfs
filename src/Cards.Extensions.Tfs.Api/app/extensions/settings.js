@@ -5,14 +5,47 @@
     app.config(['AppSettings', function (AppSettings) {
         AppSettings.serviceBaseUrl = 'http://localhost:3000/api/';
         AppSettings.cardTemplate = 'extensions/card-partial.html';
-        AppSettings.menuTemplate = 'extensions/menu-partial.html'
+        AppSettings.cardFormTemplate = 'extensions/cardform-partial.html';
+        AppSettings.menuTemplate = 'extensions/menu-partial.html';
+        AppSettings.sessionTemplate = 'extensions/login-partial.html';
+        AppSettings.importQuery = 'CardsTest';
+        
     }]);
 
-    app.controller('MenuCtrl', ['$scope', '$location', '$http', '$route', function ($scope, $location, $http, $route) {
+    app.run(['Session', 'AppSettings', '$http', '$rootScope', '$window', function (Session, AppSettings, $http, $rootScope, $window) {
+        
+        Session.checkAuthentication = function () {
+            //Windows authentication, let session bar gets the currently signed in user
+        };
+
+        Session.isAuthenticated = function () {
+            return true;
+        };
+
+        Session.getCurrentUser = function () {
+            if (!$window.sessionStorage.user) {
+                var uri = AppSettings.serviceBaseUrl + 'session';
+                $window.sessionStorage.user = "Logged In";
+
+
+                $http.post(uri)
+                    .success(function (session) {
+                        Session.create(session);
+                    });
+            }
+
+            return $window.sessionStorage.user;
+        };
+    }]);
+
+    app.controller('MenuCtrl', ['$scope', '$rootScope', '$window', '$location', '$http', '$route', 'Session', 'AppSettings', function ($scope, $rootScope, $window, $location, $http, $route, Session, AppSettings) {
 
         $scope.import = function () {
-            $http.post('/api/import/1?queryName=CardsTest')
-                .success(function(data) {
+
+            $rootScope.$broadcast('ajax_start');
+            $http.post('/api/import/1?queryName=' + AppSettings.importQuery)
+                .success(function (data) {
+                    $rootScope.$broadcast('ajax_end');
                     $route.reload();
                 });
         };

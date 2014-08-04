@@ -5,8 +5,8 @@ namespace Cards.Extensions.Tfs.Core.Interfaces
 {
     public interface ITFSProvider
     {
+        string GetTFSDisplayName(string identity);
         WorkItem GetTFSItem(int tfsID);
-        List<WorkItem> GetTFSItems(IEnumerable<KeyValuePair<string, string>> tfsQueryArgs);
         List<WorkItem> GetTFSItems(string queryName);
     }
 }
