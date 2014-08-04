@@ -9,6 +9,7 @@
         AppSettings.menuTemplate = 'extensions/menu-partial.html';
         AppSettings.sessionTemplate = 'extensions/login-partial.html';
         AppSettings.importQuery = 'Cards';
+        AppSettings.tfsLinkTemplate = 'http://nvitpmmtf100:8080/tfs/TFSCollection/NCA/_workItems#id={{TFSID}}&_a=edit';
         
     }]);
 
@@ -37,6 +38,15 @@
             return $window.sessionStorage.user;
         };
     }]);
+
+    app.controller('LinkCtrl', ['$scope', 'AppSettings', function ($scope, AppSettings) {
+        $scope.getLink = function (tfsId) {
+            var uri = AppSettings.tfsLinkTemplate.replace('{{TFSID}}', tfsId);
+
+            return uri;
+        };
+    }])
+    
 
     app.controller('MenuCtrl', ['$scope', '$rootScope', '$window', '$location', '$http', '$route', 'Session', 'AppSettings', function ($scope, $rootScope, $window, $location, $http, $route, Session, AppSettings) {
 

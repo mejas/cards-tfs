@@ -1,6 +1,6 @@
 ﻿<div class="card panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">ID {{card.tfsID}}</h4>
+    <div class="panel-heading" ng-if="card.tfsID" ng-controller="LinkCtrl">
+        <h4 class="panel-title">ID <a ng-href="{{getLink(card.tfsID)}}" target="_blank" class="link-unstyled">{{card.tfsID}}</a></h4>
     </div>
     <div class="panel-body">
         <a class="link link-unstyled" href="#/cards/{{card.id}}">{{card.name}}</a>
