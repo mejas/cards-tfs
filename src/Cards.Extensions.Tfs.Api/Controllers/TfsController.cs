@@ -17,8 +17,13 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [Route("api/tfs/{workItemId}")]
         public HttpResponseMessage Get(HttpRequestMessage request, int workItemId)
         {
-            var workItem = new WorkItem();
-            workItem = workItem.Get(workItemId);
+            WorkItem workItem = null;
+
+            using (var impersonator = HttpContextImpersonator.Begin())
+            {
+                workItem = new WorkItem();
+                workItem = workItem.Get(workItemId);
+            }
 
             return request.CreateResponse(HttpStatusCode.OK, workItem);
         }
