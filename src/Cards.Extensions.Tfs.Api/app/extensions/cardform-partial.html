@@ -1,3 +1,15 @@
+<div ng-controller="ImportTFSCtrl">
+    <form class="form-inline" >
+        <div class="form-group">
+            <label for="card-fetch-tfs">You can choose to import from TFS Work Item...</label>
+            <input type="text" id="card-fetch-tfs" class="form-control" placeholder="Enter Work Item ID" ng-model="tfs.id" />
+        </div>
+
+        <button type="submit" class="btn btn-default" ng-click="fetch(tfs.id)">Get</button>
+    </form>
+</div>
+<hr />
+
 <div class="form-group">
     <label for="card-area-id">Area ID</label>
     <select class="form-control" ng-model="card.areaID" ng-options="a.id as a.name for a in areas"></select>
@@ -25,3 +37,4 @@
     <label for="card-assigned-to">Assigned To</label>
     <input type="text" id="card-assigned-to" class="form-control" placeholder="Enter user assigned to" ng-model="card.assignedTo"></textarea>
 </div>
+

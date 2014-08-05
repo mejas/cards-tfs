@@ -158,6 +158,7 @@
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\LabelController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
+    <Compile Include="Controllers\TfsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

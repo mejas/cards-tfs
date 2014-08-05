@@ -39,7 +39,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [Route("api/Cards")]
         public HttpResponseMessage Add(HttpRequestMessage request, Card card)
         {
-            var result = card.Add(card.Name, card.Description, card.AssignedTo, card.AreaID);
+            var result = card.Add(card.Name, card.Description, card.AssignedTo, card.AreaID, card.TfsID);
 
             if (result != null)
             {

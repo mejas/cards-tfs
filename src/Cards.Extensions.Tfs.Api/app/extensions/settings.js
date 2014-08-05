@@ -47,6 +47,25 @@
         };
     }])
     
+    app.controller('ImportTFSCtrl', ['$scope', '$rootScope', '$http', 'CardHelper', function ($scope, $rootScope, $http, CardHelper) {
+        $scope.tfs = {};
+        $scope.tfs.id = '';
+
+        $scope.fetch = function (tfsId) {
+
+            $rootScope.$broadcast('ajax_start');
+            $http.get('http://localhost:3000/api/tfs/' + tfsId)
+                .success(function(workItem) {
+                    $scope.card.tfsID = workItem.id;
+                    $scope.card.name = workItem.title;
+                    $scope.card.description = workItem.description;
+                    $scope.card.assignedTo = workItem.assignedTo;
+                    $scope.card.labels = CardHelper.getLabels($scope.card.name);
+
+                    $rootScope.$broadcast('ajax_end');
+                });
+        };
+    }]);
 
     app.controller('MenuCtrl', ['$scope', '$rootScope', '$window', '$location', '$http', '$route', 'Session', 'AppSettings', function ($scope, $rootScope, $window, $location, $http, $route, Session, AppSettings) {
 
