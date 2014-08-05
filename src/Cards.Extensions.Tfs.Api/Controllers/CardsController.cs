@@ -89,6 +89,7 @@ namespace Cards.Extensions.Tfs.Api.Controllers
             }
         }
 
+        [HttpDelete]
         [HttpHead]
         [ResponseType(typeof(void))]
         [Route("api/Cards/{id}")]

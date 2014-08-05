@@ -47,14 +47,15 @@
         };
     }])
     
-    app.controller('ImportTFSCtrl', ['$scope', '$rootScope', '$http', 'CardHelper', function ($scope, $rootScope, $http, CardHelper) {
+    app.controller('ImportTFSCtrl', ['$scope', '$rootScope', '$http', 'CardHelper', 'AppSettings', function ($scope, $rootScope, $http, CardHelper, AppSettings) {
         $scope.tfs = {};
         $scope.tfs.id = '';
 
         $scope.fetch = function (tfsId) {
+            var uri = AppSettings.serviceBaseUrl + 'tfs/' + tfsId;
 
             $rootScope.$broadcast('ajax_start');
-            $http.get('http://localhost:3000/api/tfs/' + tfsId)
+            $http.get(uri)
                 .success(function(workItem) {
                     $scope.card.tfsID = workItem.id;
                     $scope.card.name = workItem.title;
