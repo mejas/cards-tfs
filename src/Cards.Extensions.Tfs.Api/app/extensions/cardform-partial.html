@@ -15,13 +15,14 @@
     <select class="form-control" ng-model="card.areaID" ng-options="a.id as a.name for a in areas"></select>
 </div>
 
-<div class="card-manage form-group" ng-hide="card.tfsID == undefined">
-    <span class="label label-info">TFS {{card.tfsID}}</span>
+<div class="form-group" ng-class="{'has-error': !cardForm.tfsId.$valid && cardForm.tfsId.$dirty }">
+    <label for="card-tfsId">TFS ID</label>
+    <input type="number" min="1" max="999999" id="card-tfsId" name="tfsId" class="form-control" placeholder="Enter TFS ID for card" ng-model="card.tfsID" />
 </div>
 
-<div class="form-group">
+<div class="form-group" ng-class="{'has-error': !cardForm.name.$valid && cardForm.name.$dirty }">
     <label for="card-name">Name</label>
-    <input type="text" id="card-name" class="form-control" placeholder="Enter name for card" ng-model="card.name"></input>
+    <input type="text" id="card-name" name="name" class="form-control" placeholder="Enter name for card" ng-model="card.name" required></input>
 </div>
 
 <div class="form-group">
