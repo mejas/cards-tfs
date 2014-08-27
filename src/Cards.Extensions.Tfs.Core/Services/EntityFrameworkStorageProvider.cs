@@ -15,7 +15,7 @@ namespace Cards.Extensions.Tfs.Core.Services
             {
                 var areas = db.Areas.Where(area=>area.Active).ToList();
 
-                //areas.ForEach(area => area.Cards = db.Cards.Where(card => card.AreaID == area.ID && card.Active).ToList());
+                areas.ForEach(area => area.Cards = db.Cards.Where(card => card.AreaID == area.ID && card.Active).ToList());
 
                 return areas;
             }
