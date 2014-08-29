@@ -1,5 +1,7 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using Cards.Extensions.Tfs.Core.Interfaces;
+using Cards.Extensions.Tfs.Core.Models;
 
 namespace Cards.Extensions.Tfs.Core.Services
 {
@@ -7,7 +9,14 @@ namespace Cards.Extensions.Tfs.Core.Services
     {
         public string GetUserName()
         {
-            return HttpContext.Current.Request.LogonUserIdentity.Name;
+            var session = (HttpContext.Current.Cache["Session"] as Session);
+
+            if (session != null)
+            {
+                return session.DisplayName;
+            }
+
+            return String.Empty;
         }
     }
 }
