@@ -14,7 +14,8 @@ namespace Cards.Extensions.Tfs.Core.Models
         public Card()
             : this( new DateProvider(), 
                     new EntityFrameworkStorageProvider(), 
-                    new WindowsIdentityProvider())
+                    new WindowsIdentityProvider(),
+                    new ConfigurationProvider())
         {
             Active         = true;
             CardActivities = new List<CardActivity>();
@@ -22,16 +23,19 @@ namespace Cards.Extensions.Tfs.Core.Models
 
         public Card(IDateProvider dateProvider, 
                     IStorageProvider storageProvider, 
-                    IIdentityProvider identityProvider)
+                    IIdentityProvider identityProvider,
+                    IConfigurationProvider configurationProvider)
         {
-            DateProvider     = dateProvider;
-            StorageProvider  = storageProvider;
-            IdentityProvider = identityProvider;
+            DateProvider          = dateProvider;
+            StorageProvider       = storageProvider;
+            IdentityProvider      = identityProvider;
+            ConfigurationProvider = configurationProvider;
         }
 
         protected IDateProvider DateProvider { get; set; }
         protected IStorageProvider StorageProvider { get; set; }
         protected IIdentityProvider IdentityProvider { get; set; }
+        protected IConfigurationProvider ConfigurationProvider { get; set; }
 
         /// <summary>
         /// Gets or sets the database identifier.
@@ -129,6 +133,29 @@ namespace Cards.Extensions.Tfs.Core.Models
         /// The card activities.
         /// </value>
         public List<CardActivity> CardActivities { get; set; }
+
+        /// <summary>
+        /// Gets or sets the age.
+        /// </summary>
+        /// <value>
+        /// The age.
+        /// </value>
+        public int DaysSinceModified 
+        {
+            get { return onGetCardAge(); }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="Card"/> is aged.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if aged; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasAged
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Creates a card using the specified parameters.
@@ -319,6 +346,17 @@ namespace Cards.Extensions.Tfs.Core.Models
             }
 
             return cardResult;
+        }
+
+        private int onGetCardAge()
+        {
+            return isCardAging() ? (ModifiedDate - DateProvider.Now()).Days : 0;
+        }
+
+        private bool isCardAging()
+        {
+            return  this.AreaID != ConfigurationProvider.PendingWorkArea ||
+                    this.AreaID != ConfigurationProvider.CompletedWorkArea;
         }
     }
 }

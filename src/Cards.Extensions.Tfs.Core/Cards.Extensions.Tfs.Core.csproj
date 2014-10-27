@@ -53,9 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IConfigurationProvider.cs" />
     <Compile Include="Models\CardActivity.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Services\ConfigurationProvider.cs" />
     <Compile Include="Models\Label.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\WorkItem.cs" />
