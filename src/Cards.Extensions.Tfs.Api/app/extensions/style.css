@@ -1,3 +1,11 @@
+html { 
+    background: url(../images/cover.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 .card-manage a {
     text-decoration: none;
 }

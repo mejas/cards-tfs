@@ -159,13 +159,29 @@ namespace Cards.Extensions.Tfs.Core.Models
 
         /// <summary>
         /// Creates a card using the specified parameters.
+        /// Adds the specified name.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="description">The description.</param>
-        /// <param name="assignedTo">The person who this item is assigned to.</param>
+        /// <param name="assignedTo">The assigned to.</param>
         /// <param name="areaID">The area identifier.</param>
         /// <returns></returns>
         public Card Add(string name, string description, string assignedTo, int areaID)
+        {
+            return Add(name, description, assignedTo, areaID, 0);
+        }
+
+
+        /// <summary>
+        /// Adds the specified name.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="assignedTo">The assigned to.</param>
+        /// <param name="areaID">The area identifier.</param>
+        /// <param name="tfsID">The TFS identifier.</param>
+        /// <returns></returns>
+        public Card Add(string name, string description, string assignedTo, int areaID, int tfsID)
         {
             var dateNow     = DateProvider.Now();
             var currentUser = IdentityProvider.GetUserName();
@@ -180,6 +196,7 @@ namespace Cards.Extensions.Tfs.Core.Models
                 Name        = name,
                 Description = description,
                 AreaID      = areaID,
+                TfsID       = tfsID,
                 AssignedTo  = assignedTo
             };
 

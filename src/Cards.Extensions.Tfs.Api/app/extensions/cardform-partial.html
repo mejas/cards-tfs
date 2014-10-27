@@ -1,15 +1,28 @@
+<div ng-controller="ImportTFSCtrl">
+    <form class="form-inline" >
+        <div class="form-group">
+            <label for="card-fetch-tfs">You can choose to import from TFS Work Item...</label>
+            <input type="text" id="card-fetch-tfs" class="form-control" placeholder="Enter Work Item ID" ng-model="tfs.id" />
+        </div>
+
+        <button type="submit" class="btn btn-default" ng-click="fetch(tfs.id)">Get</button>
+    </form>
+</div>
+<hr />
+
 <div class="form-group">
     <label for="card-area-id">Area ID</label>
     <select class="form-control" ng-model="card.areaID" ng-options="a.id as a.name for a in areas"></select>
 </div>
 
-<div class="card-manage form-group" ng-hide="card.tfsID == undefined">
-    <span class="label label-info">TFS {{card.tfsID}}</span>
+<div class="form-group" ng-class="{'has-error': !cardForm.tfsId.$valid && cardForm.tfsId.$dirty }">
+    <label for="card-tfsId">TFS ID</label>
+    <input type="number" min="0" max="999999" id="card-tfsId" name="tfsId" class="form-control" placeholder="Enter TFS ID for card" ng-model="card.tfsID" required />
 </div>
 
-<div class="form-group">
+<div class="form-group" ng-class="{'has-error': !cardForm.name.$valid && cardForm.name.$dirty }">
     <label for="card-name">Name</label>
-    <input type="text" id="card-name" class="form-control" placeholder="Enter name for card" ng-model="card.name"></input>
+    <input type="text" id="card-name" name="name" class="form-control" placeholder="Enter name for card" ng-model="card.name" required></input>
 </div>
 
 <div class="form-group">
@@ -23,5 +36,6 @@
 
 <div class="form-group">
     <label for="card-assigned-to">Assigned To</label>
-    <input type="text" id="card-assigned-to" class="form-control" placeholder="Enter user assigned to" ng-model="card.assignedTo"></textarea>
+    <input type="text" name="assingedTo" id="card-assigned-to" class="form-control" placeholder="Enter user assigned to" ng-model="card.assignedTo"></textarea>
 </div>
+

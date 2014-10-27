@@ -161,7 +161,7 @@ namespace Cards.Extensions.Tfs.Tests
 
                 Card card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
 
-                subject = card.Add(name, description, "MIKADO", areaID);
+                subject = card.Add(name, description, "MIKADO", areaID, 100);
 
                 subject.Should().NotBeNull();
             }
