@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Moq;
 
 namespace Cards.Extensions.Tfs.Tests
 {
-    public abstract class BaseTest
+    public abstract class BaseTest<T>
     {
-        protected Dictionary<Type, object> Services;
-        protected abstract Dictionary<Type, object> onInitializeServices();
+        protected T Subject;
+        private Dictionary<Type, Mock> _services;
+        protected abstract Dictionary<Type, Mock> OnInitializeServices();
+        
+        protected abstract void Setup();
+
+        protected S GetService<S>() where S : class
+        {
+            return _services[typeof(S)].Object as S;
+        }
 
         private void initializeServices()
         {
-            Services = onInitializeServices();
+            _services = OnInitializeServices();
         }
 
         public BaseTest()
