@@ -6,144 +6,12 @@ using Cards.Extensions.Tfs.Core.Services;
 using FluentAssertions;
 using Moq;
 using Xunit;
+using System.Linq;
 
 namespace Cards.Extensions.Tfs.Tests
 {
     public class CardTests
     {
-        public class Structure : BaseTest<Card>
-        {
-            protected override Dictionary<Type, Mock> OnInitializeServices()
-            {
-                return new Dictionary<Type, Mock>();
-            }
-
-            protected override void Setup()
-            {
-                Subject = new Card();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldNotBeNull()
-            {
-                Setup();
-                Subject.Should().NotBeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldIDBeZero()
-            {
-                Setup();
-                Subject.ID.Should().Be(0);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldActiveBeTrue()
-            {
-                Setup();
-                Subject.Active.Should().Be(true);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldCardNameBeNll()
-            {
-                Setup();
-                Subject.Name.Should().BeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldCardDescriptionBeNull()
-            {
-                Setup();
-                Subject.Description.Should().BeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldAreaIDBeZero()
-            {
-                Setup();
-                Subject.AreaID.Should().Be(0);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldCreatedDateBeMinValue()
-            {
-                Setup();
-                Subject.CreatedDate.Should().Be(DateTime.MinValue);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldModifiedDateBeMinValue()
-            {
-                Setup();
-                Subject.ModifiedDate.Should().Be(DateTime.MinValue);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldCreatedUserBeNull()
-            {
-                Setup();
-                Subject.CreatedUser.Should().BeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldModifiedUserBeNull()
-            {
-                Setup();
-                Subject.ModifiedUser.Should().BeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldAssignedToBeNull()
-            {
-                Setup();
-                Subject.AssignedTo.Should().BeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldTfsIdBeZero()
-            {
-                Setup();
-                Subject.TfsID.Should().Be(0);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldActivitiesCountBeZero()
-            {
-                Setup();
-                Subject.CardActivities.Count.Should().Be(0);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldAgeBeZero()
-            {
-                Setup();
-                Subject.DaysSinceModified.Should().Be(0);
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenInitialize_ShouldAgedBeFalse()
-            {
-                Setup();
-                Subject.HasAged.Should().Be(false);
-            }
-        }
-
         public class AddMethod : BaseTest<Card>
         {
             DateTime NOW = new DateTime(2014, 5, 22);
@@ -194,7 +62,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldNotBeNull()
+            public void TestForNullValue()
             {
                 Setup();
                 Subject.Should().NotBeNull();
@@ -202,7 +70,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldNameBeMyCard()
+            public void TestCardName()
             {
                 Setup();
                 Subject.Name.Should().Be("MyCard");
@@ -210,7 +78,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldDescriptionBeMyDescription()
+            public void TestCardDescription()
             {
                 Setup();
                 Subject.Description.Should().Be("MyDescription");
@@ -218,7 +86,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldAreaIDBeOne()
+            public void TestAreaID()
             {
                 Setup();
                 Subject.AreaID.Should().Be(1);
@@ -226,7 +94,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldIDBeZero()
+            public void TestCardID()
             {
                 Setup();
                 Subject.ID.Should().Be(0);
@@ -234,7 +102,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldBeActive()
+            public void TestActiveState()
             {
                 Setup();
                 Subject.Active.Should().Be(true);
@@ -242,7 +110,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldCreatedDateHaveValue()
+            public void TestCreatedDate()
             {
                 Setup();
                 Subject.CreatedDate.Should().Be(NOW);
@@ -250,7 +118,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldModifiedDateHaveValue()
+            public void TestModifiedDate()
             {
                 Setup();
                 Subject.ModifiedDate.Should().Be(NOW);
@@ -258,7 +126,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldCreatedUserHaveValue()
+            public void TestCreatedUser()
             {
                 Setup();
                 Subject.CreatedUser.Should().Be("Dave Rodgers");
@@ -266,7 +134,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldModifiedUserHaveValue()
+            public void TestModifiedUser()
             {
                 Setup();
                 Subject.ModifiedUser.Should().Be("Dave Rodgers");
@@ -274,7 +142,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldAssignedToHaveValue()
+            public void TestAssignedTo()
             {
                 Setup();
                 Subject.AssignedTo.Should().Be("MIKADO");
@@ -282,7 +150,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldTFSIdBeZero()
+            public void TestTFSID()
             {
                 Setup();
                 Subject.TfsID.Should().Be(0);
@@ -290,7 +158,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldLatestCardActivityBeAdd()
+            public void TestLatestCardActivity()
             {
                 Setup();
                 Subject.CardActivities[Subject.CardActivities.Count - 1].ActivityType.Should().Be(CardActivityType.Add.ToString());
@@ -349,7 +217,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldNotBeNull()
+            public void TestForNulLValue()
             {
                 Setup();
                 Subject[0].Should().NotBeNull();
@@ -357,7 +225,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldNameBeMyCard()
+            public void TestCardName()
             {
                 Setup();
                 Subject[0].Name.Should().Be("MyCard");
@@ -365,7 +233,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldDescriptionBeMyDescription()
+            public void TestCardDescription()
             {
                 Setup();
                 Subject[0].Description.Should().Be("MyDescription");
@@ -373,7 +241,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldAreaIDBeOne()
+            public void TestAreaID()
             {
                 Setup();
                 Subject[0].AreaID.Should().Be(1);
@@ -381,7 +249,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldIDBeZero()
+            public void TestCardID()
             {
                 Setup();
                 Subject[0].ID.Should().Be(0);
@@ -389,7 +257,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldBeActive()
+            public void TestActiveState()
             {
                 Setup();
                 Subject[0].Active.Should().Be(true);
@@ -397,7 +265,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldCreatedDateHaveValue()
+            public void TestCreatedDate()
             {
                 Setup();
                 Subject[0].CreatedDate.Should().Be(NOW);
@@ -405,7 +273,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldModifiedDateHaveValue()
+            public void TestModifiedDate()
             {
                 Setup();
                 Subject[0].ModifiedDate.Should().Be(NOW);
@@ -413,7 +281,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldCreatedUserHaveValue()
+            public void TestCreatedUser()
             {
                 Setup();
                 Subject[0].CreatedUser.Should().Be("Dave Rodgers");
@@ -421,7 +289,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldModifiedUserHaveValue()
+            public void TestModifiedUser()
             {
                 Setup();
                 Subject[0].ModifiedUser.Should().Be("Dave Rodgers");
@@ -429,7 +297,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldAssignedToHaveValue()
+            public void TestAssignedTo()
             {
                 Setup();
                 Subject[0].AssignedTo.Should().Be("Dave Rodgers");
@@ -437,7 +305,7 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldTFSIdBe1234()
+            public void TestTFSID()
             {
                 Setup();
                 Subject[0].TfsID.Should().Be(1234);
@@ -445,466 +313,267 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenAdd_ShouldAllItemsLatestActivitiesBeAdd()
+            public void TestLatestCardActivity()
             {
                 Setup();
                 Subject.Should().OnlyContain(item => item.CardActivities[item.CardActivities.Count - 1].ActivityType == CardActivityType.Add.ToString());
             }
         }
 
-        public class GetAllMethod
+        public class GetAllMethodNoMatch : BaseTest<List<Card>>
         {
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenGetAll_ShouldNotBeNull()
+            protected override Dictionary<Type, Mock> OnInitializeServices()
             {
+                Dictionary<Type, Mock> services = new Dictionary<Type, Mock>();
+
                 var storageProvider = new Mock<IStorageProvider>();
+
+                List<Card> cards = new List<Card>();
 
                 storageProvider
                     .Setup(d => d.GetAllCards(It.IsAny<int>()))
-                    .Returns(() => new List<Card>());
+                    .Returns((int areaID) => cards.FindAll(item => item.AreaID == areaID) ?? new List<Card>());
 
-                var area = 1;
-                var card = new Card(null, storageProvider.Object, null, null);
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Card>()))
+                    .Callback((Card card) => cards.Add(card));
 
-                var subject = card.GetAll(area);
+                services.Add(typeof(IStorageProvider), storageProvider);
 
-                subject.Should().NotBeNull();
+                return services;
+            }
+
+            protected override void Setup()
+            {
+                var card = new Card(null, GetService<IStorageProvider>(), null, null);
+
+                Subject = card.GetAll(1);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGetAll_ShouldBeEmpty()
+            public void TestForNullValue()
             {
+                Setup();
+                Subject.Should().NotBeNull();
+            }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void TestForEmptyValue()
+            {
+                Setup();
+                Subject.Should().BeEmpty();
+            }
+        }
+
+        public class GetAllMethodWithMatch : BaseTest<List<Card>>
+        {
+            DateTime NOW = new DateTime(2014, 5, 22);
+
+            protected override Dictionary<Type, Mock> OnInitializeServices()
+            {
+                Dictionary<Type, Mock> services = new Dictionary<Type, Mock>();
+
                 var storageProvider = new Mock<IStorageProvider>();
+
+                List<Card> cards = new List<Card>();
 
                 storageProvider
                     .Setup(d => d.GetAllCards(It.IsAny<int>()))
-                    .Returns(() => new List<Card>());
+                    .Returns((int areaID) => cards.FindAll(item => item.AreaID == areaID) ?? new List<Card>());
 
-                var area = 1;
-                var card = new Card(null, storageProvider.Object, null, null);
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Card>()))
+                    .Callback((Card card) => cards.Add(card));
 
-                var subject = card.GetAll(area);
+                services.Add(typeof(IStorageProvider), storageProvider);
 
-                subject.Should().BeEmpty();
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                services.Add(typeof(IDateProvider), dateProvider);
+
+                var identityProvider = new Mock<IIdentityProvider>();
+                identityProvider.Setup(d => d.GetUserName()).Returns("Dave Rodgers");
+
+                services.Add(typeof(IIdentityProvider), identityProvider);
+
+                return services;
+            }
+
+            protected override void Setup()
+            {
+                var card = new Card(GetService<IDateProvider>(), GetService<IStorageProvider>(), GetService<IIdentityProvider>(), null);
+
+                card.Add("SampleName", "SampleDescription", "SamplePerson", 2);
+
+                Subject = card.GetAll(2);
             }
 
             [Fact]
             [Trait("Category", "Card")]
             public void WhenGetAll_AndWithNewCard_ShouldHaveOneElement()
             {
-                var storageProvider = new Mock<IStorageProvider>();
-
-                storageProvider
-                    .Setup(d => d.GetAllCards(It.IsAny<int>()))
-                    .Returns(() => {
-
-                        var list = new List<Card>();
-
-                        list.Add(new Card());
-
-                        return list;
-
-                    });
-
-                var area = 1;
-                var card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.GetAll(area);
-
-                subject.Count.Should().Be(1);
+                Setup();
+                Subject.Count.Should().Be(1);
             }
 
             [Fact]
             [Trait("Category", "Card")]
             public void WhenGetAll_AndWithNewCard_ShouldElementsBeActiveOnly()
             {
-                var storageProvider = new Mock<IStorageProvider>();
-
-                storageProvider
-                    .Setup(d => d.GetAllCards(It.IsAny<int>()))
-                    .Returns(() =>
-                    {
-
-                        var list = new List<Card>();
-
-                        list.Add(new Card());
-                        list.Add(new Card());
-
-                        return list;
-
-                    });
-
-                var area = 1;
-                var card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.GetAll(area);
-
-                subject.Should().OnlyContain(item => item.Active == true);
+                Setup();
+                Subject.Should().OnlyContain(item => item.Active == true);
             }
         }
 
-        public class GetMethod
+        public class GetMethod : BaseTest<Card>
         {
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenGet_ShouldBeNull()
+            DateTime NOW = new DateTime(2014, 5, 22);
+            string USERNAME = "Dave Rodgers";
+
+            protected override Dictionary<Type, Mock> OnInitializeServices()
             {
+                Dictionary<Type, Mock> services = new Dictionary<Type, Mock>();
+
+                var cardsDb = new List<Card>();
+
                 var storageProvider = new Mock<IStorageProvider>();
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Card>()))
+                    .Returns(
+                    (Card card) => 
+                    {
+                        card.ID = cardsDb.Count+1;
+                        cardsDb.Add(card); 
+                        return card; 
+                    });
 
                 storageProvider
                     .Setup(d => d.GetCard(It.IsAny<int>()))
-                    .Returns(() => null);
+                    .Returns((int id) => cardsDb.Find(card => card.ID == id));
 
-                var card = new Card(null, storageProvider.Object, null, null);
+                var identityProvider = new Mock<IIdentityProvider>();
 
-                var subject = card.Get(1);
+                identityProvider
+                    .Setup(d => d.GetUserName())
+                    .Returns(() => USERNAME);
 
-                subject.Should().BeNull();
+                var dateProvider = new Mock<IDateProvider>();
+
+                dateProvider
+                    .Setup(d => d.Now())
+                    .Returns(() => NOW);
+
+                services.Add(typeof(IStorageProvider), storageProvider);
+                services.Add(typeof(IIdentityProvider), identityProvider);
+                services.Add(typeof(IDateProvider), dateProvider);
+
+                return services;
+            }
+
+            protected override void Setup()
+            {
+                var card = new Card(GetService<IDateProvider>(), GetService<IStorageProvider>(), GetService<IIdentityProvider>(), null);
+
+                card.Add("MyCard", "MyDescription", String.Empty, 1);
+
+                Subject = card.Get(1);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldBeNotBeNull()
+            public void TestForNull()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID           = 1,
-                            AreaID       = 1,
-                            Name         = "MyCard",
-                            Description  = "MyDescription",
-                            CreatedDate  = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser  = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.Should().NotBeNull();
+                Setup();
+                Subject.Should().NotBeNull();
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldNameBeMyCard()
+            public void TestCardName()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.Name.Should().Be("MyCard");
+                Setup();
+                Subject.Name.Should().Be("MyCard");
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldDescriptionBeMyDescription()
+            public void TestCardDescription()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.Description.Should().Be("MyDescription");
+                Setup();
+                Subject.Description.Should().Be("MyDescription");
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldAreaIDBeOne()
+            public void TestAreaID()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.AreaID.Should().Be(1);
+                Setup();
+                Subject.AreaID.Should().Be(1);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldIDBeOne()
+            public void TestCardID()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.ID.Should().Be(1);
+                Setup();
+                Subject.ID.Should().Be(1);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldBeActive()
+            public void TestActiveState()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.Active.Should().Be(true);
+                Setup();
+                Subject.Active.Should().Be(true);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldCreatedDateHaveValue()
+            public void TestCreatedDate()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.CreatedDate.Should().Be(NOW);
+                Setup();
+                Subject.CreatedDate.Should().Be(NOW);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldModifiedDateHaveValue()
+            public void TestModifiedDate()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.ModifiedDate.Should().Be(NOW);
+                Setup();
+                Subject.ModifiedDate.Should().Be(NOW);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldCreatedUserHaveValue()
+            public void TestCreatedUSer()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.CreatedUser.Should().Be(USERNAME);
+                Setup();
+                Subject.CreatedUser.Should().Be(USERNAME);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenGet_ShouldModifiedUserHaveValue()
+            public void TestModifiedUser()
             {
-                var NOW = new DateTime(2014, 5, 22);
-                var USERNAME = "Dave Rodgers";
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            AreaID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = NOW,
-                            ModifiedDate = NOW,
-                            CreatedUser = USERNAME,
-                            ModifiedUser = USERNAME,
-                        }
-                    );
-
-                Card card = new Card(null, storageProvider.Object, null, null);
-
-                var subject = card.Get(1);
-
-                subject.ModifiedUser.Should().Be(USERNAME);
+                Setup();
+                Subject.ModifiedUser.Should().Be(USERNAME);
             }
         }
 
-        public class UpdateMethod
+        public class UpdateMethod : BaseTest<Card>
         {
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenEdit_ShouldBeNull()
+            DateTime NOW          = new DateTime(2014, 5, 22);
+            DateTime CREATED_DATE = new DateTime(2014, 5, 21);
+
+            protected override Dictionary<Type, Mock> OnInitializeServices()
             {
-                Card subject = null;
+                Dictionary<Type, Mock> services = new Dictionary<Type, Mock>();
 
-                var storageProvider = new Mock<IStorageProvider>();
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c)
-                    .Returns(() => subject);
-
-                var card = new Card(null, storageProvider.Object, null, null);
-
-                subject = card.Update(null);
-
-                subject.Should().BeNull();
-            }
-
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenEdit_ShouldBeNotBeNull()
-            {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
+                services.Add(typeof(IStorageProvider), getStorageProvider());
 
                 var dateProvider = new Mock<IDateProvider>();
                 dateProvider.Setup(d => d.Now()).Returns(NOW);
@@ -912,294 +581,138 @@ namespace Cards.Extensions.Tfs.Tests
                 var identityProvider = new Mock<IIdentityProvider>();
                 identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
 
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
+                services.Add(typeof(IDateProvider), dateProvider);
+                services.Add(typeof(IIdentityProvider), identityProvider);
 
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.Should().NotBeNull();
+                return services;
             }
 
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenEdit_ShouldNameBeUpdated()
+            private Mock getStorageProvider()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
                 var storageProvider = new Mock<IStorageProvider>();
+
+                var cardsDb = new List<Card>();
+                var activityDb = new List<CardActivity>();
+
                 storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
+                    .Setup(d => d.Add(It.IsAny<Card>()))
+                    .Returns((Card card) => { cardsDb.Add(card); return card; });
+
+                storageProvider
+                    .Setup(d => d.GetCard(It.IsAny<int>()))
+                    .Returns((int id) => cardsDb.Find(item => item.ID == id));
+
+                storageProvider
+                    .Setup(d => d.Update(It.IsAny<Card>()))
+                    .Returns(
+                    (Card card) => 
+                    {
+                        var exist = cardsDb.Find(item => item.ID == card.ID);
+
+                        if (exist != null)
+                        {
+                            cardsDb[cardsDb.IndexOf(exist)] = card;
+
+                            return card;
+                        }
+
+                        return null;
+                    });
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<CardActivity>()))
+                    .Returns((CardActivity activity) => { activityDb.Add(activity); return activity; });
+
+                cardsDb.Add(new Card()
                         {
                             ID = 1,
                             Name = "MyCard",
                             Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
+                            CreatedDate = CREATED_DATE,
+                            ModifiedDate = CREATED_DATE,
                             CreatedUser = "Dave Rodgers",
                             ModifiedUser = "Dave Rodgers",
                             Active = true,
                             AreaID = 1
                         });
 
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
+                activityDb.Add(new CardActivity()
+                    {
+                        ActivityType = CardActivityType.Add.ToString(),
+                        CardID = 1,
+                        ID = 0,
+                        LoggedDate = CREATED_DATE,
+                        LoggedUser = "Dave Rodgers"
+                    });
 
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.Name.Should().Be("NotMyCard");
+                return storageProvider;
             }
 
-            [Fact]
-            [Trait("Category", "Card")]
-            public void WhenEdit_ShouldDescriptionBeUpdated()
+            protected override void Setup()
             {
-                Card subject = null;
+                var card = new Card(GetService<IDateProvider>(), GetService<IStorageProvider>(), GetService<IIdentityProvider>(), null);
 
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
+                Subject = card.Get(1);
 
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
+                Subject.Name        = "NotMyCard";
+                Subject.Description = "NotMyDescription";
+                Subject.AssignedTo  = "Me";
+                Subject.AreaID      = 2;
 
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.Description.Should().Be("NotMyDescription");
+                Subject = card.Update(Subject);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldAreaIDBeUpdated()
+            public void TestForNull()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.ID.Should().Be(1);
+                Setup();
+                Subject.Should().NotBeNull();
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldIDNotBeUpdated()
+            public void TestCardName()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.ID.Should().Be(1);
+                Setup();
+                Subject.Name.Should().Be("NotMyCard");
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldModifiedDateBeUpdated()
+            public void TestCardDescription()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.ModifiedDate.Should().Be(NOW);
+                Setup();
+                Subject.Description.Should().Be("NotMyDescription");
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldModifiedUserBeUpdated()
+            public void TestAreaID()
+            {
+                Setup();
+                Subject.ID.Should().Be(1);
+            }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void TestCardID()
+            {
+                Setup();
+                Subject.ID.Should().Be(1);
+            }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void TestModifiedDate()
+            {
+                Setup();
+                Subject.ModifiedDate.Should().Be(NOW);
+            }
+
+            [Fact]
+            [Trait("Category", "Card")]
+            public void TestModifiedUser()
             {
                 Card subject = null;
 
@@ -1249,290 +762,116 @@ namespace Cards.Extensions.Tfs.Tests
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldCreatedDateBeUpdated()
+            public void TestCreatedDate()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.CreatedDate.Should().Be(createdDate);
+                Setup();
+                Subject.CreatedDate.Should().Be(CREATED_DATE);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldCreatedUserBeUpdated()
+            public void TestCreatedUser()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.CreatedUser.Should().Be("Dave Rodgers");
+                Setup();
+                Subject.CreatedUser.Should().Be("Dave Rodgers");
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldActiveBitBeUpdated()
+            public void TestActiveState()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-
-                subject = card.Update(subject);
-
-                subject.Active.Should().Be(true);
+                Setup();
+                Subject.Active.Should().Be(true);
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldAssignedToBeUpdated()
+            public void TestAssignedTo()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-                subject.AssignedTo = "Me";
-
-                subject = card.Update(subject);
-
-                subject.AssignedTo.Should().Be("Me");
+                Setup();
+                Subject.AssignedTo.Should().Be("Me");
             }
 
             [Fact]
             [Trait("Category", "Card")]
-            public void WhenEdit_ShouldLatestCardActivityBeModified()
+            public void TestLatestActivity()
             {
-                Card subject = null;
-
-                var createdDate = new DateTime(2014, 5, 21);
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-                storageProvider
-                    .Setup(d => d.GetCard(It.Is<int>(i => i == 1)))
-                    .Returns(() =>
-                        new Card()
-                        {
-                            ID = 1,
-                            Name = "MyCard",
-                            Description = "MyDescription",
-                            CreatedDate = createdDate,
-                            ModifiedDate = NOW,
-                            CreatedUser = "Dave Rodgers",
-                            ModifiedUser = "Dave Rodgers",
-                            Active = true,
-                            AreaID = 1
-                        });
-
-                storageProvider
-                    .Setup(d => d.Update(It.IsAny<Card>()))
-                    .Callback<Card>(c => subject = c.ID == 1 ? c : null)
-                    .Returns(() => subject);
-
-                CardActivity activity = null;
-
-                storageProvider
-                    .Setup(d => d.Add(It.IsAny<CardActivity>()))
-                    .Callback<CardActivity>(a => activity = a)
-                    .Returns(() => activity);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                subject = card.Get(1);
-
-                subject.Name = "NotMyCard";
-                subject.Description = "NotMyDescription";
-                subject.AreaID = 2;
-                subject.AssignedTo = "Me";
-
-                subject = card.Update(subject);
-
-                subject.AssignedTo.Should().Be("Me");
+                Setup();
+                Subject.CardActivities[Subject.CardActivities.Count - 1].ActivityType.Should().Be(CardActivityType.Modify.ToString());
             }
         }
 
-        public class RemoveMethod
+        public class RemoveMethod : BaseTest<Card>
         {
+            protected override Dictionary<Type, Mock> OnInitializeServices()
+            {
+                Dictionary<Type, Mock> services = new Dictionary<Type, Mock>();
+
+                var NOW = new DateTime(2014, 5, 22);
+
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider.Setup(d => d.Now()).Returns(NOW);
+
+                var identityProvider = new Mock<IIdentityProvider>();
+                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
+
+                var storageProvider = new Mock<IStorageProvider>();
+
+                var cardsDb = new List<Card>();
+
+                storageProvider
+                    .Setup(d => d.Add(It.IsAny<Card>()))
+                    .Returns(
+                    (Card card) => 
+                    {
+                        card.ID = cardsDb.Count + 1;
+
+                        cardsDb.Add(card);
+
+                        return card;
+                    }
+                    );
+
+                storageProvider
+                    .Setup(d => d.GetCard(It.IsAny<int>()))
+                    .Returns(
+                    (int id) => 
+                    {
+                        return cardsDb.FirstOrDefault(item => item.ID == id && item.Active);
+                    });
+
+                storageProvider
+                    .Setup(d => d.RemoveCard(It.IsAny<Card>()))
+                    .Callback(
+                    (Card card) => 
+                    {
+                        cardsDb.Remove(card);
+                    });
+
+                services.Add(typeof(IDateProvider), dateProvider);
+                services.Add(typeof(IIdentityProvider), identityProvider);
+                services.Add(typeof(IStorageProvider), storageProvider);
+
+                return services;
+            }
+
+            protected override void Setup()
+            {
+                var card = new Card(GetService<IDateProvider>(), GetService<IStorageProvider>(), GetService<IIdentityProvider>(), null);
+
+                card.Add("samplecard", "sampledescription", String.Empty, 1);
+
+                card.Remove(1);
+
+                Subject = card.Get(1);
+            }
+
             [Fact]
             [Trait("Category", "Card")]
             public void WhenDelete_ShouldDataBeRemoved()
             {
-                var NOW = new DateTime(2014, 5, 22);
-
-                var dateProvider = new Mock<IDateProvider>();
-                dateProvider.Setup(d => d.Now()).Returns(NOW);
-
-                var identityProvider = new Mock<IIdentityProvider>();
-                identityProvider.Setup(d => d.GetUserName()).Returns(() => "MIKADO");
-
-                var storageProvider = new Mock<IStorageProvider>();
-
-                storageProvider.Setup(d => d.RemoveCard(It.IsAny<Card>()));
-                storageProvider.Setup(d => d.GetCard(It.Is<int>(i => i == 1))).Returns(() => null);
-
-                var card = new Card(dateProvider.Object, storageProvider.Object, identityProvider.Object, null);
-
-                card.Remove(1);
-
-                var subject = card.Get(1);
-
-                subject.Should().BeNull();
+                Setup();
+                Subject.Should().BeNull();
             }
         }
 
