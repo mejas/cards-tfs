@@ -16,20 +16,15 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [Route("api/Import/{areaId}")]
         public HttpResponseMessage ImportFromTFSID(HttpRequestMessage request, int tfsWorkItem, int areaID)
         {
-            var session = HttpContext.Current.Cache["Session"] as Session;
+            WorkItem workItem = new WorkItem();
 
-            if (session != null)
+            var tfsItem = new List<WorkItem>() { workItem.Get(tfsWorkItem) };
+
+            var result = new Card().Add(tfsItem, areaID);
+
+            if (result != null)
             {
-                WorkItem workItem = new WorkItem(session.TFSProvider);
-
-                var tfsItem = new List<WorkItem>() { workItem.Get(tfsWorkItem) };
-
-                var result = new Card().Add(tfsItem, areaID);
-
-                if (result != null)
-                {
-                    return request.CreateResponse(HttpStatusCode.Accepted, result);
-                }
+                return request.CreateResponse(HttpStatusCode.Accepted, result);
             }
 
             return request.CreateResponse(HttpStatusCode.InternalServerError);
@@ -40,21 +35,16 @@ namespace Cards.Extensions.Tfs.Api.Controllers
         [Route("api/Import/{areaID}")]
         public HttpResponseMessage ImportFromSavedTFSQuery(HttpRequestMessage request, string queryName, int areaID)
         {
-            var session = HttpContext.Current.Cache["Session"] as Session;
+            WorkItem workItem = new WorkItem();
+            Card card = new Card();
 
-            if (session != null)
+            var tfsItems = workItem.Get(queryName);
+
+            List<Card> result = card.Add(tfsItems, areaID);
+
+            if (result != null)
             {
-                WorkItem workItem = new WorkItem(session.TFSProvider);
-                Card card = new Card();
-
-                var tfsItems = workItem.Get(queryName);
-
-                List<Card> result = card.Add(tfsItems, areaID);
-
-                if (result != null)
-                {
-                    return request.CreateResponse(HttpStatusCode.Accepted, result);
-                }
+                return request.CreateResponse(HttpStatusCode.Accepted, result);
             }
 
             return request.CreateResponse(HttpStatusCode.InternalServerError);

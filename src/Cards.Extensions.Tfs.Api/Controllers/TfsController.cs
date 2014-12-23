@@ -11,7 +11,6 @@ namespace Cards.Extensions.Tfs.Api.Controllers
 {
     public class TfsController : ApiController
     {
-
         [HttpGet]
         [ResponseType(typeof(WorkItem))]
         [Route("api/tfs/{workItemId}")]

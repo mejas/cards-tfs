@@ -8,7 +8,7 @@ namespace Cards.Extensions.Tfs.Core.Models
         public string DisplayName { get; set; }
         public string WindowsIdentityName { get; set; }
 
-        public ITFSProvider TFSProvider { get; protected set; }
+        protected ITFSProvider TFSProvider { get; set; }
 
         public Session(ITFSProvider tfsProvider)
         {
