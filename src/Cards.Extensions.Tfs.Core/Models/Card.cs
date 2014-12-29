@@ -14,7 +14,8 @@ namespace Cards.Extensions.Tfs.Core.Models
         public Card()
             : this( new DateProvider(), 
                     new EntityFrameworkStorageProvider(), 
-                    new WindowsIdentityProvider())
+                    new WindowsIdentityProvider(),
+                    new ConfigurationProvider())
         {
             Active         = true;
             CardActivities = new List<CardActivity>();
@@ -22,16 +23,19 @@ namespace Cards.Extensions.Tfs.Core.Models
 
         public Card(IDateProvider dateProvider, 
                     IStorageProvider storageProvider, 
-                    IIdentityProvider identityProvider)
+                    IIdentityProvider identityProvider,
+                    IConfigurationProvider configurationProvider)
         {
-            DateProvider     = dateProvider;
-            StorageProvider  = storageProvider;
-            IdentityProvider = identityProvider;
+            DateProvider          = dateProvider;
+            StorageProvider       = storageProvider;
+            IdentityProvider      = identityProvider;
+            ConfigurationProvider = configurationProvider;
         }
 
         protected IDateProvider DateProvider { get; set; }
         protected IStorageProvider StorageProvider { get; set; }
         protected IIdentityProvider IdentityProvider { get; set; }
+        protected IConfigurationProvider ConfigurationProvider { get; set; }
 
         /// <summary>
         /// Gets or sets the database identifier.
@@ -131,6 +135,30 @@ namespace Cards.Extensions.Tfs.Core.Models
         public List<CardActivity> CardActivities { get; set; }
 
         /// <summary>
+        /// Gets or sets the age.
+        /// </summary>
+        /// <value>
+        /// The age.
+        /// </value>
+        public int DaysSinceModified 
+        {
+            get { return onGetCardAge(); }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="Card"/> is aged.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if aged; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasAged
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Creates a card using the specified parameters.
         /// Adds the specified name.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -198,34 +226,42 @@ namespace Cards.Extensions.Tfs.Core.Models
 
             List<Card> result = new List<Card>();
 
-            foreach (var workItem in workItems)
+            if (workItems != null)
             {
-                var cardToAdd = new Card()
+                foreach (var workItem in workItems)
                 {
-                    CreatedUser  = currentUser,
-                    CreatedDate  = dateNow,
-                    ModifiedUser = currentUser,
-                    ModifiedDate = dateNow,
+                    var cardToAdd = createCardFromWorkItem(areaID, workItem, dateNow, currentUser);
 
-                    Name        = workItem.Title,
-                    Description = workItem.Description,
-                    AreaID      = areaID,
-                    AssignedTo  = workItem.AssignedTo,
-                    TfsID       = workItem.ID
-                };
+                    var storedCard = StorageProvider.Add(cardToAdd);
 
-                var storedCard = StorageProvider.Add(cardToAdd);
+                    if (storedCard != null)
+                    {
+                        CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
+                        storedCard.CardActivities.Add(activity.Add(storedCard.ID, CardActivityType.Add, dateNow));
 
-                if (storedCard != null)
-                {
-                    CardActivity activity = new CardActivity(StorageProvider, IdentityProvider);
-                    storedCard.CardActivities.Add(activity.Add(storedCard.ID, CardActivityType.Add, dateNow));
-
-                    result.Add(storedCard);
+                        result.Add(storedCard);
+                    }
                 }
             }
 
             return result;
+        }
+
+        private Card createCardFromWorkItem(int areaID, WorkItem workItem, DateTime dateNow, string currentUser)
+        {            
+            return new Card()
+            {
+                CreatedUser = currentUser,
+                CreatedDate = dateNow,
+                ModifiedUser = currentUser,
+                ModifiedDate = dateNow,
+
+                Name = workItem.Title,
+                Description = workItem.Description,
+                AreaID = areaID,
+                AssignedTo = workItem.AssignedTo,
+                TfsID = workItem.ID
+            };
         }
 
         /// <summary>
@@ -327,6 +363,17 @@ namespace Cards.Extensions.Tfs.Core.Models
             }
 
             return cardResult;
+        }
+
+        private int onGetCardAge()
+        {
+            return isCardAging() ? (ModifiedDate - DateProvider.Now()).Days : 0;
+        }
+
+        private bool isCardAging()
+        {
+            return  this.AreaID != ConfigurationProvider.PendingWorkArea ||
+                    this.AreaID != ConfigurationProvider.CompletedWorkArea;
         }
     }
 }
