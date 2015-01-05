@@ -9,6 +9,7 @@
         AppSettings.menuTemplate = 'extensions/menu-partial.html';
         AppSettings.sessionTemplate = 'extensions/login-partial.html';
         AppSettings.importQuery = 'CardsTest';
+        AppSettings.tfsLinkTemplate = 'http://tfsserver:8080/tfs/tfscollection/nca/_workitems#id={{TFSID}}&_a=edit';
         
     }]);
 
