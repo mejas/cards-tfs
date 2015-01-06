@@ -13,7 +13,7 @@
         
     }]);
 
-    app.run(['Session', 'AppSettings', '$http', '$rootScope', '$window', function (Session, AppSettings, $http, $rootScope, $window) {
+    app.run(['Session', 'Cards', 'AppSettings', '$http', '$rootScope', '$window', function (Session, Cards, AppSettings, $http, $rootScope, $window) {
         
         Session.checkAuthentication = function () {
             //Windows authentication, let session bar gets the currently signed in user
@@ -37,6 +37,21 @@
 
             return $window.sessionStorage.user;
         };
+
+        Cards.getBlank = function() {
+
+                var card = {
+                    areaID: 1,
+                    tfsID: 0,
+                    name: 'New Task',
+                    description: '',
+                    assignedTo: '',
+                    labels: []
+                };
+
+                return card;
+        };
+
     }]);
 
     app.controller('LinkCtrl', ['$scope', 'AppSettings', function ($scope, AppSettings) {
